@@ -47,7 +47,7 @@
 </div>
 @endif
 
-<form action="{{ route('admin.user.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('admin.role.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <div class="container">
@@ -68,67 +68,27 @@
 
         </div>
 
-          <div class="form-group ml-5">
-
-            <label for="email" class="col-sm-2 col-form-label">Email</label>
-
-            <div class="col-sm-9">
-
-                <input type="email" name='email' class="form-control {{$errors->first('email') ? "is-invalid" : "" }} " value="{{old('email')}}" id="email" placeholder="Email">
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('email') }}
-                </div>
-
-            </div>
-
-        </div>
-
-         <div class="form-group ml-5">
-
-            <label for="password" class="col-sm-2 col-form-label">Password</label>
-
-            <div class="col-sm-9">
-
-                <input type="password" name='password' class="form-control {{$errors->first('password') ? "is-invalid" : "" }} " value="{{old('password')}}" id="password" placeholder="Password">
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('password') }}
-                </div>
-
-            </div>
-
-        </div>
-
         {{-- assign role --}}
 
         <div class="form-group ml-5">
 
-            <label class="col-sm-2 col-form-label">Assign Role</label>
+            <label for="role" class="col-sm-2 col-form-label">Assign Role</label>
 
-            <div class="col-sm-9 row">
+            @foreach ($permissions as $permission)
 
-                @foreach ($roles as $role)
+                <div class="col-sm-9">
 
-                <div class="col-lg-3">
+                    <label><input type="checkbox" name="permissions[]" class="{{$errors->first('permissions') ? "is-invalid" : "" }} " value="{{ $permission->id }}"> {{ $permission->name }}</label>
 
-                    <div class="checkbox">
-
-                        <label><input type="checkbox" name="role[]" value="{{ $role->id }}"> {{ $role->name }} </label>
-
+                    <div class="invalid-feedback">
+                        {{ $errors->first('permissions') }}
                     </div>
 
                 </div>
 
-                @endforeach
+            @endforeach
 
-
-            </div>
-
-
-            {{-- <label for="role" class="col-sm-2 col-form-label">Assign Role</label>
-
-            <select name="role" id="" class="form-control">
+            {{-- <select name="role" id="" class="form-control">
                 <option value=""></option>
             </select> --}}
 

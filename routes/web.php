@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{ CategoryController, FaqController, GeneralController, LinkController, PageController, PartnerController, PcategoryController, PortfolioController, PostController, ServiceController, TagController, TestimonialController, UserController};
 use App\Http\Controllers\Team\TeamController;
 use App\Http\Controllers\Banner\BannerController;
+use App\Http\Controllers\Permission\PermissionController;
+use App\Http\Controllers\Role\RoleController;
 use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +28,7 @@ Auth::routes([
     return view('welcome');
 });
 // change language
-Route::get('locale/{locale?}', array('en'=>'set-locale', 'uses'=>'App\Http\Controllers\Languages\LanguageController@changeLang'));
+Route::get('locale/{locale?}', array('en'=>'set-locale', 'uses'=>'Languages\LanguageController@changeLang'));
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -37,6 +39,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     // General settings
     Route::get('general-settings', [GeneralController::class, 'general'])->name('admin.general');
     Route::post('general-settings', [GeneralController::class, 'generalUpdate'])->name('admin.general.update');
+
     // About
     Route::get('about', [GeneralController::class, 'about'])->name('admin.about');
     Route::post('about', [GeneralController::class, 'aboutUpdate'])->name('about.update');
@@ -82,21 +85,13 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
      // Manage Blog
     Route::get('post',[PostController::class, 'index'])->name('admin.post');
-
     Route::get('post/create',[PostController::class, 'create'])->name('admin.post.create');
-
     Route::post('post/create',[PostController::class, 'store'])->name('admin.post.store');
-
     Route::get('post/edit/{id}',[PostController::class, 'edit'])->name('admin.post.edit');
-
     Route::post('post/edit/{id}',[PostController::class, 'update'])->name('admin.post.update');
-
     Route::get('post/trash',[PostController::class, 'trash'])->name('admin.post.trash');
-
     Route::post('post/{id}/restore',[PostController::class, 'restore'])->name('admin.post.restore');
-
     Route::delete('post/trash/{id}',[PostController::class, 'destroy'])->name('admin.post.destroy');
-
     Route::delete('post/destroy/{id}',[PostController::class, 'deletePermanent'])->name('admin.post.deletePermanent');
 
     // Manage Testimonials
@@ -171,4 +166,26 @@ Route::prefix('admin')->middleware('auth')->group(function () {
      Route::get('users/edit/{id}', [UserController::class, 'edit'])->name('admin.user.edit');
      Route::post('users/edit/{id}', [UserController::class, 'update'])->name('admin.user.update');
      Route::delete('users/destroy/{id}',[UserController::class, 'destroy'])->name('admin.user.destroy');
+
+    //  Manage Role
+    Route::group(['prefix'=>'roles','namespace'=>'Role'],function()
+        {
+            Route::get('/', [RoleController::class, 'index'])->name('admin.role');
+            Route::get('/create', [RoleController::class, 'create'])->name('admin.role.create');
+            Route::post('/create', [RoleController::class, 'store'])->name('admin.role.store');
+            Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('admin.role.edit');
+            Route::post('/edit/{id}', [RoleController::class, 'update'])->name('admin.role.update');
+            Route::delete('/destroy/{id}',[RoleController::class, 'destroy'])->name('admin.role.destroy');
+        });
+
+    // Manage Permission
+    Route::group(['prefix'=>'permissions','namespace'=>'Permission'],function()
+        {
+            Route::get('/', [PermissionController::class, 'index'])->name('admin.permission');
+            Route::get('/create', [PermissionController::class, 'create'])->name('admin.permission.create');
+            Route::post('/create', [PermissionController::class, 'store'])->name('admin.permission.store');
+            Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('admin.permission.edit');
+            Route::post('/edit/{id}', [PermissionController::class, 'update'])->name('admin.permission.update');
+            Route::delete('/destroy/{id}',[PermissionController::class, 'destroy'])->name('admin.permission.destroy');
+        });
 });

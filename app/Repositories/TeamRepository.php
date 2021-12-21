@@ -7,17 +7,25 @@ use App\Repositories\Interfaces\TeamRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Team\Team;
 use App\Models\Team\TeamTranslation;
-
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class TeamRepository implements TeamRepositoryInterface{
 
     private $team;
     private $teamTranslation;
-    public function __construct(Team $team , TeamTranslation $teamTranslation)
+    private $user;
+    public function __construct(User $user, Team $team , TeamTranslation $teamTranslation)
     {
+        $this->user = $user;
         $this->team = $team;
         $this->teamTranslation = $teamTranslation;
+
+    //     $this->middleware('can:team-list')->only('index','show');
+    //     $this->middleware('can:team-create')->only('create','store');
+    //     $this->middleware('can:team-update')->only('edit','update');
+    //     $this->middleware('can:team-delete')->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +34,8 @@ class TeamRepository implements TeamRepositoryInterface{
      */
     public function index()
     {
-         $this->team::orderBy('id','desc')->get();
+        Gate::authorize('team-list',$this->user);
+        $team = $this->team::orderBy('id','desc')->get();
 
         return view('admin.team.index',compact('team'));
     }
@@ -38,6 +47,7 @@ class TeamRepository implements TeamRepositoryInterface{
      */
     public function create()
     {
+        Gate::authorize('team-create',$this->user);
         return view('admin.team.create');
     }
 
@@ -49,6 +59,7 @@ class TeamRepository implements TeamRepositoryInterface{
      */
     public function store(TeamRequest $request)
     {
+        Gate::authorize('team-create',$this->user);
         $team = new Team();
         $team->name = $request->name;
         $team->position = $request->position;
@@ -85,7 +96,7 @@ class TeamRepository implements TeamRepositoryInterface{
      */
     public function show($id)
     {
-        //
+        Gate::authorize('team-list',$this->user);
     }
 
     /**
@@ -96,6 +107,7 @@ class TeamRepository implements TeamRepositoryInterface{
      */
     public function edit($id)
     {
+        Gate::authorize('team-update',$this->user);
         $team = $this->team::findOrFail($id);
 
         return view('admin.team.edit',compact('team'));
@@ -110,6 +122,7 @@ class TeamRepository implements TeamRepositoryInterface{
      */
     public function update(TeamRequest $request, $id)
     {
+        Gate::authorize('team-update',$this->user);
         $team = $this->team::findOrFail($id);
         $team->name = $request->name;
         $team->position = $request->position;
@@ -150,6 +163,7 @@ class TeamRepository implements TeamRepositoryInterface{
      */
     public function destroy($id)
     {
+        Gate::authorize('team-delete',$this->user);
         $team = $this->team::findOrFail($id);
 
         $team->delete();

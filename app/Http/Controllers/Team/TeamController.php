@@ -4,16 +4,24 @@ namespace App\Http\Controllers\Team;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Team\TeamRequest;
+use App\Models\User;
 use App\Service\Team\TeamService;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
     private $teamService;
-    public function __construct(TeamService $teamService)
+    private $user;
+    public function __construct(User $user,TeamService $teamService)
     {
         $this->teamService = $teamService;
+        $this->user = $user;
+        $this->middleware('can:team-list')->only('index','show');
+        $this->middleware('can:team-create')->only('create','store');
+        $this->middleware('can:team-update')->only('edit','update');
+        $this->middleware('can:team-delete')->only('destroy');
     }
+
     public function index()
     {
         return $this->teamService->index();

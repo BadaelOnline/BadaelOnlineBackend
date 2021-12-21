@@ -14,7 +14,7 @@
   <!-- Custom fonts for this template-->
   <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
   <!-- Custom styles for this template-->
@@ -23,7 +23,7 @@
    {{-- Summernote CDN --}}
 
    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-   
+
      {{-- Select2 Style CDN --}}
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -60,6 +60,18 @@
           <span>Admin</span></a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.role') }}">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Roles</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.permission') }}">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Permissions</span></a>
+      </li>
+
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -89,7 +101,7 @@
           </div>
         </div>
       </li>
-      
+
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.faq') }}">
           <i class="fas fa-fw fa-table"></i>
@@ -120,11 +132,13 @@
           <span>Services</span></a>
       </li>
 
+      @can('team-list')
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.team') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Team</span></a>
       </li>
+      @endcan
 
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.testi') }}">
@@ -173,10 +187,10 @@
           </button>
 
           <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">            
+          <ul class="navbar-nav ml-auto">
             {{-- dropdown language --}}
-              <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>      
-              <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a>        
+              <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>
+              <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a>
             {{-- <select class="selectpicker" data-width="fit">
               <option data-content='<span class="flag-icon flag-icon-us"></span> English'><a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">English</a></option>
               <option  data-content='<span class="flag-icon flag-icon-mx"></span> Español'><a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Arabic</a></option>
@@ -249,7 +263,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          
+
           <a class="btn btn-primary" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
