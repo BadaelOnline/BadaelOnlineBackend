@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\Banner;
+use App\Models\Banner\Banner;
+use App\Models\Banner\BannerTranslation;
 use App\Repositories\Interfaces\BannerRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

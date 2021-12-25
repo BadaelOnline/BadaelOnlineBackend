@@ -2,8 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Models\{About, Banner, Category, Faq, General, Link, Page, Partner, Pcategory, Portfolio, Post, Tag, Testimonial, Service, Subscriber};
+use App\Models\{About, Category, Faq, General, Link, Page, Partner, Pcategory, Portfolio, Post, Tag, Testimonial, Service, Subscriber};
 use App\Models\Team\{Team,TeamTranslation};
+use App\Models\Banner\Banner;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\GeneralTrait;
 
@@ -11,7 +12,7 @@ use App\Repositories\Interfaces\FrontRepositoryInterface;
 use Illuminate\Http\Request;
 
 class FrontRepository implements FrontRepositoryInterface{
-    
+
 
     private $tag;
     private $category;

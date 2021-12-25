@@ -24,7 +24,8 @@ class TeamController extends Controller
 
     public function index()
     {
-        return $this->teamService->index();
+        $team = $this->teamService->index();
+        return view('admin.team.index',compact('team'));
     }
      /**
      * Show the form for creating a new resource.
@@ -32,7 +33,8 @@ class TeamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        return $this->teamService->create();
+        $team = $this->teamService->create();
+        return view('admin.team.create',compact('team'));
     }
 
     /**
@@ -62,7 +64,8 @@ class TeamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        return $this->teamService->edit($id);
+        $team = $this->teamService->edit($id);
+        return view('admin.team.edit',compact('team'));
     }
     /**
      * Update the specified resource in storage.

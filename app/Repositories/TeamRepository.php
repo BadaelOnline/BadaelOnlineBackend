@@ -22,11 +22,6 @@ class TeamRepository implements TeamRepositoryInterface{
         $this->user = $user;
         $this->team = $team;
         $this->teamTranslation = $teamTranslation;
-
-    //     $this->middleware('can:team-list')->only('index','show');
-    //     $this->middleware('can:team-create')->only('create','store');
-    //     $this->middleware('can:team-update')->only('edit','update');
-    //     $this->middleware('can:team-delete')->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -37,9 +32,7 @@ class TeamRepository implements TeamRepositoryInterface{
     {
         Gate::authorize('team-list',$this->user);
 
-        $team = $this->team::orderBy('id','desc')->get();
-
-        return view('admin.team.index',compact('team'));
+        return $this->team::orderBy('id','desc')->get();
     }
 
     /**
@@ -50,7 +43,6 @@ class TeamRepository implements TeamRepositoryInterface{
     public function create()
     {
         Gate::authorize('team-create',$this->user);
-        return view('admin.team.create');
     }
 
     /**
@@ -61,15 +53,15 @@ class TeamRepository implements TeamRepositoryInterface{
      */
     public function store(Request $request)
     {
-        Gate::authorize('team-create',$this->user);
-
-        /** transformation to collection */
         try {
+            Gate::authorize('team-create',$this->user);
+
+            /** transformation to collection */
             $allteams = collect($request->team)->all();
 
             $request->is_active ? $is_active = true : $is_active = false;
 
-            // $photo = $request->file('photo');
+            $photo = $request->file('photo');
             if($photo){
             $cover_path = $photo->store('images/team', 'public');
             $photo = $cover_path;
@@ -106,7 +98,7 @@ class TeamRepository implements TeamRepositoryInterface{
 
         } catch (\Exception $ex) {
             DB::rollback();
-            return redirect()->route('admin.team.create')->with('error', 'Data failed to add');    
+            return redirect()->route('admin.team.create')->with('error', 'Data failed to add');
         }
     }
 
@@ -130,9 +122,7 @@ class TeamRepository implements TeamRepositoryInterface{
     public function edit($id)
     {
         Gate::authorize('team-update',$this->user);
-        $team = $this->team::findOrFail($id);
-        $teamTranslation = $this->teamTranslation::findOrFail($id);
-        return view('admin.team.edit',compact('team','teamTranslation'));
+        return $this->team::findOrFail($id);
     }
 
     /**
@@ -144,11 +134,12 @@ class TeamRepository implements TeamRepositoryInterface{
      */
     public function update(Request $request, $id)
     {
-        Gate::authorize('team-update',$this->user);
         try{
+            Gate::authorize('team-update',$this->user);
+
             $team = $this->team::findOrFail($id);
 
-            // $photo = $request->file('photo');
+            $photo = $request->file('photo');
             if($photo){
             $cover_path = $photo->store('images/team', 'public');
             $photo = $cover_path;
@@ -185,7 +176,7 @@ class TeamRepository implements TeamRepositoryInterface{
             DB::rollback();
             return redirect()->route('admin.team.edit')->with('error', 'Data failed to update');
         }
-       
+
     }
 
     /**

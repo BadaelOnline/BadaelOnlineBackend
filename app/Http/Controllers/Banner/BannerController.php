@@ -34,10 +34,10 @@ class BannerController extends Controller
     }
 
     public function update(Request $request, $id){
-        return $this->bannerRepository->update($request, $id);
+        return $this->bannerService->update($request, $id);
     }
 
     public function destroy($id){
-        return $this->bannerRepository->destroy($id);
+        return $this->bannerService->destroy($id);
     }
 }

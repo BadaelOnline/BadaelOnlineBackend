@@ -121,6 +121,12 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.post') }}">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Post</span></a>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.partner') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Partners</span></a>
