@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Team;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Team\TeamRequest;
-use App\Models\User;
+use App\Models\User\User;
 use App\Service\Team\TeamService;
 use Illuminate\Http\Request;
 

@@ -3,14 +3,14 @@
 namespace App\Repositories;
 
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserRepository implements UserRepositoryInterface{
-    
+
     public function index()
     {
         $user = User::all();

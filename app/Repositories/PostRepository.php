@@ -2,10 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Models\Category\Category;
+use App\Models\Post\Post;
+use App\Models\Tag\Tag;
 use App\Repositories\Interfaces\PostRepositoryInterface;
 use Illuminate\Http\Request;
 
-use App\Models\{Category, Post, Tag};
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;

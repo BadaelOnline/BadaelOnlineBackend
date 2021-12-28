@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Category;
+use App\Models\Category\Category;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;

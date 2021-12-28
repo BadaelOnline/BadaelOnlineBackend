@@ -5,8 +5,10 @@ namespace App\Repositories;
 use App\Repositories\Interfaces\GeneralRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\{About, General, Page, Post, User};
+use App\Models\{About, General, Page};
+use App\Models\Post\Post;
 use App\Models\Team\Team;
+use App\Models\User\User;
 use Illuminate\Support\Facades\Storage;
 
 class GeneralRepository implements GeneralRepositoryInterface{

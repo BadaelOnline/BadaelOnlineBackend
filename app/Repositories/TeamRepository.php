@@ -7,7 +7,7 @@ use App\Repositories\Interfaces\TeamRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Team\Team;
 use App\Models\Team\TeamTranslation;
-use App\Models\User;
+use App\Models\User\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;

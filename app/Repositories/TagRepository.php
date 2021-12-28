@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\Tag;
+use App\Models\Tag\Tag;
+use App\Models\Tag\TagTranslation;
 use App\Repositories\Interfaces\TagRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
