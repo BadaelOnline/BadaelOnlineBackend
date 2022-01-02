@@ -17,14 +17,11 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->foreignId('category_id');
             $table->foreignId('author_id');
-            $table->string('title');
             $table->string('slug');
             $table->string('cover');
-            $table->longText('body');
-            $table->string('keyword');
-            $table->string('meta_desc');
             $table->integer('views')->default(0);
             $table->enum('status', ['PUBLISH','DRAFT']);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -191,11 +191,7 @@
             {{-- dropdown language --}}
               <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>
               <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a>
-            {{-- <select class="selectpicker" data-width="fit">
-              <option data-content='<span class="flag-icon flag-icon-us"></span> English'><a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">English</a></option>
-              <option  data-content='<span class="flag-icon flag-icon-mx"></span> Español'><a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Arabic</a></option>
-            </select> --}}
-            {{--  --}}
+
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
@@ -212,7 +208,34 @@
                 </a>
               </div>
             </li>
-
+             {{-- notification --}}
+            {{-- <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fa fa-bell"></span>
+                </a>
+                <!-- Dropdown - Notification Information -->
+                <ul class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" role="menu">
+                  <li>
+                    @if(auth()->user()->is_admin)
+                    @forelse($notifications as $notification)
+                        <div class="alert alert-success" role="alert">
+                            [{{ $notification->created_at }}] User {{ $notification->data['name'] }} ({{ $notification->data['email'] }}) has just registered.
+                            <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+                                Mark as read
+                            </a>
+                        </div>
+                        @if($loop->last)
+                            <a href="#" id="mark-all">
+                                Mark all as read
+                            </a>
+                         @endif
+                    @empty
+                        There are no new notifications
+                    @endforelse
+                @endif
+                  </li>
+                </ul>
+              </li> --}}
           </ul>
 
         </nav>
@@ -333,6 +356,7 @@
     });
   });
   </script>
+
 
   @stack('scripts')
 
