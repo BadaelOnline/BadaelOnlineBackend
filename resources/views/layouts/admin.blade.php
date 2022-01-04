@@ -209,33 +209,43 @@
               </div>
             </li>
              {{-- notification --}}
-            {{-- <li class="nav-item dropdown no-arrow">
+            <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="fa fa-bell"></span>
+                    <i class="fa fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">
+                        @if(count(auth()->user()->unreadNotifications))
+                            <span class="badge badge-warning">{{ count(auth()->user()->unreadNotifications) }}</span>
+                        @endif
+                    </span>
                 </a>
                 <!-- Dropdown - Notification Information -->
-                <ul class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" role="menu">
-                  <li>
-                    @if(auth()->user()->is_admin)
-                    @forelse($notifications as $notification)
-                        <div class="alert alert-success" role="alert">
-                            [{{ $notification->created_at }}] User {{ $notification->data['name'] }} ({{ $notification->data['email'] }}) has just registered.
-                            <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" role="menu">
+                  <span class="dropdown-header">Unread Notifications</span>
+                  @foreach (auth()->user()->unreadNotifications as $notification)
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope"></i> {{ $notification->data['title'] }}
+                        <span class="ml-2 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
+                        <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
                                 Mark as read
-                            </a>
-                        </div>
-                        @if($loop->last)
-                            <a href="#" id="mark-all">
-                                Mark all as read
-                            </a>
-                         @endif
-                    @empty
-                        There are no new notifications
-                    @endforelse
-                @endif
-                  </li>
-                </ul>
-              </li> --}}
+                        </a>
+                    </a>
+                  @endforeach
+
+                  <div class="dropdown-divider"></div>
+                  <span class="dropdown-header">Read Notifications</span>
+                  @forelse(auth()->user()->readNotifications as $notification)
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> {{ $notification->data['description'] }}
+                        <span class="ml-3 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
+                    </a>
+                  @empty
+                  <span class="ml-3 pull-right text-muted text-sm">no notifications read</span>
+                  @endforelse
+
+                  <div class="dropdown-divider"></div>
+                  <a href="#" class="dropdown-item dropdown-footer">Mark all as read</a>
+                </div>
+              </li>
           </ul>
 
         </nav>

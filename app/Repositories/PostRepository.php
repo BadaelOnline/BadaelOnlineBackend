@@ -2,12 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Events\PostEvent;
 use App\Models\Category\Category;
 use App\Models\Post\Post;
 use App\Models\Post\PostTranslation;
 use App\Models\Tag\Tag;
 use App\Models\User\User;
 use App\Notifications\AddPostNotification;
+use App\Notifications\PostNotification;
 use App\Repositories\Interfaces\PostRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -86,50 +88,18 @@ class PostRepository implements PostRepositoryInterface{
                 }
                 $this->postTranslation->insert($transPost_arr);
             }
-            DB::commit();
+             DB::commit();
+
+            $notification=Post::find($unTransPost_id);
+            event(new PostEvent($notification));
 
             return redirect()->route('admin.post')->with('success', 'Data added successfully');
-
-            $user = User::all();
-
-            Notification::send($user , new AddPostNotification($transPost_arr));
 
         } catch (\Exception $ex) {
             // return $ex->getMessage();
             DB::rollback();
             return redirect()->route('admin.post.create')->with('error', 'Data failed to add');
         }
-        // Validator::make($request->all(), [
-        //     "title" => "required",
-        //     "cover" => "required",
-        //     "body" => "required",
-        //     "category" => "required",
-        //     "tags" => "array|required",
-        //     "keyword" => "required",
-        //     "meta_desc" => "required"
-        // ])->validate();
-
-        // $data = $request->all();
-
-        // $data['slug'] = Str::slug(request('title'));
-
-        // $data['category_id'] = request('category');
-
-        // $data['status'] = 'PUBLISH';
-
-        // $data['author_id'] = Auth::user()->id;
-
-        // $cover = $request->file('cover');
-
-        // if($cover){
-        // $cover_path = $cover->store('images/blog', 'public');
-
-        // $data['cover'] = $cover_path;
-        // }
-
-        // $post = Post::create($data);
-
-        // $post->tags()->attach(request('tags'));
 
     }
 
