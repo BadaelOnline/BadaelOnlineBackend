@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Pcategory;
+use App\Models\Pcategory\Pcategory;
 use App\Repositories\Interfaces\PcategoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

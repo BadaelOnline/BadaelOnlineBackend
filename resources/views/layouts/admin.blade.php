@@ -29,6 +29,11 @@
 
   @yield('styles')
 
+  <style>
+    .unread{
+      background-color: #e5e5e5;
+    }
+  </style>
 </head>
 
 <body id="page-top">
@@ -121,6 +126,12 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.post') }}">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Post</span></a>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.partner') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Partners</span></a>
@@ -209,10 +220,10 @@
               </div>
             </li>
              {{-- notification --}}
-            <li class="nav-item dropdown no-arrow">
+            <li class="nav-item dropdown no-arrow notification">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge">
+                    <span class="badge badge-warning navbar-badge" id="count">
                         @if(count(auth()->user()->unreadNotifications))
                             <span class="badge badge-warning">{{ count(auth()->user()->unreadNotifications) }}</span>
                         @endif
@@ -222,12 +233,12 @@
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" role="menu">
                   <span class="dropdown-header">Unread Notifications</span>
                   @foreach (auth()->user()->unreadNotifications as $notification)
-                    <a href="#" class="dropdown-item">
+                    <a href="#" class="dropdown-item {{ $notification->read_at == null ? 'unread' : '' }}" >
                         <i class="fas fa-envelope"></i> {{ $notification->data['title'] }}
                         <span class="ml-2 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
-                        <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+                        {{-- <span href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
                                 Mark as read
-                        </a>
+                        </span> --}}
                     </a>
                   @endforeach
 
@@ -243,7 +254,7 @@
                   @endforelse
 
                   <div class="dropdown-divider"></div>
-                  <a href="#" class="dropdown-item dropdown-footer">Mark all as read</a>
+                  {{-- <a href="#" class="dropdown-item dropdown-footer">Mark all as read</a> --}}
                 </div>
               </li>
           </ul>
@@ -365,6 +376,24 @@
         },
     });
   });
+
+  // notification count
+  var count = $('#count'), c ;
+    c = parseInt(count.html());
+    // count.html(c+1);
+
+    // notification style
+    $('.notification').on('click',function(){
+      setTimeout(() => {
+        count.html(0);
+        $('.unread').each(function(){
+        $(this).removeClass('unread');
+      });
+      }, 3000);
+
+    //   $.get('MarkAllSeen', function(){});
+    });
+
   </script>
 
 

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Page;
+use App\Models\Page\Page;
 use Illuminate\Support\Str;
 use App\Repositories\Interfaces\PageRepositoryInterface;
 use Illuminate\Http\Request;

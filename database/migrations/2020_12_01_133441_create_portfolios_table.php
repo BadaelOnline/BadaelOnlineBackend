@@ -16,14 +16,12 @@ class CreatePortfoliosTable extends Migration
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pcategory_id');
-            $table->string('name');
             $table->string('slug');
             $table->string('cover')->nullable();
             $table->string('mobileImage')->nullable();
-            $table->string('client');
 			 $table->string('link');
             $table->date('date')->nullable();
-            $table->longText('desc');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

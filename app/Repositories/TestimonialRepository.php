@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Testimonial\Testimonial;
 use App\Repositories\Interfaces\TestimonialRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Models\Testimonial;
 
 class TestimonialRepository implements TestimonialRepositoryInterface{
     public function index()

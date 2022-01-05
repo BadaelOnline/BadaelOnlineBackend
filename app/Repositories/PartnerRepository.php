@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Partner;
+use App\Models\Partner\Partner;
 use App\Repositories\Interfaces\PartnerRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

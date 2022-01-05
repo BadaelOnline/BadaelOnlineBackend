@@ -211,4 +211,10 @@ class PostRepository implements PostRepositoryInterface{
         return redirect()->route('admin.post.trash')->with('success', 'Data deleted successfully');
         }
     }
+
+    public function MarkNotification(){
+        foreach(auth()->user()->unreadNotifications as $notification){
+            $notification->markAsRead();
+        }
+    }
 }

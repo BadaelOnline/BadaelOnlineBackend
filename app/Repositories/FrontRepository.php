@@ -2,9 +2,23 @@
 
 namespace App\Repositories;
 
-use App\Models\{About, Category, Faq, General, Link, Page, Partner, Pcategory, Portfolio, Post, Tag, Testimonial, Service, Subscriber};
-use App\Models\Team\{Team,TeamTranslation};
+use App\Models\About\About;
 use App\Models\Banner\Banner;
+use App\Models\Category\Category;
+use App\Models\Faq\Faq;
+use App\Models\General\General;
+use App\Models\Link\Link;
+use App\Models\Page\Page;
+use App\Models\Partner\Partner;
+use App\Models\Pcategory\Pcategory;
+use App\Models\Portfolio\Portfolio;
+use App\Models\Post\Post;
+use App\Models\Service\Service;
+use App\Models\Subscriber;
+use App\Models\Tag\Tag;
+use App\Models\Team\Team;
+use App\Models\Team\TeamTranslation;
+use App\Models\Testimonial\Testimonial;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\GeneralTrait;
 
@@ -34,7 +48,7 @@ class FrontRepository implements FrontRepositoryInterface{
     // private $request;
     use GeneralTrait;
 
-    public function __construct(Tag $tag,Category $category ,Team $team,TeamTranslation $teamTranslation,About $about, Banner $banner, Faq $faq, General $general, Link $link, Page $page, Partner $partner, Pcategory $pcategories, Portfolio $portfolio, Post $post, Testimonial $testimonial, Service $service, Subscriber $subscriber)
+    public function __construct(Tag $tag,Category $category ,Team $team,TeamTranslation $teamTranslation, About $about, Banner $banner, Faq $faq, General $general, Link $link, Page $page, Partner $partner, Pcategory $pcategories, Portfolio $portfolio, Post $post, Testimonial $testimonial, Service $service, Subscriber $subscriber)
     {
         // $this->request = $request;
         $this->team = $team;

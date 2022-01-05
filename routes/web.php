@@ -212,4 +212,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::post('/edit/{id}', 'PermissionController@update')->name('admin.permission.update');
             Route::delete('/destroy/{id}', 'PermissionController@destroy')->name('admin.permission.destroy');
         });
+
+    // Notification Mark All Read
+    Route::get('/MarkAllSeen','PostController@MarkNotification');
 });

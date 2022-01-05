@@ -2,10 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Models\About\About;
+use App\Models\General\General;
+use App\Models\Page\Page;
 use App\Repositories\Interfaces\GeneralRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\{About, General, Page};
 use App\Models\Post\Post;
 use App\Models\Team\Team;
 use App\Models\User\User;
