@@ -13,12 +13,16 @@ class PageScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
-            ->where('tag_translations.local', '=', Config::get('app.locale'))
+        $builder->join('page_translations', 'pages.id', '=', 'page_translations.page_id')
+            ->where('page_translations.local', '=', Config::get('app.locale'))
             ->select([
-                'tags.id','tags.is_active','tags.slug',
-                'tag_translations.name','tag_translations.keyword',
-                'tag_translations.meta_desc','tag_translations.local'
+                'pages.id',
+                'pages.is_active',
+                'pages.slug',
+                
+                'page_translations.title',
+                'page_translations.text',
+                'page_translations.local'
             ]);
     }
 }

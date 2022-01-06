@@ -13,12 +13,14 @@ class PcategoryScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
-            ->where('tag_translations.local', '=', Config::get('app.locale'))
+        $builder->join('pcategory_translations', 'pcategories.id', '=', 'pcategory_translations.pcategory_id')
+            ->where('pcategory_translations.local', '=', Config::get('app.locale'))
             ->select([
-                'tags.id','tags.is_active','tags.slug',
-                'tag_translations.name','tag_translations.keyword',
-                'tag_translations.meta_desc','tag_translations.local'
+                'pcategories.id',
+                'pcategories.is_active',
+
+                'pcategory_translations.name',
+                'pcategory_translations.local'
             ]);
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Permission;
 
-use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
+
 
 class PermissionController extends Controller
 {
@@ -43,6 +45,7 @@ class PermissionController extends Controller
 
         $permission= new Permission();
         $permission->name = $request->name;
+        $permission->slug = Str::slug($request->name);
         $permission->save();
 
         return redirect(route('admin.permission'));

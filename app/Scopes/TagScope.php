@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Facades\Config;
 
 
-class AboutScope implements Scope
+class TagScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {

@@ -13,12 +13,18 @@ class TestimonialScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
-            ->where('tag_translations.local', '=', Config::get('app.locale'))
+        $builder->join('testimonial_translations', 'testimonials.id', '=', 'testimonial_translations.testimonial_id')
+            ->where('testimonial_translations.local', '=', Config::get('app.locale'))
             ->select([
-                'tags.id','tags.is_active','tags.slug',
-                'tag_translations.name','tag_translations.keyword',
-                'tag_translations.meta_desc','tag_translations.local'
+                'testimonials.id',
+                'testimonials.is_active',
+                'testimonials.photo',
+                'testimonials.status',
+
+                'testimonial_translations.name',
+                'testimonial_translations.profession',
+                'testimonial_translations.desc',
+                'testimonial_translations.local'
             ]);
     }
 }

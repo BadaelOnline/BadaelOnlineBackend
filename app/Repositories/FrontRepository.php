@@ -75,24 +75,25 @@ class FrontRepository implements FrontRepositoryInterface{
         $banner = $this->banner->all();
         $general = $this->general->find(1);
         $link = $this->link->orderBy('name','asc')->get();
-        $lpost = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
+        $post = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
         $partner = $this->partner->orderBy('name','asc')->limit(8)->get();
         $pcategories = $this->pcategories->all();
         $portfolio = $this->portfolio->all();
+        $team = $this->team->orderBy('id','asc')->get();
         $service = $this->service->orderBy('title','asc')->get();
-        return $response = $this->returnData(compact('about','banner','general','link','lpost','partner','pcategories','portfolio','service'));
+        return $response = $this->returnData(compact('about','team','banner','general','link','post','partner','pcategories','portfolio','service'));
     }
 
     public function about()
     {
         $about = $this->about->find(1);
         $faq = $this->faq->all();
-        $general = $this->general->find(1);
-        $link = $this->link->orderBy('name','asc')->get();
-        $lpost = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
+        // $general = $this->general->find(1);
+        // $link = $this->link->orderBy('name','asc')->get();
+        // $lpost = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
         $partner = $this->partner->orderBy('name','asc')->get();
-        $team = $this->team->orderBy('id','asc')->get();
-        return $response = $this->returnData(compact('about','faq','general','link','lpost','partner','team'));
+        // $team = $this->team->orderBy('id','asc')->get();
+        return $response = $this->returnData(compact('about','faq','partner'));
 
     }
 
@@ -124,21 +125,21 @@ class FrontRepository implements FrontRepositoryInterface{
 
     public function portfolio()
     {
-        $general = $this->general->find(1);
-        $link = $this->link->orderBy('name','asc')->get();
-        $lpost = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
-        $pcategories = $this->pcategories->all();
+        // $general = $this->general->find(1);
+        // $link = $this->link->orderBy('name','asc')->get();
+        // $lpost = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
+        // $pcategories = $this->pcategories->all();
         $portfolio = $this->portfolio->all();
-        return $response = $this->returnData(compact('general','link','lpost','pcategories','portfolio'));
+        return $response = $this->returnData(compact('portfolio'));
     }
 
     public function portfolioshow($slug)
     {
-        $general = $this->general->find(1);
-        $link = $this->link->orderBy('name','asc')->get();
-        $lpost = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
+        // $general = $this->general->find(1);
+        // $link = $this->link->orderBy('name','asc')->get();
+        // $lpost = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
         $portfolio = $this->portfolio->where('slug', $slug)->firstOrFail();
-        return $response = $this->returnData(compact('general','link','lpost','portfolio'));
+        return $response = $this->returnData(compact('portfolio'));
     }
 
     public function blog()
@@ -146,11 +147,11 @@ class FrontRepository implements FrontRepositoryInterface{
         $categories = $this->category->all();
         $general = $this->general->find(1);
         $link = $this->link->orderBy('name','asc')->get();
-        $lpost = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
+        $post = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
         $posts = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->paginate(3);
         $recent = $this->post->orderBy('id','desc')->limit(5)->get();
         $tags = $this->tag->all();
-        return $response = $this->returnData(compact('categories','general','link','lpost','posts','recent','tags'));
+        return $response = $this->returnData(compact('categories','general','link','post','posts','recent','tags'));
 
     }
 

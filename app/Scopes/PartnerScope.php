@@ -13,12 +13,16 @@ class PartnerScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
-            ->where('tag_translations.local', '=', Config::get('app.locale'))
+        $builder->join('partner_translations', 'partners.id', '=', 'partner_translations.partner_id')
+            ->where('partner_translations.local', '=', Config::get('app.locale'))
             ->select([
-                'tags.id','tags.is_active','tags.slug',
-                'tag_translations.name','tag_translations.keyword',
-                'tag_translations.meta_desc','tag_translations.local'
+                'partners.id',
+                'partners.is_active',
+                'partners.cover',
+                'partners.link',
+
+                'partner_translations.name',
+                'partner_translations.local'
             ]);
     }
 }

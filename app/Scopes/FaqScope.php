@@ -13,12 +13,12 @@ class FaqScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
-            ->where('tag_translations.local', '=', Config::get('app.locale'))
+        $builder->join('faq_translations', 'faqs.id', '=', 'faq_translations.faq_id')
+            ->where('faq_translations.local', '=', Config::get('app.locale'))
             ->select([
-                'tags.id','tags.is_active','tags.slug',
-                'tag_translations.name','tag_translations.keyword',
-                'tag_translations.meta_desc','tag_translations.local'
+                'faqs.id','faqs.is_active',
+                'faq_translations.question','faq_translations.answer',
+                'faq_translations.local'
             ]);
     }
 }

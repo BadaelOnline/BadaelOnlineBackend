@@ -13,12 +13,15 @@ class LinkScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
-            ->where('tag_translations.local', '=', Config::get('app.locale'))
+        $builder->join('link_translations', 'links.id', '=', 'link_translations.link_id')
+            ->where('link_translations.local', '=', Config::get('app.locale'))
             ->select([
-                'tags.id','tags.is_active','tags.slug',
-                'tag_translations.name','tag_translations.keyword',
-                'tag_translations.meta_desc','tag_translations.local'
+                'links.id',
+                'links.is_active',
+                'links.link',
+                
+                'link_translations.name',
+                'link_translations.local'
             ]);
     }
 }

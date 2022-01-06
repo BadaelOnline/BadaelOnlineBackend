@@ -13,12 +13,18 @@ class ServiceScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
-            ->where('tag_translations.local', '=', Config::get('app.locale'))
+        $builder->join('service_translations', 'services.id', '=', 'service_translations.service_id')
+            ->where('service_translations.local', '=', Config::get('app.locale'))
             ->select([
-                'tags.id','tags.is_active','tags.slug',
-                'tag_translations.name','tag_translations.keyword',
-                'tag_translations.meta_desc','tag_translations.local'
+                'services.id',
+                'services.is_active',
+                'services.slug',
+                'services.icon',
+
+                'service_translations.title',
+                'service_translations.quote',
+                'service_translations.desc',
+                'service_translations.local'
             ]);
     }
 }

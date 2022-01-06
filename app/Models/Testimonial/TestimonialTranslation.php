@@ -16,6 +16,7 @@ class TestimonialTranslation extends Model
         'profession',
         'desc',
         'local'];
+        
     protected $hidden=['testimonial_id','local'];
 
     public function testimonial()

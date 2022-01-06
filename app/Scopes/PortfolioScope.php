@@ -13,12 +13,21 @@ class PortfolioScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
-            ->where('tag_translations.local', '=', Config::get('app.locale'))
+        $builder->join('portfolio_translations', 'portfolios.id', '=', 'portfolio_translations.portfolio_id')
+            ->where('portfolio_translations.local', '=', Config::get('app.locale'))
             ->select([
-                'tags.id','tags.is_active','tags.slug',
-                'tag_translations.name','tag_translations.keyword',
-                'tag_translations.meta_desc','tag_translations.local'
+                'portfolios.id',
+                'portfolios.is_active',
+                'portfolios.slug',
+                'portfolios.cover',
+                'portfolios.mobileImage',
+                'portfolios.link',
+                'portfolios.date',
+
+                'portfolio_translations.name',
+                'portfolio_translations.client',
+                'portfolio_translations.desc',
+                'portfolio_translations.local'
             ]);
     }
 }
