@@ -17,6 +17,7 @@ class PortfolioScope implements Scope
             ->where('portfolio_translations.local', '=', Config::get('app.locale'))
             ->select([
                 'portfolios.id',
+                'portfolios.pcategory_id',
                 'portfolios.is_active',
                 'portfolios.slug',
                 'portfolios.cover',

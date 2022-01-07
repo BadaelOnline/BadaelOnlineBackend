@@ -72,6 +72,25 @@
 
         <div class="form-group ml-5">
 
+            <label for="permissions" class="col-sm-2 col-form-label">Assign Role</label>
+
+            <div class="col-sm-9">
+
+                <select name='permissions[]' class="form-control {{$errors->first('permissions') ? "is-invalid" : "" }} select2" id="permissions" multiple>
+                    @foreach ($permissions as $permission)
+                        <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback">
+                    {{ $errors->first('permissions') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- <div class="form-group ml-5">
+
             <label for="role" class="col-sm-2 col-form-label">Assign Role</label>
 
             @foreach ($permissions as $permission)
@@ -88,11 +107,7 @@
 
             @endforeach
 
-            {{-- <select name="role" id="" class="form-control">
-                <option value=""></option>
-            </select> --}}
-
-        </div>
+        </div> --}}
 
         <div class="form-group ml-5">
 

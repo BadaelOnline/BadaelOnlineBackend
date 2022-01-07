@@ -63,9 +63,14 @@ class PostRepository implements PostRepositoryInterface{
                 'slug' => $request->slug = 'title',
                 'cover' => $request['cover'],
                 'is_active' => $request->is_active = 1,
-                'cover' => $request->file('cover'),
                 'status' => 'PUBLISH'
             ]);
+
+            // $cover = $request->file('cover');
+            // if($cover){
+            // $cover_path = $cover->store('images/blog', 'public');
+            // $cover = $cover_path;
+            // }
 
             $cover = $request->file('cover');
             if($cover){

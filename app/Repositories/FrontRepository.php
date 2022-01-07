@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Scopes\AboutScope;
 use App\Models\About\About;
 use App\Models\Banner\Banner;
 use App\Models\Category\Category;
@@ -71,17 +72,16 @@ class FrontRepository implements FrontRepositoryInterface{
     }
     public function home()
     {
-        $about = $this->about->find(1);
+        $about = $this->about::withoutGlobalScope(AboutScope::class)->about()->find(1);
         $banner = $this->banner->all();
         $general = $this->general->find(1);
         $link = $this->link->orderBy('name','asc')->get();
         $post = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->limit(5)->get();
-        $partner = $this->partner->orderBy('name','asc')->limit(8)->get();
         $pcategories = $this->pcategories->all();
         $portfolio = $this->portfolio->all();
         $team = $this->team->orderBy('id','asc')->get();
         $service = $this->service->orderBy('title','asc')->get();
-        return $response = $this->returnData(compact('about','team','banner','general','link','post','partner','pcategories','portfolio','service'));
+        return $response = $this->returnData(compact('about','team','banner','general','link','post','pcategories','portfolio','service'));
     }
 
     public function about()

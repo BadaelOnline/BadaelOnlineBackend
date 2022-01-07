@@ -19,6 +19,7 @@ class Portfolio extends Model
     ];
     protected $fillable = [
         'slug',
+        'pcategory_id',
         'cover',
         'mobileImage',
         'link',

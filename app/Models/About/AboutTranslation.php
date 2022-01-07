@@ -10,7 +10,7 @@ class AboutTranslation extends Model
     use HasFactory;
     protected $table='about_translations';
     protected $fillable=['id','about_id','title','subject','desc','local'];
-    protected $hidden=['about_id','local'];
+    protected $hidden=[];
 
     public function about()
     {

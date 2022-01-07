@@ -59,7 +59,22 @@
           <span>Dashboard</span></a>
       </li>
 
+      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Managment</span>
+        </a>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{ route('admin.user') }}">Admin</a>
+            <a class="collapse-item" href="{{ route('admin.role') }}">Role</a>
+            <a class="collapse-item" href="{{ route('admin.permission') }}">Permission</a>
+          </div>
+        </div>
+      </li>
+
+      {{-- <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.user') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Admin</span></a>
@@ -75,7 +90,7 @@
         <a class="nav-link" href="{{ route('admin.permission') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Permissions</span></a>
-      </li>
+      </li> --}}
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
