@@ -2,76 +2,109 @@
 
 namespace App\Repositories;
 
+use App\Events\PostEvent;
 use App\Models\Category\Category;
 use App\Models\Post\Post;
+use App\Models\Post\PostTranslation;
 use App\Models\Tag\Tag;
+use App\Models\User\User;
+use App\Notifications\AddPostNotification;
+use App\Notifications\PostNotification;
 use App\Repositories\Interfaces\PostRepositoryInterface;
 use Illuminate\Http\Request;
-
-
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class PostRepository implements PostRepositoryInterface{
+
+    private $post;
+    private $postTranslation;
+    private $category;
+    private $tag;
+    public function __construct(Post $post , PostTranslation $postTranslation , Category $category , Tag $tag)
+    {
+        $this->post = $post;
+        $this->postTranslation = $postTranslation;
+        $this->category = $category;
+        $this->tag = $tag;
+    }
+
     public function index()
     {
-        $post = Post::orderBy('id','desc')->get();
+        $post = $this->post::orderBy('id','desc')->get();
 
         return view('admin.post.index',compact('post'));
     }
 
     public function create()
     {
-        $categories = Category::get();
-        $tags = Tag::get();
+
+        $categories = $this->category::get();
+        $tags = $this->tag::get();
+
         return view('admin.post.create',compact('categories','tags'));
     }
 
     public function store(Request $request)
     {
-        Validator::make($request->all(), [
-            "title" => "required",
-            "cover" => "required",
-            "body" => "required",
-            "category" => "required",
-            "tags" => "array|required",
-            "keyword" => "required",
-            "meta_desc" => "required"
-        ])->validate();
 
-        $data = $request->all();
+        try {
+            // /** transformation to collection */
+            $allposts = collect($request->post)->all();
 
-        $data['slug'] = Str::slug(request('title'));
+            $request->is_active ? $is_active = true : $is_active = false;
 
-        $data['category_id'] = request('category');
+            DB::beginTransaction();
+            //create the default language's post
+            $unTransPost_id = $this->post->insertGetId([
+                'category_id' => $request['category'],
+                'author_id' => Auth::user()->id,
+                'slug' => $request->slug = 'title',
+                'cover' => $request['cover'],
+                'is_active' => $request->is_active = 1,
+                'cover' => $request->file('cover'),
+                'status' => 'PUBLISH'
+            ]);
 
-        $data['status'] = 'PUBLISH';
+            $cover = $request->file('cover');
+            if($cover){
+            $cover_path = $cover->store('images/blog', 'public');
+            $cover = $cover_path;
+            }
 
-        $data['author_id'] = Auth::user()->id;
+            //check the Post and request
+            if (isset($allposts) && count($allposts)) {
+                //insert other traslations for Posts
+                foreach ($allposts as $allpost) {
+                    $transPost_arr[] = [
+                        'title' => $allpost ['title'],
+                        'local' => $allpost['local'],
+                        'body' => $allpost['body'],
+                        'keyword' => $allpost['keyword'],
+                        'meta_desc' => $allpost['meta_desc'],
+                        'post_id' => $unTransPost_id
+                    ];
+                }
+                $this->postTranslation->insert($transPost_arr);
+            }
+             DB::commit();
 
-        $cover = $request->file('cover');
+            $notification=Post::find($unTransPost_id);
+            event(new PostEvent($notification));
 
-        if($cover){
-        $cover_path = $cover->store('images/blog', 'public');
+            return redirect()->route('admin.post')->with('success', 'Data added successfully');
 
-        $data['cover'] = $cover_path;
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            DB::rollback();
+            return redirect()->route('admin.post.create')->with('error', 'Data failed to add');
         }
 
-        $post = Post::create($data);
 
-        $post->tags()->attach(request('tags'));
-
-        if ($post) {
-
-                return redirect()->route('admin.post')->with('success', 'Post added successfully');
-
-               } else {
-
-                return redirect()->route('admin.post.create')->with('error', 'Post failed to add');
-
-               }
     }
 
     public function show($id)

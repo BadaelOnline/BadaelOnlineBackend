@@ -196,8 +196,9 @@
           <ul class="navbar-nav ml-auto">
             {{-- dropdown language --}}
               <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>
-              <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a>
-            {{--  --}}
+
+
+
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
@@ -214,7 +215,44 @@
                 </a>
               </div>
             </li>
+             {{-- notification --}}
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">
+                        @if(count(auth()->user()->unreadNotifications))
+                            <span class="badge badge-warning">{{ count(auth()->user()->unreadNotifications) }}</span>
+                        @endif
+                    </span>
+                </a>
+                <!-- Dropdown - Notification Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" role="menu">
+                  <span class="dropdown-header">Unread Notifications</span>
+                  @foreach (auth()->user()->unreadNotifications as $notification)
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope"></i> {{ $notification->data['title'] }}
+                        <span class="ml-2 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
+                        <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+                                Mark as read
+                        </a>
+                    </a>
+                  @endforeach
 
+                  <div class="dropdown-divider"></div>
+                  <span class="dropdown-header">Read Notifications</span>
+                  @forelse(auth()->user()->readNotifications as $notification)
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> {{ $notification->data['description'] }}
+                        <span class="ml-3 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
+                    </a>
+                  @empty
+                  <span class="ml-3 pull-right text-muted text-sm">no notifications read</span>
+                  @endforelse
+
+                  <div class="dropdown-divider"></div>
+                  <a href="#" class="dropdown-item dropdown-footer">Mark all as read</a>
+                </div>
+              </li>
           </ul>
 
         </nav>
@@ -335,6 +373,7 @@
     });
   });
   </script>
+
 
   @stack('scripts')
 

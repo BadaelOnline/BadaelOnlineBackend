@@ -55,41 +55,92 @@
         <div class="form-group">
 
             <div class="picture-container">
-    
+
                 <div class="picture">
-    
+
                     <img src="" class="picture-src" id="wizardPicturePreview" height="200px" width="400px" title=""/>
-    
+
                     <input type="file" id="wizard-picture" name="cover" class="form-control {{$errors->first('cover') ? "is-invalid" : "" }} ">
-    
+
                     <div class="invalid-feedback">
-                        {{ $errors->first('logo') }}    
-                    </div>  
-    
+                        {{ $errors->first('logo') }}
+                    </div>
+
                 </div>
-    
+
                 <h6>Pilih Cover</h6>
-    
+
             </div>
-    
+
         </div>
 
+        @foreach(config('app.languages') as $index => $lang)
 
         <div class="form-group ml-5">
 
-            <label for="title" class="col-sm-2 col-form-label">Title</label>
+            <label for="title" class="col-sm-2 col-form-label">Title [ {{ strtoupper ($lang)}} ]</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='title' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
-
+                <input type="text" name='post[{{$index}}][title]' class="form-control {{$errors->first('post.$index.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
+                <input type="text" name='post[{{$index}}][local]' value='{{$lang}}' hidden>
                 <div class="invalid-feedback">
-                    {{ $errors->first('title') }}    
-                </div>   
+                    {{ $errors->first('post.$index.title') }}
+                </div>
 
             </div>
 
         </div>
+
+        <div class="form-group ml-5">
+
+            <label for="body" class="col-sm-2 col-form-label">Desc [ {{ strtoupper ($lang)}} ]</label>
+
+            <div class="col-sm-9">
+
+                <textarea name='post[{{$index}}][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
+                <input type="text" name='post[{{$index}}][local]' value='{{$lang}}' hidden>
+                <div class="invalid-feedback">
+                    {{ $errors->first('body') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group ml-5">
+
+            <label for="keyword" class="col-sm-2 col-form-label">Keyword [ {{ strtoupper ($lang)}} ]</label>
+
+            <div class="col-sm-9">
+
+                <input type="text" name='post[{{$index}}][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword" placeholder="Keyword">
+                <input type="text" name='post[{{$index}}][local]' value='{{$lang}}' hidden>
+                <div class="invalid-feedback">
+                    {{ $errors->first('keyword') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group ml-5">
+
+            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc [ {{ strtoupper ($lang)}} ]</label>
+
+            <div class="col-sm-9">
+
+                <input type="text" name='post[{{$index}}][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc" placeholder="Meta Description">
+                <input type="text" name='post[{{$index}}][local]' value='{{$lang}}' hidden>
+                <div class="invalid-feedback">
+                    {{ $errors->first('meta_desc') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        @endforeach
 
         <div class="form-group ml-5">
 
@@ -104,8 +155,8 @@
                     @endforeach
                 </select>
                 <div class="invalid-feedback">
-                    {{ $errors->first('category') }}    
-                </div>   
+                    {{ $errors->first('category') }}
+                </div>
 
             </div>
 
@@ -123,8 +174,8 @@
                     @endforeach
                 </select>
                 <div class="invalid-feedback">
-                    {{ $errors->first('tags') }}    
-                </div>   
+                    {{ $errors->first('tags') }}
+                </div>
 
             </div>
 
@@ -132,62 +183,15 @@
 
         <div class="form-group ml-5">
 
-            <label for="body" class="col-sm-2 col-form-label">Desc</label>
-
-            <div class="col-sm-9">
-
-                <textarea name="body" class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
-                <div class="invalid-feedback">
-                    {{ $errors->first('body') }}    
-                </div>   
-
-            </div>
-
-        </div>
-
-        <div class="form-group ml-5">
-
-            <label for="keyword" class="col-sm-2 col-form-label">Keyword</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='keyword' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword" placeholder="Keyword">
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('keyword') }}    
-                </div>   
-
-            </div>
-
-        </div>
-
-        <div class="form-group ml-5">
-
-            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='meta_desc' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc" placeholder="Meta Description">
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('meta_desc') }}    
-                </div>   
-
-            </div>
-
-        </div>
-   
-        <div class="form-group ml-5">
-   
             <div class="col-sm-3">
-   
+
                 <button type="submit" class="btn btn-primary">Create</button>
-   
+
             </div>
-   
+
         </div>
 
-    </div>      
+    </div>
 
   </form>
 @endsection
