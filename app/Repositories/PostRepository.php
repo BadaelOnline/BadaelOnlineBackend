@@ -42,13 +42,16 @@ class PostRepository implements PostRepositoryInterface{
 
     public function create()
     {
+
         $categories = $this->category::get();
         $tags = $this->tag::get();
+
         return view('admin.post.create',compact('categories','tags'));
     }
 
     public function store(Request $request)
     {
+
         try {
             // /** transformation to collection */
             $allposts = collect($request->post)->all();
@@ -100,6 +103,7 @@ class PostRepository implements PostRepositoryInterface{
             DB::rollback();
             return redirect()->route('admin.post.create')->with('error', 'Data failed to add');
         }
+
 
     }
 

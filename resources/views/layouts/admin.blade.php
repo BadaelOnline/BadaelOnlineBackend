@@ -121,6 +121,12 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.post') }}">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Post</span></a>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.partner') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Partners</span></a>
@@ -190,7 +196,8 @@
           <ul class="navbar-nav ml-auto">
             {{-- dropdown language --}}
               <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>
-              <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a>
+
+
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
