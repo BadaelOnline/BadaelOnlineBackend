@@ -73,16 +73,19 @@
 
     </div>   
 
+    @foreach(config('app.languages') as $index => $lang)
+    
     <div class="form-group ml-5">
 
-        <label for="name" class="col-sm-2 col-form-label">Name</label>
+        <label for="name" class="col-sm-2 col-form-label">Name  {{$lang}}</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='name' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $team->name}}" id="name" placeholder="Example: Susi Similikiti">
+            <input type="text" name='team[{{$index}}][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $team->name}}" id="name" placeholder="Example: Susi Similikiti">
+            <input type="text" name='team[{{$index}}][local]' value='{{$lang}}' hidden>
 
             <div class="invalid-feedback">
-                {{ $errors->first('name') }}    
+                {{ $errors->first('team.$index.name') }}    
             </div>   
 
         </div>
@@ -91,19 +94,36 @@
 
     <div class="form-group ml-5">
 
-        <label for="position" class="col-sm-2 col-form-label">Position</label>
+        <label for="position" class="col-sm-2 col-form-label">Position  {{$lang}}</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='position' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position') ? old('position') : $team->position}}" id="position" placeholder="Example: Product Manager">
-
+            <input type="text" name='team[{{$index}}][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position') ? old('position') : $team->position}}" id="position" placeholder="Example: Product Manager">
+            <input type="text" name='team[{{$index}}][local]' value='{{$lang}}' hidden>
             <div class="invalid-feedback">
-                {{ $errors->first('position') }}    
+                {{ $errors->first('team.$index.position') }}
+            </div>  
+
+        </div>
+
+    </div>
+
+    <div class="form-group ml-5">
+
+        <label for="qoute" class="col-sm-2 col-form-label">Qoute {{$lang}}</label>
+
+        <div class="col-sm-7">
+
+            <input type="text" name='team[{{$index}}][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute') ? old('linkedin') : $team->qoute}}" id="qoute" placeholder="Qoute">
+            <input type="text" name='team[{{$index}}][local]' value='{{$lang}}' hidden>
+            <div class="invalid-feedback">
+                {{ $errors->first('team.$index.qoute') }}
             </div>   
 
         </div>
 
     </div>
+    @endforeach
 
     <div class="form-group ml-5">
 
@@ -163,22 +183,6 @@
 
             <div class="invalid-feedback">
                 {{ $errors->first('linkedin') }}    
-            </div>   
-
-        </div>
-
-    </div>
-
-    <div class="form-group ml-5">
-
-        <label for="qoute" class="col-sm-2 col-form-label">Qoute</label>
-
-        <div class="col-sm-7">
-
-            <input type="text" name='qoute' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute') ? old('linkedin') : $team->qoute}}" id="qoute" placeholder="Qoute">
-
-            <div class="invalid-feedback">
-                {{ $errors->first('qoute') }}    
             </div>   
 
         </div>

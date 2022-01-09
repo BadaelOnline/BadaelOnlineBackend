@@ -36,10 +36,10 @@
                   <tr>
                     <td>{{ ++$no }}</td>
                     <td>
-                        <img src="{{ asset('storage/'.$banner->cover) }}" alt="" height="200px" width="250px">
+                        <img src="{{ asset('storage/'.$banner->cover) }}" alt="" height="50px" width="50px">
                     </td>
                     <td>{{ $banner->title }}</td>
-                    <td>{{Str::limit( strip_tags( $banner->desc ), 100 )}}</td>
+                    <td>{{Str::limit( strip_tags( $banner->desc ), 50 )}}</td>
                     <td>{{ $banner->link }}</td>
                     <td>
                         <a href="{{route('admin.banner.edit', [$banner->id])}}" class="btn btn-info btn-sm"> Edit </a>

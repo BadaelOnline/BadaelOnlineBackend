@@ -7,7 +7,8 @@ use App\Repositories\Interfaces\TeamRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Team\Team;
 use App\Models\Team\TeamTranslation;
-use App\Models\User;
+use App\Models\User\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
 
@@ -21,11 +22,6 @@ class TeamRepository implements TeamRepositoryInterface{
         $this->user = $user;
         $this->team = $team;
         $this->teamTranslation = $teamTranslation;
-
-    //     $this->middleware('can:team-list')->only('index','show');
-    //     $this->middleware('can:team-create')->only('create','store');
-    //     $this->middleware('can:team-update')->only('edit','update');
-    //     $this->middleware('can:team-delete')->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -35,9 +31,8 @@ class TeamRepository implements TeamRepositoryInterface{
     public function index()
     {
         Gate::authorize('team-list',$this->user);
-        $team = $this->team::orderBy('id','desc')->get();
 
-        return view('admin.team.index',compact('team'));
+        return $this->team::orderBy('id','desc')->get();
     }
 
     /**
@@ -48,7 +43,6 @@ class TeamRepository implements TeamRepositoryInterface{
     public function create()
     {
         Gate::authorize('team-create',$this->user);
-        return view('admin.team.create');
     }
 
     /**
@@ -57,35 +51,55 @@ class TeamRepository implements TeamRepositoryInterface{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TeamRequest $request)
+    public function store(Request $request)
     {
-        Gate::authorize('team-create',$this->user);
-        $team = new Team();
-        $team->name = $request->name;
-        $team->position = $request->position;
-        $team->twitter = $request->twitter;
-        $team->facebook = $request->facebook;
-        $team->instagram = $request->instagram;
-        $team->linkedin = $request->linkedin;
-        $team->qoute = $request->qoute;
+        try {
+            Gate::authorize('team-create',$this->user);
 
-        $photo = $request->file('photo');
+            /** transformation to collection */
+            $allteams = collect($request->team)->all();
 
-        if($photo){
-        $cover_path = $photo->store('images/team', 'public');
+            $request->is_active ? $is_active = true : $is_active = false;
 
-        $team->photo = $cover_path;
-        }
+            $photo = $request->file('photo');
+            if($photo){
+            $cover_path = $photo->store('images/team', 'public');
+            $photo = $cover_path;
+            }
 
-        if ( $team->save()) {
+            DB::beginTransaction();
+            // //create the default language's team
+            $unTransTeam_id = $this->team->insertGetId([
+                'facebook' => $request['facebook'],
+                'twitter' => $request['twitter'],
+                'instagram' => $request['instagram'],
+                'linkedin' => $request['linkedin'],
+                'is_active' => $request->is_active = 1,
+                'photo' => $request->file('photo'),
+            ]);
+
+            //check the Team and request
+            if (isset($allteams) && count($allteams)) {
+                //insert other traslations for Teams
+                foreach ($allteams as $allteam) {
+                    $transTeam_arr[] = [
+                        'name' => $allteam ['name'],
+                        'local' => $allteam['local'],
+                        'position' => $allteam['position'],
+                        'qoute' => $allteam['qoute'],
+                        'team_id' => $unTransTeam_id
+                    ];
+                }
+                $this->teamTranslation->insert($transTeam_arr);
+            }
+            DB::commit();
 
             return redirect()->route('admin.team')->with('success', 'Data added successfully');
 
-           } else {
-
+        } catch (\Exception $ex) {
+            DB::rollback();
             return redirect()->route('admin.team.create')->with('error', 'Data failed to add');
-
-           }
+        }
     }
 
     /**
@@ -108,9 +122,7 @@ class TeamRepository implements TeamRepositoryInterface{
     public function edit($id)
     {
         Gate::authorize('team-update',$this->user);
-        $team = $this->team::findOrFail($id);
-
-        return view('admin.team.edit',compact('team'));
+        return $this->team::findOrFail($id);
     }
 
     /**
@@ -120,39 +132,51 @@ class TeamRepository implements TeamRepositoryInterface{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TeamRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        Gate::authorize('team-update',$this->user);
-        $team = $this->team::findOrFail($id);
-        $team->name = $request->name;
-        $team->position = $request->position;
-        $team->twitter = $request->twitter;
-        $team->facebook = $request->facebook;
-        $team->instagram = $request->instagram;
-        $team->linkedin = $request->linkedin;
-        $team->qoute = $request->qoute;
+        try{
+            Gate::authorize('team-update',$this->user);
 
-        $new_photo = $request->file('photo');
+            $team = $this->team::findOrFail($id);
 
-        if($new_photo){
-        if($team->photo && file_exists(storage_path('app/public/' . $team->photo))){
-            Storage::delete('public/'. $team->photo);
-        }
+            $photo = $request->file('photo');
+            if($photo){
+            $cover_path = $photo->store('images/team', 'public');
+            $photo = $cover_path;
+            }
 
-        $new_cover_path = $new_photo->store('images/team', 'public');
+            DB::beginTransaction();
+            // //create the default language's team
+            $unTransTeam_id = $this->team->where('teams.id', $id)
+                ->update([
+                'facebook' => $request['facebook'],
+                'twitter' => $request['twitter'],
+                'instagram' => $request['instagram'],
+                'linkedin' => $request['linkedin'],
+                'is_active' => $request->is_active = 1,
+                'photo' => $request->file('photo'),
+            ]);
 
-        $team->photo = $new_cover_path;
-        }
-
-        if ( $team->save()) {
-
+            $allteams = array_values($request->team);
+                //insert other traslations for Teams
+                foreach ($allteams as $allteam) {
+                    $this->teamTranslation->where('team_id', $id)
+                    ->where('local', $allteam['local'])
+                    ->update([
+                        'name' => $allteam ['name'],
+                        'local' => $allteam['local'],
+                        'position' => $allteam['position'],
+                        'qoute' => $allteam['qoute'],
+                        'team_id' => $unTransTeam_id
+                    ]);
+                }
+            DB::commit();
             return redirect()->route('admin.team')->with('success', 'Data updated successfully');
-
-           } else {
-
+        }catch(\Exception $ex){
+            DB::rollback();
             return redirect()->route('admin.team.edit')->with('error', 'Data failed to update');
+        }
 
-           }
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Team;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Team\TeamRequest;
-use App\Models\User;
+use App\Models\User\User;
 use App\Service\Team\TeamService;
 use Illuminate\Http\Request;
 
@@ -24,7 +24,8 @@ class TeamController extends Controller
 
     public function index()
     {
-        return $this->teamService->index();
+        $team = $this->teamService->index();
+        return view('admin.team.index',compact('team'));
     }
      /**
      * Show the form for creating a new resource.
@@ -32,7 +33,8 @@ class TeamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        return $this->teamService->create();
+        $team = $this->teamService->create();
+        return view('admin.team.create',compact('team'));
     }
 
     /**
@@ -41,7 +43,7 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TeamRequest $request){
+    public function store(Request $request){
         return $this->teamService->store($request);
     }
 
@@ -62,7 +64,8 @@ class TeamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-        return $this->teamService->edit($id);
+        $team = $this->teamService->edit($id);
+        return view('admin.team.edit',compact('team'));
     }
     /**
      * Update the specified resource in storage.
@@ -71,7 +74,7 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TeamRequest $request, $id){
+    public function update(Request $request, $id){
         return $this->teamService->update($request, $id);
     }
 
