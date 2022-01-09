@@ -67,27 +67,29 @@
 
         </div>
 
-      </div>   
+      </div>
+
+      @foreach(config('app.languages') as $index => $lang)
 
       <div class="form-group ml-5">
-        <label for="title" class="col-sm-2 col-form-label">Title</label>
+        <label for="title" class="col-sm-2 col-form-label">Title [{{$lang}}]</label>
         <div class="col-sm-7">
-            <input type="text" name='title' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $banner->title}}" id="title" placeholder="Title">
+            <input type="text" name='banner[{{$index}}][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $banner->title}}" id="title" placeholder="Title">
             <div class="invalid-feedback">
-                {{ $errors->first('title') }}    
-            </div>   
+                {{ $errors->first('title') }}
+            </div>
         </div>
     </div>
 
     <div class="form-group ml-5">
-        <label for="desc" class="col-sm-2 col-form-label">Desc</label>
+        <label for="desc" class="col-sm-2 col-form-label">Desc [{{$lang}}]</label>
         <div class="col-sm-7">
-          <textarea name="desc" id="desc" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $banner->desc}}</textarea>
+          <textarea name="banner[{{$index}}][desc]" id="desc" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $banner->desc}}</textarea>
           <div class="invalid-feedback">
-            {{ $errors->first('desc') }}    
-        </div> 
+            {{ $errors->first('desc') }}
         </div>
-      
+        </div>
+
     </div>
 
     <div class="form-group ml-5">
@@ -95,8 +97,8 @@
       <div class="col-sm-7">
         <input type="text" name='link' class="form-control {{$errors->first('link') ? "is-invalid" : "" }} " value="{{old('link') ? old('link') : $banner->link}}" id="link" placeholder="Link">
         <div class="invalid-feedback">
-          {{ $errors->first('link') }}    
-      </div> 
+          {{ $errors->first('link') }}
+      </div>
       </div>
     </div>
 
@@ -125,5 +127,5 @@ function readURL(input) {
   }
 }
 </script>
-  
+
 @endpush

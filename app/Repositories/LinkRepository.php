@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Link;
+use App\Models\Link\Link;
 use App\Repositories\Interfaces\LinkRepositoryInterface;
 use Illuminate\Http\Request;
 

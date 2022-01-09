@@ -29,6 +29,11 @@
 
   @yield('styles')
 
+  <style>
+    .unread{
+      background-color: #e5e5e5;
+    }
+  </style>
 </head>
 
 <body id="page-top">
@@ -54,23 +59,36 @@
           <span>Dashboard</span></a>
       </li>
 
+      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Managment</span>
+        </a>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{{ route('admin.user') }}">Admin</a>
+            <a class="collapse-item" href="{{ route('admin.role') }}">Role</a>
+            <a class="collapse-item" href="{{ route('admin.permission') }}">Permission</a>
+          </div>
+        </div>
+      </li>
+
+      {{-- <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.user') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Admin</span></a>
       </li>
-
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.role') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Roles</span></a>
       </li>
-
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.permission') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Permissions</span></a>
-      </li>
+      </li> --}}
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -118,12 +136,6 @@
         <a class="nav-link" href="{{ route('admin.page') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Pages</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.post') }}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Post</span></a>
       </li>
 
       <li class="nav-item">
@@ -196,8 +208,7 @@
           <ul class="navbar-nav ml-auto">
             {{-- dropdown language --}}
               <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>
-
-
+              <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a>
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -216,10 +227,10 @@
               </div>
             </li>
              {{-- notification --}}
-            <li class="nav-item dropdown no-arrow">
+            <li class="nav-item dropdown no-arrow notification">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge">
+                    <span class="badge badge-warning navbar-badge" id="count">
                         @if(count(auth()->user()->unreadNotifications))
                             <span class="badge badge-warning">{{ count(auth()->user()->unreadNotifications) }}</span>
                         @endif
@@ -229,12 +240,12 @@
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" role="menu">
                   <span class="dropdown-header">Unread Notifications</span>
                   @foreach (auth()->user()->unreadNotifications as $notification)
-                    <a href="#" class="dropdown-item">
+                    <a href="#" class="dropdown-item {{ $notification->read_at == null ? 'unread' : '' }}" >
                         <i class="fas fa-envelope"></i> {{ $notification->data['title'] }}
                         <span class="ml-2 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
-                        <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+                        {{-- <span href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
                                 Mark as read
-                        </a>
+                        </span> --}}
                     </a>
                   @endforeach
 
@@ -250,7 +261,7 @@
                   @endforelse
 
                   <div class="dropdown-divider"></div>
-                  <a href="#" class="dropdown-item dropdown-footer">Mark all as read</a>
+                  {{-- <a href="#" class="dropdown-item dropdown-footer">Mark all as read</a> --}}
                 </div>
               </li>
           </ul>
@@ -372,6 +383,20 @@
         },
     });
   });
+  // notification count
+  var count = $('#count'), c ;
+    c = parseInt(count.html());
+    // count.html(c+1);
+    // notification style
+    $('.notification').on('click',function(){
+      setTimeout(() => {
+        count.html(0);
+        $('.unread').each(function(){
+        $(this).removeClass('unread');
+      });
+      }, 3000);
+    //   $.get('MarkAllSeen', function(){});
+    });
   </script>
 
 

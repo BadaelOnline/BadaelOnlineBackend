@@ -6,123 +6,150 @@ use App\Models\Banner\Banner;
 use App\Models\Banner\BannerTranslation;
 use App\Repositories\Interfaces\BannerRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class BannerRepository implements BannerRepositoryInterface{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $banner;
+    private $bannerTranslation;
+    public function __construct(Banner $banner, BannerTranslation $bannerTranslation)
+    {
+        $this->banner = $banner;
+        $this->bannerTranslation = $bannerTranslation;
+    }
+
     public function index()
     {
-        $banner = Banner::all();
-        return view ('admin.banner.index', [
-            'banner' => $banner
-        ]);
+        return Banner::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view ('admin.banner.create');
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $banner = new Banner();
-        $banner->title  = $request->title;
-        $banner->link  = $request->link;
-        $banner->desc   = $request->desc;
+        try {
+            /** transformation to collection */
+            $allbanners = collect($request->banner)->all();
 
-        $cover = $request->file('cover');
-        if($cover){
-        $cover_path = $cover->store('images/banner', 'public');
-        $banner->cover = $cover_path;
-        }
+            $request->is_active ? $is_active = true : $is_active = false;
 
-        if ($banner->save()) {
+            $cover = $request->file('cover');
+            if($cover){
+            $cover_path = $cover->store('images/banner', 'public');
+            $cover = $cover_path;
+            }
+
+            DB::beginTransaction();
+            // //create the default language's banner
+            $unTransBanner_id = $this->banner->insertGetId([
+                'link' => $request['link'],
+                'is_active' => $request->is_active = 1,
+                'cover' => $request['cover'],
+            ]);
+
+            //check the Banner and request
+            if (isset($allbanners) && count($allbanners)) {
+                //insert other traslations for Banners
+                foreach ($allbanners as $allbanner) {
+                    $transBanner_arr[] = [
+                        'title' => $allbanner ['title'],
+                        'local' => $allbanner['local'],
+                        'desc' => $allbanner['desc'],
+                        'banner_id' => $unTransBanner_id
+                    ];
+                }
+                $this->bannerTranslation->insert($transBanner_arr);
+            }
+            DB::commit();
+
             return redirect()->route('admin.banner')->with('success', 'Data added successfully');
-           } else {
-            return redirect()->route('admin.banner.create')->with('error', 'Data failed to add');
 
-           }
+        } catch (\Exception $ex) {
+            DB::rollback();
+            return $ex->getMessage();
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $banner = Banner::findOrFail($id);
-        return view ('admin.banner.edit', [
-            'banner' => $banner
-        ]);
+        return Banner::findOrFail($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $banner = Banner::findOrFail($id);
-        $banner->title  = $request->title;
-        $banner->link  = $request->link;
-        $banner->desc   = $request->desc;
+        try{
+            $banner = $this->banner::findOrFail($id);
+            
+            $new_cover = $request->file('cover');
+            if($new_cover){
+                if($banner->cover && file_exists(storage_path('app/public/' . $banner->cover))){
+                    Storage::delete('public/'. $banner->cover);
+                }
 
-        $new_cover = $request->file('cover');
-        if($new_cover){
-        if($banner->cover && file_exists(storage_path('app/public/' . $banner->cover))){
-            Storage::delete('public/'. $banner->cover);
+                $new_cover_path = $new_cover->store('images/banner', 'public');
+
+                $banner->cover = $new_cover_path;
+            }
+
+            DB::beginTransaction();
+            // //create the default language's banner
+            $unTransBanner_id = $this->banner->where('banners.id', $id)
+                ->update([
+                    'link' => $request['link'],
+                    'is_active' => $request->is_active = 1,
+                    'cover' => $request['cover'],
+            ]);
+
+            $allbanners = array_values($request->banner);
+                //insert other traslations for Teams
+                foreach ($allbanners as $allbanner) {
+                    $this->bannerTranslation->where('banner_id', $id)
+                    ->where('local', $allbanner['local'])
+                    ->update([
+                        'title' => $allbanner ['title'],
+                        'local' => $allbanner['local'],
+                        'desc' => $allbanner['desc'],
+                        'banner_id' => $unTransBanner_id
+                    ]);
+                }
+            DB::commit();
+            return redirect()->route('admin.team')->with('success', 'Data updated successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return redirect()->route('admin.team.edit')->with('error', 'Data failed to update');
         }
+    //     $banner = Banner::findOrFail($id);
+    //     $banner->title  = $request->title;
+    //     $banner->link  = $request->link;
+    //     $banner->desc   = $request->desc;
 
-        $new_cover_path = $new_cover->store('images/banner', 'public');
+    //     $new_cover = $request->file('cover');
+    //     if($new_cover){
+    //     if($banner->cover && file_exists(storage_path('app/public/' . $banner->cover))){
+    //         Storage::delete('public/'. $banner->cover);
+    //     }
 
-        $banner->cover = $new_cover_path;
+    //     $new_cover_path = $new_cover->store('images/banner', 'public');
+
+    //     $banner->cover = $new_cover_path;
+    // }
+    //     if ($banner->update()) {
+    //         return redirect()->route('admin.banner')->with('success', 'Data updated successfully');
+    //        } else {
+    //         return redirect()->route('admin.banner.edit')->with('error', 'Data failed to update');
+
+    //        }
     }
-    // dd($banner);
-        if ($banner->update()) {
-            return redirect()->route('admin.banner')->with('success', 'Data updated successfully');
-           } else {
-            return redirect()->route('admin.banner.edit')->with('error', 'Data failed to update');
 
-           }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $banner = Banner::findOrFail($id);

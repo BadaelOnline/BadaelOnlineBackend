@@ -15,8 +15,8 @@ class CreateLinksTable extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('link');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

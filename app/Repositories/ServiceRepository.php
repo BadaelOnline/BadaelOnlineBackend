@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Service\Service;
 use App\Repositories\Interfaces\ServiceRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Models\Service;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;

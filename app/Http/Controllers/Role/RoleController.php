@@ -7,6 +7,7 @@ use App\Http\Requests\Role\RoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
@@ -44,6 +45,7 @@ class RoleController extends Controller
 
         $role = new Role();
         $role->name = $request->name;
+        $role->slug = Str::slug($request->name);
         $role->save();
 
         $role->permissions()->sync($request->permissions);

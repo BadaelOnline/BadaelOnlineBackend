@@ -15,9 +15,7 @@ class CreateAboutsTable extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('subject');
-            $table->longText('desc');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

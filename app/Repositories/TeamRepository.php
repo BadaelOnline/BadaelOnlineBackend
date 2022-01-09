@@ -23,11 +23,7 @@ class TeamRepository implements TeamRepositoryInterface{
         $this->team = $team;
         $this->teamTranslation = $teamTranslation;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         Gate::authorize('team-list',$this->user);
@@ -35,22 +31,11 @@ class TeamRepository implements TeamRepositoryInterface{
         return $this->team::orderBy('id','desc')->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         Gate::authorize('team-create',$this->user);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try {
@@ -101,37 +86,17 @@ class TeamRepository implements TeamRepositoryInterface{
             return redirect()->route('admin.team.create')->with('error', 'Data failed to add');
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         Gate::authorize('team-list',$this->user);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         Gate::authorize('team-update',$this->user);
         return $this->team::findOrFail($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         try{
@@ -179,12 +144,6 @@ class TeamRepository implements TeamRepositoryInterface{
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         Gate::authorize('team-delete',$this->user);

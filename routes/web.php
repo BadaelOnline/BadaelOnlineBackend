@@ -28,7 +28,7 @@ Route::get('locale/{locale?}', array('en'=>'set-locale', 'uses'=>'Languages\Lang
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware(['auth','Localization'])->group(function () {
 
     Route::group(['namespace'=>'General'],function()
         {
@@ -165,9 +165,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::post('/edit/{id}', 'ServiceController@update')->name('admin.service.update');
             Route::delete('/destroy/{id}', 'ServiceController@destroy')->name('admin.service.destroy');
         });
-    Route::group([
-        'middleware' => ['Localization']
-    ],function(){
     // Manage Team
     Route::group(['prefix'=>'teams','namespace'=>'Team'],function()
         {
@@ -179,7 +176,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::delete('/destroy/{id}','TeamController@destroy')->name('admin.team.destroy');
 
         });
-    });
      // Manage Admin
     Route::group(['prefix'=>'users','namespace'=>'User'],function()
         {
@@ -212,4 +208,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             Route::post('/edit/{id}', 'PermissionController@update')->name('admin.permission.update');
             Route::delete('/destroy/{id}', 'PermissionController@destroy')->name('admin.permission.destroy');
         });
+
+    // Notification Mark All Read
+    Route::get('/MarkAllSeen','PostController@MarkNotification');
 });

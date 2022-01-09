@@ -2,12 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Models\Faq;
+use App\Models\Faq\Faq;
 use App\Repositories\Interfaces\FaqRepositoryInterface;
 use Illuminate\Http\Request;
 
 class FaqRepository implements FaqRepositoryInterface{
-    
+
     public function index()
     {
         $faq = Faq::orderBy('id','desc')->get();
