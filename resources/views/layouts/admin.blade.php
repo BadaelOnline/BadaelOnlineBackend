@@ -79,13 +79,11 @@
           <i class="fas fa-fw fa-table"></i>
           <span>Admin</span></a>
       </li>
-
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.role') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Roles</span></a>
       </li>
-
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.permission') }}">
           <i class="fas fa-fw fa-table"></i>
@@ -385,12 +383,10 @@
         },
     });
   });
-
   // notification count
   var count = $('#count'), c ;
     c = parseInt(count.html());
     // count.html(c+1);
-
     // notification style
     $('.notification').on('click',function(){
       setTimeout(() => {
@@ -399,10 +395,8 @@
         $(this).removeClass('unread');
       });
       }, 3000);
-
     //   $.get('MarkAllSeen', function(){});
     });
-
   </script>
 
 

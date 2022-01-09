@@ -16,6 +16,7 @@ return array(
     'App\\Http\\Controllers\\Auth\\ResetPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ResetPasswordController.php',
     'App\\Http\\Controllers\\Auth\\VerificationController' => $baseDir . '/app/Http/Controllers/Auth/VerificationController.php',
     'App\\Http\\Controllers\\Banner\\BannerController' => $baseDir . '/app/Http/Controllers/Banner/BannerController.php',
+
     'App\\Http\\Controllers\\CategoryController' => $baseDir . '/app/Http/Controllers/CategoryController.php',
     'App\\Http\\Controllers\\Category\\CategoryController' => $baseDir . '/app/Http/Controllers/Category/CategoryController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
@@ -48,6 +49,7 @@ return array(
     'App\\Http\\Controllers\\TestimonialController' => $baseDir . '/app/Http/Controllers/TestimonialController.php',
     'App\\Http\\Controllers\\Testimonial\\TestimonialController' => $baseDir . '/app/Http/Controllers/Testimonial/TestimonialController.php',
     'App\\Http\\Controllers\\UserController' => $baseDir . '/app/Http/Controllers/UserController.php',
+
     'App\\Http\\Controllers\\User\\UserController' => $baseDir . '/app/Http/Controllers/User/UserController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
@@ -62,8 +64,10 @@ return array(
     'App\\Http\\Requests\\Permission\\PermissionRequest' => $baseDir . '/app/Http/Requests/Permission/PermissionRequest.php',
     'App\\Http\\Requests\\Role\\RoleRequest' => $baseDir . '/app/Http/Requests/Role/RoleRequest.php',
     'App\\Http\\Requests\\Team\\TeamRequest' => $baseDir . '/app/Http/Requests/Team/TeamRequest.php',
+
     'App\\Listeners\\PostListener' => $baseDir . '/app/Listeners/PostListener.php',
     'App\\Listeners\\SendNewUserNotification' => $baseDir . '/app/Listeners/SendNewUserNotification.php',
+
     'App\\Manager\\Banner\\BannerManager' => $baseDir . '/app/Manager/Banner/BannerManager.php',
     'App\\Manager\\Category\\CategoryManager' => $baseDir . '/app/Manager/Category/CategoryManager.php',
     'App\\Manager\\Faq\\FaqManager' => $baseDir . '/app/Manager/Faq/FaqManager.php',
@@ -81,11 +85,14 @@ return array(
     'App\\Manager\\Testimonial\\TestimonialManager' => $baseDir . '/app/Manager/Testimonial/TestimonialManager.php',
     'App\\Manager\\User\\UserManager' => $baseDir . '/app/Manager/User/UserManager.php',
     'App\\Models\\About' => $baseDir . '/app/Models/About.php',
+
     'App\\Models\\About\\AboutTranslation' => $baseDir . '/app/Models/About/AboutTranslation.php',
+
     'App\\Models\\Banner\\Banner' => $baseDir . '/app/Models/Banner/Banner.php',
     'App\\Models\\Banner\\BannerTranslation' => $baseDir . '/app/Models/Banner/BannerTranslation.php',
     'App\\Models\\Category\\Category' => $baseDir . '/app/Models/Category/Category.php',
     'App\\Models\\Category\\CategoryTranslation' => $baseDir . '/app/Models/Category/CategoryTranslation.php',
+
     'App\\Models\\Faq\\Faq' => $baseDir . '/app/Models/Faq/Faq.php',
     'App\\Models\\Faq\\FaqTranslation' => $baseDir . '/app/Models/Faq/FaqTranslation.php',
     'App\\Models\\General\\General' => $baseDir . '/app/Models/General/General.php',
@@ -106,16 +113,19 @@ return array(
     'App\\Models\\Role' => $baseDir . '/app/Models/Role.php',
     'App\\Models\\Service\\Service' => $baseDir . '/app/Models/Service/Service.php',
     'App\\Models\\Service\\ServiceTranslation' => $baseDir . '/app/Models/Service/ServiceTranslation.php',
+
     'App\\Models\\Subscriber' => $baseDir . '/app/Models/Subscriber.php',
     'App\\Models\\Tag\\Tag' => $baseDir . '/app/Models/Tag/Tag.php',
     'App\\Models\\Tag\\TagTranslation' => $baseDir . '/app/Models/Tag/TagTranslation.php',
     'App\\Models\\Team\\Team' => $baseDir . '/app/Models/Team/Team.php',
     'App\\Models\\Team\\TeamTranslation' => $baseDir . '/app/Models/Team/TeamTranslation.php',
+
     'App\\Models\\Testimonial\\Testimonial' => $baseDir . '/app/Models/Testimonial/Testimonial.php',
     'App\\Models\\Testimonial\\TestimonialTranslation' => $baseDir . '/app/Models/Testimonial/TestimonialTranslation.php',
     'App\\Models\\User\\User' => $baseDir . '/app/Models/User/User.php',
     'App\\Notifications\\NewUserNotification' => $baseDir . '/app/Notifications/NewUserNotification.php',
     'App\\Notifications\\PostNotification' => $baseDir . '/app/Notifications/PostNotification.php',
+
     'App\\Policies\\GeneralPolicy' => $baseDir . '/app/Policies/GeneralPolicy.php',
     'App\\Policies\\PagePolicy' => $baseDir . '/app/Policies/PagePolicy.php',
     'App\\Policies\\ServicePolicy' => $baseDir . '/app/Policies/ServicePolicy.php',
@@ -163,7 +173,9 @@ return array(
     'App\\Scopes\\PostScope' => $baseDir . '/app/Scopes/PostScope.php',
     'App\\Scopes\\TagScope' => $baseDir . '/app/Scopes/TagScope.php',
     'App\\Scopes\\TeamScope' => $baseDir . '/app/Scopes/TeamScope.php',
+
     'App\\Scopes\\UserScope' => $baseDir . '/app/Scopes/UserScope.php',
+
     'App\\Service\\Banner\\BannerService' => $baseDir . '/app/Service/Banner/BannerService.php',
     'App\\Service\\Category\\CategoryService' => $baseDir . '/app/Service/Category/CategoryService.php',
     'App\\Service\\Faq\\FaqService' => $baseDir . '/app/Service/Faq/FaqService.php',
