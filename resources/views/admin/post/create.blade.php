@@ -74,18 +74,32 @@
 
         </div>
 
-        @foreach(config('app.languages') as $index => $lang)
+        <div class="form-group ml-5">
+
+            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" id="selectTeam" >
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+        </div>
+
+        {{-- @foreach(config('app.languages') as $index => $lang) --}}
 
         <div class="form-group ml-5">
 
-            <label for="title" class="col-sm-2 col-form-label">Title [ {{ strtoupper ($lang)}} ]</label>
+            <label for="title" class="col-sm-2 col-form-label">Title</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='post[{{$index}}][title]' class="form-control {{$errors->first('post.$index.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
-                <input type="text" name='post[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='post[title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
+                <input type="text" name='post[local]' id="local" >
                 <div class="invalid-feedback">
-                    {{ $errors->first('post.$index.title') }}
+                    {{ $errors->first('post.title') }}
                 </div>
 
             </div>
@@ -94,12 +108,12 @@
 
         <div class="form-group ml-5">
 
-            <label for="body" class="col-sm-2 col-form-label">Desc [ {{ strtoupper ($lang)}} ]</label>
+            <label for="body" class="col-sm-2 col-form-label">Desc</label>
 
             <div class="col-sm-9">
 
-                <textarea name='post[{{$index}}][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
-                <input type="text" name='post[{{$index}}][local]' value='{{$lang}}' hidden>
+                <textarea name='post[body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
+                <input type="text" name='post[local]' id="local" >
                 <div class="invalid-feedback">
                     {{ $errors->first('body') }}
                 </div>
@@ -107,6 +121,8 @@
             </div>
 
         </div>
+
+        {{--
 
         <div class="form-group ml-5">
 
@@ -140,7 +156,7 @@
 
         </div>
 
-        @endforeach
+        @endforeach --}}
 
         <div class="form-group ml-5">
 
@@ -199,6 +215,17 @@
 @push('scripts')
 
 <script>
+    // languages
+    // $("#selectTeam").change(function(){
+    //     var lang = document.getElementById("selectTeam").value;
+    //     if (lang == 'EN'){
+    //         document.getElementById("local").value = lang;
+    //     }else{
+    //         document.getElementById("local").value = lang;
+    //     }
+    //     console.log(lang);
+    // });
+
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){
       readURL(this);

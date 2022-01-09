@@ -11,14 +11,21 @@ class BannerController extends Controller
     private $bannerService;
     public function __construct(BannerService $bannerService)
     {
+
         $this->bannerService=$bannerService;
     }
     public function index(){
-        return $this->bannerService->index();
+        $banner = $this->bannerService->index();
+        return view ('admin.banner.index', [
+            'banner' => $banner
+        ]);
     }
 
     public function create(){
-        return $this->bannerService->create();
+        $banner = $this->bannerService->create();
+        return view ('admin.banner.create',[
+            'banner' => $banner
+        ]);
     }
 
     public function store(Request $request){
@@ -30,7 +37,10 @@ class BannerController extends Controller
     }
 
     public function edit($id){
-        return $this->bannerService->edit($id);
+        $banner = $this->bannerService->edit($id);
+        return view ('admin.banner.edit', [
+            'banner' => $banner
+        ]);
     }
 
     public function update(Request $request, $id){

@@ -73,6 +73,20 @@
 
     </div>
 
+    <div class="form-group ml-5">
+
+        <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+
+        <div class="col-sm-9">
+            <select class="form-control" id="selectTeam" >
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
+        </div>
+
+    </div>
+    
     @foreach(config('app.languages') as $index => $lang)
 
     <div class="form-group ml-5">
