@@ -58,7 +58,7 @@ class FrontService
 
     public function blogshow($slug)
     {
-        return $this->frontManager->home($slug);
+        return $this->frontManager->blogshow($slug);
     }
 
     public function category()

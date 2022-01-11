@@ -2,11 +2,9 @@
 /public/hot
 /public/storage
 /storage/*.key
-/vendor/
+/vendor
 .env
-.env.example
-.env.local
-.env.staging
+.env.backup
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json

@@ -192,7 +192,7 @@ class FrontRepository implements FrontRepositoryInterface{
             // $posts = $this->post->where('status','=','PUBLISH')->orderBy('id','desc')->paginate(3);
             $recent = $this->post->orderBy('id','desc')->limit(5)->get();
             $tags = $this->tag->all();
-        return $response = $this->returnData(compact('categories','general','link','post','posts','recent','tags'));
+        return $response = $this->returnData(compact('categories','post','recent','tags'));
 
         } catch (\Exception $ex) {
             return $this->returnError($ex->getCode(), $ex->getMessage());
