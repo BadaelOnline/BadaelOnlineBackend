@@ -23,6 +23,11 @@ class FrontController extends Controller
         return $this->frontService->about();
     }
 
+    public function team()
+    {
+        return $this->frontService->team();
+    }
+
     public function testi()
     {
         return $this->frontService->testi();
@@ -57,14 +62,19 @@ class FrontController extends Controller
         return $this->frontService->home($slug);
     }
 
-    public function category($category)
+    public function category()
     {
-        return $this->frontService->category($category);
+        return $this->frontService->category();
     }
 
-    public function tag($tag)
+    public function categoryshow($slug)
     {
-        return $this->frontService->tag($tag);
+        return $this->frontService->categoryshow($slug);
+    }
+
+    public function tag()
+    {
+        return $this->frontService->tag();
     }
 
     public function search()
@@ -72,9 +82,14 @@ class FrontController extends Controller
         return $this->frontService->search();
     }
 
-    public function page($slug)
+    public function page()
     {
-        return $this->frontService->page($slug);
+        return $this->frontService->page();
+    }
+
+    public function pageshow($slug)
+    {
+        return $this->frontService->pageshow($slug);
     }
 
     public function subscribe(Request $request)

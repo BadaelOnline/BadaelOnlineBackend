@@ -207,8 +207,24 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             {{-- dropdown language --}}
-              <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>
-              <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a>
+            <div class="col-sm-4 m-2">
+                <select class="form-control" id="selectTeam" >
+                    @foreach(config('app.languages') as $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
+            </div>
+                {{-- @foreach (config('app.languages') as $locale)
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), $locale) }}"
+                            @if (app()->getLocale() == $locale)
+                            style="font-weight: bold; text-decoration: underline" @endif>
+                            {{ strtoupper($locale) }}</a>
+                    </li>
+                @endforeach --}}
+              {{-- <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>
+              <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a> --}}
 
             <div class="topbar-divider d-none d-sm-block"></div>
 

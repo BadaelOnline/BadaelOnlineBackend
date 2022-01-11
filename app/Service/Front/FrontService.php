@@ -22,6 +22,11 @@ class FrontService
         return $this->frontManager->about();
     }
 
+    public function team()
+    {
+        return $this->frontManager->team();
+    }
+
     public function testi()
     {
         return $this->frontManager->testi();
@@ -56,14 +61,19 @@ class FrontService
         return $this->frontManager->home($slug);
     }
 
-    public function category($category)
+    public function category()
     {
-        return $this->frontManager->category($category);
+        return $this->frontManager->category();
     }
 
-    public function tag($tag)
+    public function categoryshow($slug)
     {
-        return $this->frontManager->tag($tag);
+        return $this->frontManager->categoryshow($slug);
+    }
+
+    public function tag()
+    {
+        return $this->frontManager->tag();
     }
 
     public function search()
@@ -71,9 +81,14 @@ class FrontService
         return $this->frontManager->search();
     }
 
-    public function page($slug)
+    public function page()
     {
-        return $this->frontManager->page($slug);        
+        return $this->frontManager->page();
+    }
+
+    public function pageshow($slug)
+    {
+        return $this->frontManager->pageshow($slug);
     }
 
     public function subscribe(Request $request)

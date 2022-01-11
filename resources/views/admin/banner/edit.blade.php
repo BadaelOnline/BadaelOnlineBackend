@@ -75,6 +75,7 @@
         <label for="title" class="col-sm-2 col-form-label">Title [{{$lang}}]</label>
         <div class="col-sm-7">
             <input type="text" name='banner[{{$index}}][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $banner->title}}" id="title" placeholder="Title">
+            <input type="text" name='banner[{{$index}}][local]' value='{{$lang}}' hidden> 
             <div class="invalid-feedback">
                 {{ $errors->first('title') }}
             </div>
@@ -85,13 +86,14 @@
         <label for="desc" class="col-sm-2 col-form-label">Desc [{{$lang}}]</label>
         <div class="col-sm-7">
           <textarea name="banner[{{$index}}][desc]" id="desc" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $banner->desc}}</textarea>
+          <input type="text" name='banner[{{$index}}][local]' value='{{$lang}}' hidden>
           <div class="invalid-feedback">
             {{ $errors->first('desc') }}
         </div>
         </div>
 
     </div>
-
+    @endforeach
     <div class="form-group ml-5">
       <label for="link" class="col-sm-2 col-form-label">Link</label>
       <div class="col-sm-7">
