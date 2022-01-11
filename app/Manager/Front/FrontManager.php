@@ -14,70 +14,85 @@ class FrontManager
     }
     public function home()
     {
-        return $this->frontRepository->home(); 
+        return $this->frontRepository->home();
     }
 
     public function about()
     {
-        return $this->frontRepository->about(); 
+        return $this->frontRepository->about();
+    }
+
+    public function team()
+    {
+        return $this->frontRepository->team();
     }
 
     public function testi()
     {
-        return $this->frontRepository->testi(); 
+        return $this->frontRepository->testi();
     }
     public function service()
     {
-        return $this->frontRepository->service(); 
+        return $this->frontRepository->service();
     }
 
     public function serviceshow($slug)
     {
-        return $this->frontRepository->serviceshow($slug); 
+        return $this->frontRepository->serviceshow($slug);
     }
 
     public function portfolio()
     {
-        return $this->frontRepository->portfolio(); 
+        return $this->frontRepository->portfolio();
     }
 
     public function portfolioshow($slug)
     {
-        return $this->frontRepository->portfolioshow($slug); 
+        return $this->frontRepository->portfolioshow($slug);
     }
 
     public function blog()
     {
-        return $this->frontRepository->blog(); 
+        return $this->frontRepository->blog();
     }
 
     public function blogshow($slug)
     {
-        return $this->frontRepository->blogshow($slug); 
+        return $this->frontRepository->blogshow($slug);
     }
 
     public function category()
     {
-        return $this->frontRepository->category(); 
+        return $this->frontRepository->category();
+    }
+
+    public function categoryshow($slug)
+    {
+        return $this->frontRepository->categoryshow($slug);
     }
 
     public function tag()
     {
-        return $this->frontRepository->tag(); 
+        return $this->frontRepository->tag();
     }
 
     public function search()
     {
-        return $this->frontRepository->search(); 
+        return $this->frontRepository->search();
     }
 
-    public function page($slug)
+    public function page()
     {
-        return $this->frontRepository->page($slug); 
+        return $this->frontRepository->page();
+    }
+
+    public function pageshow($slug)
+    {
+        return $this->frontRepository->pageshow($slug);
     }
 
     public function subscribe(Request $request)
     {
-        return $this->frontRepository->subscribe($request); 
+        return $this->frontRepository->subscribe($request);
     }
 }

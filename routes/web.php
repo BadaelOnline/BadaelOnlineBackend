@@ -58,9 +58,9 @@ Route::prefix('admin')->middleware(['auth','Localization'])->group(function () {
         {
             Route::get('/', 'PcategoryController@index')->name('admin.pcategory');
             Route::post('/', 'PcategoryController@store')->name('admin.pcategory.store');
-            Route::get('Portfolio-categories/edit/{id}', 'PcategoryController@edit')->name('admin.pcategory.edit');
-            Route::post('Portfolio-categories/edit/{id}', 'PcategoryController@update')->name('admin.pcategory.update');
-            Route::delete('Portfolio-categories/destroy/{id}', 'PcategoryController@destroy')->name('admin.pcategory.destroy');
+            Route::get('/edit/{id}', 'PcategoryController@edit')->name('admin.pcategory.edit');
+            Route::post('/edit/{id}', 'PcategoryController@update')->name('admin.pcategory.update');
+            Route::delete('/destroy/{id}', 'PcategoryController@destroy')->name('admin.pcategory.destroy');
         });
      // Manage Portfolio
     Route::group(['prefix'=>'portfolio','namespace'=>'Portfolio'],function()

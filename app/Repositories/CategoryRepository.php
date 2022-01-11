@@ -3,16 +3,26 @@
 namespace App\Repositories;
 
 use App\Models\Category\Category;
+use App\Models\Category\CategoryTranslation;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class CategoryRepository implements CategoryRepositoryInterface{
 
+    private $category;
+    private $categoryTranslation;
+    public function __construct(Category $category, CategoryTranslation $categoryTranslation)
+    {
+        $this->category = $category;
+        $this->categoryTranslation = $categoryTranslation;
+    }
+
     public function index()
     {
-        $category = Category::orderBy('id','desc')->get();
+        $category = $this->category::orderBy('id','desc')->get();
         return view('admin.category.index',compact('category'));
     }
 
@@ -23,32 +33,45 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
     public function store(Request $request)
     {
-        Validator::make($request->all(), [
-            "name" => "required",
-            "keyword" => "required",
-            "meta_desc" => "required"
-        ])->validate();
+        try{
+            /** transformation to collection */
+            $allcategories = collect($request->category)->all();
 
-        $category = new Category();
-        $category->name = $request->name;
-        $category->slug = Str::slug($request->name);
-        $category->keyword = $request->keyword;
-        $category->meta_desc = $request->meta_desc;
+            $request->is_active ? $is_active = true : $is_active = false;
 
-        if ( $category->save()) {
+            DB::beginTransaction();
+            // create the default language's banner
+            $unTransCategory_id = $this->category->insertGetId([
+                'slug' => $request->slug = 'name',
+                'is_active' => $request->is_active = 1
+            ]);
 
+            // check the Category and request
+            if(isset($allcategories) && count($allcategories)){
+                // insert other translation for Categories
+                foreach ($allcategories as $allcategory){
+                    $transCategory_arr[] = [
+                        'name' => $allcategory ['name'],
+                        'local' => $allcategory['local'],
+                        'keyword' => $allcategory['keyword'],
+                        'meta_desc' => $allcategory['meta_desc'],
+                        'category_id' => $unTransCategory_id
+                    ];
+                }
+
+                $this->categoryTranslation->insert($transCategory_arr);
+            }
+            DB::commit();
             return redirect()->route('admin.category')->with('success', 'Data added successfully');
-
-           } else {
-
+        }catch(\Exception $ex){
+            DB::rollback();
             return redirect()->route('admin.category')->with('error', 'Data failed to add');
-
-           }
+        }
     }
 
     public function show($id)
     {
-        //
+
     }
 
     public function edit($id)
@@ -60,27 +83,38 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
     public function update(Request $request, $id)
     {
-        Validator::make($request->all(), [
-            "name" => "required",
-            "keyword" => "required",
-            "meta_desc" => "required"
-        ])->validate();
+        try{
 
-        $category = Category::findOrFail($id);
-        $category->name = $request->name;
-        $category->slug = Str::slug($request->name);
-        $category->keyword = $request->keyword;
-        $category->meta_desc = $request->meta_desc;
+            $category = $this->category::findOrFail($id);
 
-        if ( $category->save()) {
+            DB::beginTransaction();
 
-            return redirect()->route('admin.category')->with('success', 'Data updated successfully');
+            $unTransCategory_id = $this->category->where('categories.id',$id)
+                ->update([
+                    'slug' => $request->slug = 'name',
+                    'is_active' => $request->is_active = 1
+                ]);
 
-           } else {
-
-            return redirect()->route('admin.category')->with('error', 'Data failed to update');
-
-           }
+                $allcategories = array_values($request->category);
+                // insert other translations for Category
+                foreach ($allcategories as $allcategory){
+                    $this->categoryTranslation->where('category_id',$id)
+                    ->where('local',$allcategory['local'])
+                    ->update([
+                        'name' => $allcategory ['name'],
+                        'local' => $allcategory['local'],
+                        'keyword' => $allcategory['keyword'],
+                        'meta_desc' => $allcategory['meta_desc'],
+                        'category_id' => $unTransCategory_id
+                    ]);
+                }
+                DB::commit();
+                return redirect()->route('admin.category')->with('success', 'Data updated successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            // return redirect()->route('admin.category')->with('error', 'Data failed to update');
+        }
     }
 
     public function destroy($id)

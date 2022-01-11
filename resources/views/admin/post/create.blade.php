@@ -97,7 +97,7 @@
             <div class="col-sm-9">
 
                 <input type="text" name='post[title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
-                <input type="text" name='post[local]' id="local" >
+                <input type="text" name='post[local]' id="local" value="{{ $lang }}">
                 <div class="invalid-feedback">
                     {{ $errors->first('post.title') }}
                 </div>
@@ -113,7 +113,7 @@
             <div class="col-sm-9">
 
                 <textarea name='post[body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
-                <input type="text" name='post[local]' id="local" >
+                <input type="text" name='post[local]' id="local" value="{{ $lang }}">
                 <div class="invalid-feedback">
                     {{ $errors->first('body') }}
                 </div>
@@ -216,15 +216,12 @@
 
 <script>
     // languages
-    // $("#selectTeam").change(function(){
-    //     var lang = document.getElementById("selectTeam").value;
-    //     if (lang == 'EN'){
-    //         document.getElementById("local").value = lang;
-    //     }else{
-    //         document.getElementById("local").value = lang;
-    //     }
-    //     console.log(lang);
-    // });
+    var lang = localStorage.getItem('lang');
+    $("#selectTeam").change(function(){
+        var lang = document.getElementById("selectTeam").value;
+        localStorage.setItem('lang',lang);
+        console.log(lang);
+    });
 
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){

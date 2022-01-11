@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace App\Repositories\Interfaces;
 
 use Illuminate\Http\Request;
@@ -9,6 +9,8 @@ interface FrontRepositoryInterface{
     public function home();
 
     public function about();
+
+    public function team();
 
     public function testi();
 
@@ -26,11 +28,15 @@ interface FrontRepositoryInterface{
 
     public function category();
 
+    public function categoryshow($slug);
+
     public function tag();
 
     public function search();
 
-    public function page($slug);
+    public function page();
+
+    public function pageshow($slug);
 
     public function subscribe(Request $request);
 

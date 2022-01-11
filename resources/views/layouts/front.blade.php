@@ -16,7 +16,7 @@
   <link href="{{ asset('storage/'.$general->favicon) }}" rel="apple-touch-icon">
 
   @yield('meta')
-  
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
@@ -32,7 +32,7 @@
 
   <!-- Template Main CSS File -->
   <link href="{{ asset('front/css/style.css') }}" rel="stylesheet">
-  
+
   {{-- Sharethis --}}
   {!! $general->sharethis !!}
 
@@ -66,7 +66,7 @@
           <li {{ request()->is('services') ? 'class=active' : '' }}><a href="{{ route('service') }}">Services</a></li>
           <li {{ request()->is('portfolio') ? 'class=active' : '' }}><a href="{{ route('portfolio') }}">Portfolio</a></li>
           <li {{ request()->is('blog') ? 'class=active' : '' }}><a href="{{ route('blog') }}">Blog</a></li>
-      
+
         </ul>
       </nav><!-- .nav-menu -->
 
@@ -96,7 +96,7 @@
               {{ $general->address2 }}<br>
               <a href="{{ $general->gmaps }}" target="_blank" rel="noopener noreferrer">(Go to gmaps)</a>
               <br><br>
-              
+
               <strong>Phone:</strong> {{ $general->phone }}<br>
               <strong>Email:</strong> {{ $general->email }}<br>
             </p>
@@ -108,7 +108,7 @@
               @foreach ($link as $link)
               <li><i class="bx bx-chevron-right"></i> <a href="{{ $link->link }}">{{ $link->name }}</a></li>
               @endforeach
-            
+
             </ul>
           </div>
 
@@ -118,7 +118,7 @@
               @foreach ($lpost as $lpost)
               <li><i class="bx bx-chevron-right"></i> <a href="{{ route('blogshow',$lpost->slug) }}">{{ $lpost->title }}</a></li>
               @endforeach
-             
+
             </ul>
           </div>
 
@@ -139,7 +139,7 @@
               @csrf
               <input type="email" name="email" class="form-control {{$errors->first('email') ? "is-invalid" : "" }} " value="{{old('email')}}" required><input type="submit" value="Subscribe">
               <div class="invalid-feedback">
-                {{ $errors->first('email') }}    
+                {{ $errors->first('email') }}
             </div>
             </form>
           </div>

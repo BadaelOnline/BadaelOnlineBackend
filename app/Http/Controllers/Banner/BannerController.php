@@ -11,9 +11,9 @@ class BannerController extends Controller
     private $bannerService;
     public function __construct(BannerService $bannerService)
     {
-
         $this->bannerService=$bannerService;
     }
+    
     public function index(){
         $banner = $this->bannerService->index();
         return view ('admin.banner.index', [

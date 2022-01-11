@@ -33,10 +33,12 @@ class Localization
          */
         App::setLocale($request->header("lang"));
     }
+        // route lang
+        App::setLocale('en');
+        if(isset($request->lang)&&$request->lang=='ar')
+        App::setLocale('ar');
+
         // continue request
         return $next($request);
     }
-    // url
-    // App::setlocale($request->lang);
-    // \App::setLocale($request->lang);
 }
