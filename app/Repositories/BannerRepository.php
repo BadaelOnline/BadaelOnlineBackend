@@ -40,9 +40,7 @@ class BannerRepository implements BannerRepositoryInterface{
             $cover = $request->file('cover');
             if($cover){
             $cover_path = $cover->store('images/banner', 'public');
-            // $cover_path = $cover->store('images/banner', 'public' . '/' .$cover-> getClientOriginalName());
             // $coverName= 'images/banner'. 'public' . '/' .$cover-> getClientOriginalName();
-            // $cover = $cover_path;
             }
 
             DB::beginTransaction();
@@ -93,6 +91,7 @@ class BannerRepository implements BannerRepositoryInterface{
             $banner = $this->banner::findOrFail($id);
 
             $new_cover = $request->file('cover');
+
             if($new_cover){
                 if($banner->cover && file_exists(storage_path('app/public/images/' . $banner->cover))){
                     Storage::delete('public/'. $banner->cover);
@@ -109,7 +108,7 @@ class BannerRepository implements BannerRepositoryInterface{
                 ->update([
                     'link' => $request['link'],
                     'is_active' => $request->is_active = 1,
-                    'cover' => $request['cover'],
+                    'cover' => $request['new_cover'],
             ]);
 
             $allbanners = array_values($request->banner);

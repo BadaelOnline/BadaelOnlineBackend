@@ -40,7 +40,7 @@ class GeneralRepository implements GeneralRepositoryInterface{
             "footer" => "required",
             "gmaps" => "required"
         ])->validate();
-
+//
         $general = General::find(1);
         $general->title = $request->title;
         $general->address1 = $request->address1;

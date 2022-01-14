@@ -26,6 +26,7 @@ class Category extends Model
         parent::booted();
         static::addGlobalScope(new CategoryScope);
     }
+
     public function CategoryTranslation()
     {
         return $this->hasMany(CategoryTranslation::class);

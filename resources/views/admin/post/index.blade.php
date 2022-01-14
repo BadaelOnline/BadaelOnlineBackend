@@ -10,8 +10,8 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Posts</h1>     
-   
+<h1 class="h3 mb-2 text-gray-800">Posts</h1>
+
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -59,44 +59,44 @@
                 <tbody>
 
                 @php
-                
+
                 $no=0;
-                
+
                 @endphp
-                
+
                 @foreach ($post as $post)
-                     
-                    <tr> 
-             
-                        <td>{{ ++$no }}</td>  
-                
-                        <td>{{ $post->title }}</td> 
-                        
+
+                    <tr>
+
+                        <td>{{ ++$no }}</td>
+
+                        <td>{{ $post->title }}</td>
+
                         <td>{{ $post->category->name }}</td> 
 
-                        <td>{{ $post->status }}</td> 
-                
-                        <td>    
-                
+                        <td>{{ $post->status }}</td>
+
+                        <td>
+
                             <a href="{{route('admin.post.edit', [$post->id])}}" class="btn btn-info btn-sm"> Edit </a>
-                
+
                             <form method="POST" class="d-inline" onsubmit="return confirm('Move post to trash ?')" action="{{route('admin.post.destroy', $post->id)}}">
                                 @csrf
-    
+
                                 <input type="hidden" value="DELETE" name="_method">
-    
+
                                 <input type="submit" value="Trash" class="btn btn-danger btn-sm">
-    
+
                             </form>
-                
+
                         </td>
-            
+
                     </tr>
-            
+
                     @endforeach
-        
+
                 </tbody>
-    
+
             </table>
 
         </div>

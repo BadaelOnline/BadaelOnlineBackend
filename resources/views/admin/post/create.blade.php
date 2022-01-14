@@ -95,7 +95,11 @@
             <label for="title" class="col-sm-2 col-form-label">Title</label>
 
             <div class="col-sm-9">
-
+                @if ($lang == 'en')
+                <input type="text" name='post[local]' id="local" value="en">
+                @else
+                <input type="text" name='post[local]' id="local" value="ar">
+                @endif
                 <input type="text" name='post[title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
                 <input type="text" name='post[local]' id="local" value="{{ $lang }}">
                 <div class="invalid-feedback">
@@ -217,9 +221,9 @@
 <script>
     // languages
     var lang = localStorage.getItem('lang');
-    $("#selectTeam").change(function(){
-        var lang = document.getElementById("selectTeam").value;
-        localStorage.setItem('lang',lang);
+    $("#selectTeam").click(function(){
+        // var lang = document.getElementById("selectTeam").value;
+        // localStorage.setItem('lang',lang);
         console.log(lang);
     });
 

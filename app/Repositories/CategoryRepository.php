@@ -37,12 +37,14 @@ class CategoryRepository implements CategoryRepositoryInterface{
             /** transformation to collection */
             $allcategories = collect($request->category)->all();
 
+            $slug= $request->category['English']['name'];
+
             $request->is_active ? $is_active = true : $is_active = false;
 
             DB::beginTransaction();
             // create the default language's banner
             $unTransCategory_id = $this->category->insertGetId([
-                'slug' => $request->slug = 'name',
+                'slug' => $slug ,
                 'is_active' => $request->is_active = 1
             ]);
 
@@ -62,9 +64,11 @@ class CategoryRepository implements CategoryRepositoryInterface{
                 $this->categoryTranslation->insert($transCategory_arr);
             }
             DB::commit();
+
             return redirect()->route('admin.category')->with('success', 'Data added successfully');
         }catch(\Exception $ex){
             DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.category')->with('error', 'Data failed to add');
         }
     }
@@ -76,7 +80,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $category = $this->category::findOrFail($id);
 
         return view('admin.category.edit',compact('category'));
     }
@@ -84,14 +88,17 @@ class CategoryRepository implements CategoryRepositoryInterface{
     public function update(Request $request, $id)
     {
         try{
+            return $request->all();
 
             $category = $this->category::findOrFail($id);
+
+            $slug= $request->category['English']['name'];
 
             DB::beginTransaction();
 
             $unTransCategory_id = $this->category->where('categories.id',$id)
                 ->update([
-                    'slug' => $request->slug = 'name',
+                    'slug' => $slug,
                     'is_active' => $request->is_active = 1
                 ]);
 
@@ -113,7 +120,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
         }catch(\Exception $ex){
             DB::rollback();
             return $ex->getMessage();
-            // return redirect()->route('admin.category')->with('error', 'Data failed to update');
+            return redirect()->route('admin.category')->with('error', 'Data failed to update');
         }
     }
 

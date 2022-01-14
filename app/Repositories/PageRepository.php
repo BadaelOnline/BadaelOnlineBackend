@@ -3,11 +3,21 @@
 namespace App\Repositories;
 
 use App\Models\Page\Page;
+use App\Models\Page\PageTranslation;
 use Illuminate\Support\Str;
 use App\Repositories\Interfaces\PageRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PageRepository implements PageRepositoryInterface{
+
+    private $page;
+    private $pageTranslation;
+    public function __construct(Page $page, PageTranslation $pageTranslation)
+    {
+        $this->page = $page;
+        $this->pageTranslation = $pageTranslation;
+    }
 
     public function index()
     {
@@ -22,21 +32,58 @@ class PageRepository implements PageRepositoryInterface{
 
     public function store(Request $request)
     {
-        $data = $request->all();
+        try{
+            /** transformation to collection */
+            $allpages = collect($request->page)->all();
 
-        $data['slug'] = Str::slug(request('title'));
+            $slug= $request->page['English']['title'];
 
-        $page = Page::create($data);
+            $request->is_active ? $is_active = true : $is_active = false;
 
-        if ($page) {
+            DB::beginTransaction();
+            // create the default language's banner
+            $unTransPage_id = $this->page->insertGetId([
+                'slug' => $slug ,
+                'is_active' => $request->is_active = 1
+            ]);
 
-                return redirect()->route('admin.page')->with('success', 'Data Berhasil Ditambahkan');
+            // check the Category and request
+            if(isset($allpages) && count($allpages)){
+                // insert other translation for Categories
+                foreach ($allpages as $allpage){
+                    $transPage_arr[] = [
+                        'title' => $allpage ['title'],
+                        'local' => $allpage['local'],
+                        'text' => $allpage['text'],
+                        'page_id' => $unTransPage_id
+                    ];
+                }
 
-               } else {
+                $this->pageTranslation->insert($transPage_arr);
+            }
+            DB::commit();
 
-                return redirect()->route('admin.page.create')->with('error', 'Data Gagal Ditambahkan');
+            return redirect()->route('admin.page')->with('success', 'Data added successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            // return $ex->getMessage();
+            return redirect()->route('admin.page.create')->with('error', 'Data failed to add');
+        }
+        // $data = $request->all();
 
-               }
+        // $data['slug'] = Str::slug(request('title'));
+
+        // $page = Page::create($data);
+
+        // if ($page) {
+
+        //         return redirect()->route('admin.page')->with('success', 'Data Berhasil Ditambahkan');
+
+        //        } else {
+
+        //         return redirect()->route('admin.page.create')->with('error', 'Data Gagal Ditambahkan');
+
+        //        }
     }
 
     public function show($id)
@@ -55,7 +102,7 @@ class PageRepository implements PageRepositoryInterface{
         $page = Page::findOrFail($id);
 
         $data = $request->all();
-
+//
         $data['slug'] = Str::slug(request('title'));
 
         $update = $page->update($data);

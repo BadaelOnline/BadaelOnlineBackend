@@ -13,21 +13,26 @@
 
     <div class="container">
 
+        @foreach(config('app.languages') as $index => $lang)
+
         <div class="form-group ml-5">
 
-            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <label for="name" class="col-sm-2 col-form-label">Name [{{ $lang }}]</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='name' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Name">
+                <input type="text" name='link[{{$index}}][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Name">
+                <input type="text" name='link[{{$index}}][local]' value='{{$lang}}' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('name') }}    
-                </div>   
+                    {{ $errors->first('name') }}
+                </div>
 
             </div>
 
         </div>
+
+        @endforeach
 
         <div class="form-group ml-5">
 
@@ -38,24 +43,24 @@
                 <input type="text" name='link' class="form-control {{$errors->first('link') ? "is-invalid" : "" }} " value="{{old('link')}}" id="link" placeholder="Link">
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('link') }}    
-                </div>   
+                    {{ $errors->first('link') }}
+                </div>
 
             </div>
 
         </div>
-   
+
         <div class="form-group ml-5">
-   
+
             <div class="col-sm-3">
-   
+
                 <button type="submit" class="btn btn-primary">Create</button>
-   
+
             </div>
-   
+
         </div>
 
-    </div>      
+    </div>
 
   </form>
 @endsection
