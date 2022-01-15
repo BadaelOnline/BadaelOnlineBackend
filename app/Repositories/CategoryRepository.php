@@ -5,10 +5,8 @@ namespace App\Repositories;
 use App\Models\Category\Category;
 use App\Models\Category\CategoryTranslation;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class CategoryRepository implements CategoryRepositoryInterface{
 
@@ -87,41 +85,43 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
     public function update(Request $request, $id)
     {
-        try{
-            return $request->all();
+        return 'ok';
+        // try{
 
-            $category = $this->category::findOrFail($id);
+        //     return $request->all();
 
-            $slug= $request->category['English']['name'];
+        //    $category = $this->category::findOrFail($id);
 
-            DB::beginTransaction();
+        //     $slug= $request->category['English']['name'];
 
-            $unTransCategory_id = $this->category->where('categories.id',$id)
-                ->update([
-                    'slug' => $slug,
-                    'is_active' => $request->is_active = 1
-                ]);
+        //     DB::beginTransaction();
 
-                $allcategories = array_values($request->category);
-                // insert other translations for Category
-                foreach ($allcategories as $allcategory){
-                    $this->categoryTranslation->where('category_id',$id)
-                    ->where('local',$allcategory['local'])
-                    ->update([
-                        'name' => $allcategory ['name'],
-                        'local' => $allcategory['local'],
-                        'keyword' => $allcategory['keyword'],
-                        'meta_desc' => $allcategory['meta_desc'],
-                        'category_id' => $unTransCategory_id
-                    ]);
-                }
-                DB::commit();
-                return redirect()->route('admin.category')->with('success', 'Data updated successfully');
-        }catch(\Exception $ex){
-            DB::rollback();
-            return $ex->getMessage();
-            return redirect()->route('admin.category')->with('error', 'Data failed to update');
-        }
+        //     $unTransCategory_id = $this->category->where('categories.id',$id)
+        //         ->update([
+        //             'slug' => $slug,
+        //             'is_active' => $request->is_active = 1
+        //         ]);
+
+        //         $allcategories = array_values($request->category);
+        //         // insert other translations for Category
+        //         foreach ($allcategories as $allcategory){
+        //             $this->categoryTranslation->where('category_id',$id)
+        //             ->where('local',$allcategory['local'])
+        //             ->update([
+        //                 'name' => $allcategory ['name'],
+        //                 'local' => $allcategory['local'],
+        //                 'keyword' => $allcategory['keyword'],
+        //                 'meta_desc' => $allcategory['meta_desc'],
+        //                 'category_id' => $unTransCategory_id
+        //             ]);
+        //         }
+        //         DB::commit();
+        //         return redirect()->route('admin.category')->with('success', 'Data updated successfully');
+        // }catch(\Exception $ex){
+        //     DB::rollback();
+        //     return $ex->getMessage();
+        //     return redirect()->route('admin.category')->with('error', 'Data failed to update');
+        // }
     }
 
     public function destroy($id)

@@ -13,7 +13,7 @@ class BannerController extends Controller
     {
         $this->bannerService=$bannerService;
     }
-    
+
     public function index(){
         $banner = $this->bannerService->index();
         return view ('admin.banner.index', [
@@ -38,9 +38,7 @@ class BannerController extends Controller
 
     public function edit($id){
         $banner = $this->bannerService->edit($id);
-        return view ('admin.banner.edit', [
-            'banner' => $banner
-        ]);
+        return view ('admin.banner.edit',compact('banner'));
     }
 
     public function update(Request $request, $id){

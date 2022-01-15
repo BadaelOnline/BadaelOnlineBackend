@@ -210,8 +210,8 @@
             <div class="col-sm-4 m-2">
                 <select class="form-control" id="selectTeam" >
                     {{-- @foreach(config('app.languages') as $lang) --}}
-                    <option value="en" <?php echo ( App::setLocale('en'))?>>EN</option>
-                    <option value="ar" <?php echo ( App::setLocale('ar'))?>>AR</option>
+                    <option value="en" <?php  ( App::setLocale('en'))?>>EN</option>
+                    <option value="ar" <?php  ( App::setLocale('ar'))?>>AR</option>
                     {{-- @endforeach --}}
                 </select>
             </div>

@@ -40,7 +40,6 @@ class BannerRepository implements BannerRepositoryInterface{
             $cover = $request->file('cover');
             if($cover){
             $cover_path = $cover->store('images/banner', 'public');
-            // $coverName= 'images/banner'. 'public' . '/' .$cover-> getClientOriginalName();
             }
 
             DB::beginTransaction();
@@ -71,7 +70,7 @@ class BannerRepository implements BannerRepositoryInterface{
         } catch (\Exception $ex) {
             DB::rollback();
             return $ex->getMessage();
-            // return redirect()->route('admin.banner.create')->with('error', 'Data failed to create');
+            return redirect()->route('admin.banner.create')->with('error', 'Data failed to create');
         }
     }
 
@@ -90,16 +89,12 @@ class BannerRepository implements BannerRepositoryInterface{
         try{
             $banner = $this->banner::findOrFail($id);
 
-            $new_cover = $request->file('cover');
-
-            if($new_cover){
-                if($banner->cover && file_exists(storage_path('app/public/images/' . $banner->cover))){
-                    Storage::delete('public/'. $banner->cover);
+            $cover = $request->file('cover');
+            if($cover){
+                if($request->cover && file_exists(storage_path('app/public/images/' . $request->cover))){
+                    Storage::delete('public/'. $request->cover);
                 }
-
-                $new_cover_path = $new_cover->store('banner', 'public');
-
-                $banner->cover = $new_cover_path;
+                $cover_path = $cover->store('images/banner', 'public');
             }
 
             DB::beginTransaction();
@@ -108,7 +103,7 @@ class BannerRepository implements BannerRepositoryInterface{
                 ->update([
                     'link' => $request['link'],
                     'is_active' => $request->is_active = 1,
-                    'cover' => $request['new_cover'],
+                    'cover' => $cover_path,
             ]);
 
             $allbanners = array_values($request->banner);
@@ -127,6 +122,7 @@ class BannerRepository implements BannerRepositoryInterface{
             return redirect()->route('admin.banner')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.banner.edit')->with('error', 'Data failed to update');
         }
     }
