@@ -59,7 +59,7 @@ class FrontController extends Controller
 
     public function blogshow($slug)
     {
-        return $this->frontService->home($slug);
+        return $this->frontService->blogshow($slug);
     }
 
     public function category()

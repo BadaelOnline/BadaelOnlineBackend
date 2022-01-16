@@ -10,8 +10,8 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Portfolios</h1>     
-   
+<h1 class="h3 mb-2 text-gray-800">Portfolios</h1>
+
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -46,7 +46,7 @@
 
                         <th>Cover</th>
 
-                        <th>Client</th>
+                        <th>Name</th>
 
                         <th>Project Date</th>
 
@@ -59,49 +59,49 @@
                 <tbody>
 
                 @php
-                
-                $no=0;
-                
-                @endphp
-                
-                @foreach ($portfolio as $portfolio)
-                     
-                    <tr> 
-             
-                        <td>{{ ++$no }}</td>  
-                
-                        <td>
-                        
-                            <img src="{{ asset('storage/'.$portfolio->cover) }}" alt="" style="height: 100px; width: 200px">
-                        
-                        </td> 
-                        
-                        <td>{{ $portfolio->client }}</td> 
 
-                        <td>{{ $portfolio->date }}</td> 
-                
-                        <td>    
-                
-                            <a href="{{route('admin.portfolio.edit', [$portfolio->id])}}" class="btn btn-info btn-sm"> Edit </a>
-                
-                            <form method="POST" action="{{route('admin.portfolio.destroy', [$portfolio->id])}}" class="d-inline" onsubmit="return confirm('Delete this portfolio permanently?')">
-                
-                                @csrf
-                
-                                <input type="hidden" name="_method" value="DELETE">
-                
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                
-                            </form>
-                
+                $no=0;
+
+                @endphp
+
+                @foreach ($portfolio as $portfolio)
+
+                    <tr>
+
+                        <td>{{ ++$no }}</td>
+
+                        <td>
+
+                            <img src="{{ asset('storage/'.$portfolio->cover) }}" alt="" style="height: 100px; width: 200px">
+
                         </td>
-            
+
+                        <td>{{ $portfolio->name }}</td>
+
+                        <td>{{ $portfolio->date }}</td>
+
+                        <td>
+
+                            <a href="{{route('admin.portfolio.edit', [$portfolio->id])}}" class="btn btn-info btn-sm"> Edit </a>
+
+                            <form method="POST" action="{{route('admin.portfolio.destroy', [$portfolio->id])}}" class="d-inline" onsubmit="return confirm('Delete this portfolio permanently?')">
+
+                                @csrf
+
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+
+                            </form>
+
+                        </td>
+
                     </tr>
-            
+
                     @endforeach
-        
+
                 </tbody>
-    
+
             </table>
 
         </div>

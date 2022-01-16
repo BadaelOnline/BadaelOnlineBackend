@@ -2,12 +2,25 @@
 
 namespace App\Repositories;
 
+use App\Models\Page\Page;
+use App\Models\Page\PageTranslation;
 use App\Models\Partner\Partner;
+use App\Models\Partner\PartnerTranslation;
 use App\Repositories\Interfaces\PartnerRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PartnerRepository implements PartnerRepositoryInterface{
+
+    private $partner;
+    private $partnerTranslation;
+    public function __construct(Partner $partner, PartnerTranslation $partnerTranslation)
+    {
+        $this->partner = $partner;
+        $this->partnerTranslation = $partnerTranslation;
+    }
+
     public function index()
    {
        $partner = Partner::orderBy('id','desc')->get();
@@ -21,27 +34,69 @@ class PartnerRepository implements PartnerRepositoryInterface{
 
    public function store(Request $request)
    {
-       $partner = new Partner();
-       $partner->name = $request->name;
-       $partner->link = $request->link;
+    try {
+        /** transformation to collection */
+        $allpartners= collect($request->partner)->all();
 
-       $cover = $request->file('cover');
+        $request->is_active ? $is_active = true : $is_active = false;
 
-       if($cover){
-       $cover_path = $cover->store('images/partner', 'public');
+        $cover = $request->file('cover');
+        if($cover){
+        $cover_path = $cover->store('images/partner', 'public');
+        // $coverName= 'images/banner'. 'public' . '/' .$cover-> getClientOriginalName();
+        }
 
-       $partner->cover = $cover_path;
-       }
+        DB::beginTransaction();
+        //create the default language's banner
+        $unTransPartner_id = $this->partner->insertGetId([
+            'link' => $request['link'],
+            'is_active' => $request->is_active = 1,
+            'cover' => $cover_path,
+        ]);
 
-      if ( $partner->save()) {
+        //check the Banner and request
+        if (isset($allpartners) && count($allpartners)) {
+            //insert other traslations for Banners
+            foreach ($allpartners as $allpartner) {
+                $transPartner_arr[] = [
+                    'name' => $allpartner ['name'],
+                    'local' => $allpartner['local'],
+                    'partner_id' => $unTransPartner_id
+                ];
+            }
+            $this->partnerTranslation->insert($transPartner_arr);
+        }
+        DB::commit();
 
-       return redirect()->route('admin.partner')->with('success', 'partner added successfully');
+        return redirect()->route('admin.partner')->with('success', 'partner added successfully');
 
-      } else {
+    } catch (\Exception $ex) {
+        DB::rollback();
+        return $ex->getMessage();
+        return redirect()->route('admin.partner.create')->with('error', 'partner failed to add');
+    }
 
-       return redirect()->route('admin.partner.create')->with('error', 'partner failed to add');
+    //    $partner = new Partner();
+    //    $partner->name = $request->name;
+    //    $partner->link = $request->link;
 
-      }
+    //    $cover = $request->file('cover');
+
+    //    if($cover){
+    //    $cover_path = $cover->store('images/partner', 'public');
+
+    //    $partner->cover = $cover_path;
+    //    }
+
+    //   if ( $partner->save()) {
+
+    //    return redirect()->route('admin.partner')->with('success', 'partner added successfully');
+
+    //   } else {
+
+    //    return redirect()->route('admin.partner.create')->with('error', 'partner failed to add');
+
+    //   }
    }
 
    public function show($id)

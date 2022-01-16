@@ -209,9 +209,10 @@
             {{-- dropdown language --}}
             <div class="col-sm-4 m-2">
                 <select class="form-control" id="selectTeam" >
-                    @foreach(config('app.languages') as $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
+                    {{-- @foreach(config('app.languages') as $lang) --}}
+                    <option value="en" <?php  ( App::setLocale('en'))?>>EN</option>
+                    <option value="ar" <?php  ( App::setLocale('ar'))?>>AR</option>
+                    {{-- @endforeach --}}
                 </select>
             </div>
                 {{-- @foreach (config('app.languages') as $locale)
@@ -399,6 +400,19 @@
         },
     });
   });
+  //language
+    $("#selectTeam").change(function(){
+      var lang = document.getElementById("selectTeam").value;
+      if(lang == 'en'){
+        App::setLocale('en')
+        console.log(lang);
+      }else{
+        console.log(lang);
+        App::setLocale('ar')
+      }
+        // var lang = document.getElementById("selectTeam").value;
+        // localStorage.setItem('lang',lang);
+    });
   // notification count
   var count = $('#count'), c ;
     c = parseInt(count.html());

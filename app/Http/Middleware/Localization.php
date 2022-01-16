@@ -20,10 +20,14 @@ class Localization
     public function handle(Request $request, Closure $next)
     {
         //    Check header request
-        if (session()->has('locale')) {
+        if (Session::has('locale')) {
         // set laravel localization
-            App::setLocale(session()->get('locale'));
+            $locale = Session::get('locale',Config::get('app.locale'));
+        } else{
+            $locale = 'en';
+            // App::setLocale(session()->get('locale'));
         }
+        App::setLocale($locale);
         /**
      * requests hasHeader is used to check the Accept-Language header from the REST API's
      */

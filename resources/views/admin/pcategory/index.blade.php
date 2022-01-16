@@ -10,8 +10,8 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Portfolio Categories</h1>     
-   
+<h1 class="h3 mb-2 text-gray-800">Portfolio Categories</h1>
+
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -30,13 +30,20 @@
 
         <form class="form-inline" action="{{ route('admin.pcategory.store') }}" method="POST">
             @csrf
+
+            @foreach(config('app.languages') as $index => $lang)
+
             <div class="form-group mx-sm-3 mb-2">
               <label for="name" class="sr-only">Name</label>
-              <input type="text" name="name" class="form-control {{$errors->first('name') ? "is-invalid" : "" }}" value="{{old('name')}}" id="name" placeholder="Name" required>
-              <div class="invalid-feedback">
-                {{ $errors->first('name') }}    
-            </div> 
+                <input type="text" name='pcategory[{{$index}}][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="[{{ $lang }}] ex: Wiklop">
+                <input type="text" name='pcategory[{{$index}}][local]' value='{{$lang}}' hidden>
+                <div class="invalid-feedback">
+                {{ $errors->first('name') }}
+                </div>
             </div>
+
+            @endforeach
+
             <button type="submit" class="btn btn-primary mb-2">Tambah Category</button>
           </form>
 
@@ -65,41 +72,41 @@
                 <tbody>
 
                 @php
-                
+
                 $no=0;
-                
+
                 @endphp
-                
+
                 @foreach ($pcategory as $pcategory)
-                     
-                    <tr> 
-             
-                        <td>{{ ++$no }}</td>  
-                
-                        <td>{{ $pcategory->name }}</td> 
-                
-                        <td>    
-                
+
+                    <tr>
+
+                        <td>{{ ++$no }}</td>
+
+                        <td>{{ $pcategory->name }}</td>
+
+                        <td>
+
                             <a href="{{route('admin.pcategory.edit', [$pcategory->id])}}" class="btn btn-info btn-sm"> Edit </a>
-                
+
                             <form method="POST" action="{{route('admin.pcategory.destroy', [$pcategory->id])}}" class="d-inline" onsubmit="return confirm('Delete this pcategory permanently?')">
-                
+
                                 @csrf
-                
+
                                 <input type="hidden" name="_method" value="DELETE">
-                
+
                                 <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                
+
                             </form>
-                
+
                         </td>
-            
+
                     </tr>
-            
+
                     @endforeach
-        
+
                 </tbody>
-    
+
             </table>
 
         </div>

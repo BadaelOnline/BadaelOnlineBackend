@@ -53,6 +53,7 @@ class PostRepository implements PostRepositoryInterface{
     {
 
         try {
+            return $request->all();
             // /** transformation to collection */
             $allposts = collect($request->post)->all();
 

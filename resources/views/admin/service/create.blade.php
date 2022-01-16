@@ -36,6 +36,7 @@
   width: 100%;
   height: 100%;
 }
+
 </style>
 
 @endsection
@@ -52,7 +53,7 @@
     @csrf
 
     <div class="container">
-        
+
         <div class="form-group">
             <div class="picture-container">
 
@@ -63,8 +64,8 @@
                     <input type="file" id="wizard-picture" name="icon" class="form-control {{$errors->first('icon') ? "is-invalid" : "" }} ">
 
                     <div class="invalid-feedback">
-                    {{ $errors->first('icon') }}    
-                    </div>  
+                    {{ $errors->first('icon') }}
+                    </div>
 
                 </div>
                 <h6>Choose Photo</h6>
@@ -80,30 +81,33 @@
                 <input type="text" name='icon' class="form-control {{$errors->first('icon') ? "is-invalid" : "" }} " value="{{old('icon')}}" id="icon" placeholder="example: icofont-map">
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('icon') }}    
-                </div>   
+                    {{ $errors->first('icon') }}
+                </div>
 
             </div>
-           
+
             <a href="https://icofont.com/icons" target="_blank" rel="noopener noreferrer">
-           
+
                 <span class="col-sm-2 col-form-label" style="color: blue">https://icofont.com/icons</span>
-        
+
             </a>
 
         </div> --}}
 
+        @foreach(config('app.languages') as $index => $lang)
+
         <div class="form-group ml-5">
 
-            <label for="title" class="col-sm-2 col-form-label">Title</label>
+            <label for="title" class="col-sm-2 col-form-label">Title [{{ $lang }}]</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='title' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
+                <input type="text" name='service[{{$index}}][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
+                <input type="text" name='service[{{$index}}][local]' value='{{$lang}}' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('title') }}    
-                </div>   
+                    {{ $errors->first('title') }}
+                </div>
 
             </div>
 
@@ -111,15 +115,16 @@
 
         <div class="form-group ml-5">
 
-            <label for="quote" class="col-sm-2 col-form-label">Quote</label>
+            <label for="quote" class="col-sm-2 col-form-label">Quote [{{ $lang }}]</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='quote' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote')}}" id="quote" placeholder="Quote">
+                <input type="text" name='service[{{$index}}][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote')}}" id="quote" placeholder="Quote">
+                <input type="text" name='service[{{$index}}][local]' value='{{$lang}}' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('quote') }}    
-                </div>   
+                    {{ $errors->first('quote') }}
+                </div>
 
             </div>
 
@@ -127,35 +132,36 @@
 
         <div class="form-group ml-5">
 
-            <label for="desc" class="col-sm-2 col-form-label">Desc</label>
+            <label for="desc" class="col-sm-2 col-form-label">Desc [{{ $lang }}]</label>
 
             <div class="col-sm-9">
 
                 {{-- <input type="text" class="form-control" id="title" placeholder="Title"> --}}
 
-                <textarea name="desc" id="summernote" cols="40" rows="10"  class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc')}}</textarea>
+                <textarea name="service[{{$index}}][desc]" id="summernote" cols="40" rows="10"  class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc')}}</textarea>
+                <input type="text" name='service[{{$index}}][local]' value='{{$lang}}' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('desc') }}    
-                </div> 
+                    {{ $errors->first('desc') }}
+                </div>
 
-            </div>   
-            
-             
-   
-        </div>
-   
-        <div class="form-group ml-5">
-   
-            <div class="col-sm-3">
-   
-                <button type="submit" class="btn btn-primary">Create</button>
-   
             </div>
-   
+
         </div>
 
-    </div>      
+        @endforeach
+
+        <div class="form-group ml-5">
+
+            <div class="col-sm-3">
+
+                <button type="submit" class="btn btn-primary">Create</button>
+
+            </div>
+
+        </div>
+
+    </div>
 
   </form>
 @endsection

@@ -10,8 +10,8 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Services</h1>     
-   
+<h1 class="h3 mb-2 text-gray-800">Services</h1>
+
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -59,45 +59,49 @@
                 <tbody>
 
                 @php
-                
+
                 $no=0;
-                
+
                 @endphp
-                
+
                 @foreach ($service as $service)
-                     
-                    <tr> 
-             
-                        <td>{{ ++$no }}</td>  
-             
-                        <td> {{ $service->icon }} </td>    
-                
-                        <td>{{ $service->title }}</td>    
-                
-                        <td>{{ $service->quote }}</td>     
-                
-                        <td>    
-                
-                            <a href="{{route('admin.service.edit', [$service->id])}}" class="btn btn-info btn-sm"> Edit </a>
-                
-                            <form method="POST" action="{{route('admin.service.destroy', [$service->id])}}" class="d-inline" onsubmit="return confirm('Delete this service permanently?')">
-                
-                                @csrf
-                
-                                <input type="hidden" name="_method" value="DELETE">
-                
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                
-                            </form>
-                
+
+                    <tr>
+
+                        <td>{{ ++$no }}</td>
+
+                        <td>
+
+                            <img src="{{ asset('storage/'.$service->icon) }}" alt="" style="height: 100px; width: 200px">
+
                         </td>
-            
+
+                        <td>{{ $service->title }}</td>
+
+                        <td>{{ $service->quote }}</td>
+
+                        <td>
+
+                            <a href="{{route('admin.service.edit', [$service->id])}}" class="btn btn-info btn-sm"> Edit </a>
+
+                            <form method="POST" action="{{route('admin.service.destroy', [$service->id])}}" class="d-inline" onsubmit="return confirm('Delete this service permanently?')">
+
+                                @csrf
+
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+
+                            </form>
+
+                        </td>
+
                     </tr>
-            
+
                     @endforeach
-        
+
                 </tbody>
-    
+
             </table>
 
         </div>

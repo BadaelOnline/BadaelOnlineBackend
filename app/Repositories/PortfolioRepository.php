@@ -3,15 +3,27 @@
 namespace App\Repositories;
 
 use App\Models\Pcategory\Pcategory;
+use App\Models\Pcategory\PcategoryTranslation;
 use App\Models\Portfolio\Portfolio;
+use App\Models\Portfolio\PortfolioTranslation;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Repositories\Interfaces\PortfolioRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class PortfolioRepository implements PortfolioRepositoryInterface{
+
+    private $portfolio;
+    private $portfolioTranslation;
+    public function __construct(Portfolio $portfolio, PortfolioTranslation $portfolioTranslation)
+    {
+        $this->portfolio = $portfolio;
+        $this->portfolioTranslation = $portfolioTranslation;
+    }
+
     public function index()
     {
         $portfolio = Portfolio::orderBy('id','desc')->get();
@@ -28,46 +40,61 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
 
     public function store(Request $request)
     {
-        Validator::make($request->all(), [
-            "cover" => "required",
-            "category" => "required",
-            "desc" => "required"
-        ])->validate();
+        try{
+            /** transformation to collection */
+            $allportfolioes = collect($request->portfolio)->all();
 
-        $portfolio = new Portfolio();
-        $portfolio->pcategory_id = $request->category;
-        $portfolio->name = $request->name;
-        $portfolio->slug = Str::slug($request->name);
-        $portfolio->client = $request->client;
-        $portfolio->desc = $request->desc;
-        $portfolio->date = $request->date;
+            $slug= $request->portfolio['English']['name'];
 
-        //image desktop
-        $cover = $request->file('cover');
+            $cover = $request->file('cover');
+            if($cover){
+            $cover_path = $cover->store('images/portfolio', 'public');
+            // $coverName= 'images/banner'. 'public' . '/' .$cover-> getClientOriginalName();
+            }
 
-        if($cover){
-        $cover_path = $cover->store('images/portfolio', 'public');
+            $mobileImage = $request->file('mobileImage');
+            if($mobileImage){
+            $mobileImage_path = $mobileImage->store('images/portfolio', 'public');
+            // $coverName= 'images/banner'. 'public' . '/' .$cover-> getClientOriginalName();
+            }
 
-        $portfolio->cover = $cover_path;
+            $request->is_active ? $is_active = true : $is_active = false;
+
+            DB::beginTransaction();
+            // create the default language's banner
+            $unTransPortfolio_id = $this->portfolio->insertGetId([
+                'slug' => $slug ,
+                'pcategory_id' => $request['category'],
+                'mobileImage' => $mobileImage_path,
+                'cover' => $cover_path,
+                'link' => $request['link'],
+                'date' => $request['date'],
+                'is_active' => $request->is_active = 1
+            ]);
+
+            // check the Category and request
+            if(isset($allportfolioes) && count($allportfolioes)){
+                // insert other translation for Categories
+                foreach ($allportfolioes as $allportfolio){
+                    $transPortfolio_arr[] = [
+                        'name' => $allportfolio ['name'],
+                        'local' => $allportfolio['local'],
+                        'client' => $allportfolio['client'],
+                        'desc' => $allportfolio['desc'],
+                        'portfolio_id' => $unTransPortfolio_id
+                    ];
+                }
+
+                $this->portfolioTranslation->insert($transPortfolio_arr);
+            }
+            DB::commit();
+
+            return redirect()->route('admin.portfolio')->with('success', 'Data added successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.portfolio.create')->with('error', 'Data failed to add');
         }
-
-        //image mobile
-        $mobileImage = $request->file('mobileImage');
-
-        if($mobileImage){
-        $mobileImage_path = $mobileImage->store('images/portfolio', 'public');
-
-        $portfolio->mobileImage = $mobileImage_path;
-        }
-        if ($portfolio->save()) {
-
-                return redirect()->route('admin.portfolio')->with('success', 'Data added successfully');
-
-               } else {
-
-                return redirect()->route('admin.portfolio.create')->with('error', 'Data failed to add');
-
-               }
     }
 
     public function show($id)
