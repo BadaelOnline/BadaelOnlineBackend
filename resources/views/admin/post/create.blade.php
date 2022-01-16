@@ -88,17 +88,16 @@
 
         </div>
 
-        <h1>{{ $lang }}</h1>
-
+        {{-- <h1>{{ Storage::get('local') }}</h1> --}}
         {{-- @foreach(config('app.languages') as $index => $lang) --}}
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="title" class="col-sm-2 col-form-label">Title</label>
+            <label for="title" class="col-sm-2 col-form-label">Title Arabic</label>
 
             <div class="col-sm-9">
-                <input type="text" name='post[title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
-                <input type="text" name='post[local]' id="local" value="{{ $lang }}">
+                <input type="text" name='post[ar][title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
+                <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
                 <div class="invalid-feedback">
                     {{ $errors->first('post.title') }}
                 </div>
@@ -107,14 +106,46 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 en" id="h2" style="">
 
-            <label for="body" class="col-sm-2 col-form-label">Desc</label>
+            <label for="title" class="col-sm-2 col-form-label">Title English</label>
+
+            <div class="col-sm-9">
+                <input type="text" name='post[en][title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
+                <input type="text" name='post[en][local]' id="local" value="en" hidden>
+                <div class="invalid-feedback">
+                    {{ $errors->first('post.title') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- desc --}}
+        <div class="form-group ml-5 ar" id="h1">
+
+            <label for="body" class="col-sm-2 col-form-label">Desc Arabic</label>
 
             <div class="col-sm-9">
 
-                <textarea name='post[body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
-                <input type="text" name='post[local]' id="local" value="{{ $lang }}">
+                <textarea name='post[ar][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
+                <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
+                <div class="invalid-feedback">
+                    {{ $errors->first('body') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group ml-5 en" id="h2">
+
+            <label for="body" class="col-sm-2 col-form-label">Desc English</label>
+
+            <div class="col-sm-9">
+
+                <textarea name='post[en][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
+                <input type="text" name='post[en][local]' id="local" value="en" hidden>
                 <div class="invalid-feedback">
                     {{ $errors->first('body') }}
                 </div>
@@ -217,13 +248,28 @@
 
 <script>
     // language
-const lang = localStorage.getItem('lang') || 'en';
+    window.onload = function () {
+        if(localStorage.getItem('local') == 'en'){
+            $querySelectorAll
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+    }
 
     $(function () {
         $("#selectLang").change(function() {
             var val = $(this).val();
-            localStorage.setItem('lang',val);
-            console.log(val);
+            localStorage.setItem('local',val);
+            if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+            }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+            }
         });
     });
     // Prepare the preview for profile picture
