@@ -99,7 +99,7 @@ class BannerRepository implements BannerRepositoryInterface{
 
             DB::beginTransaction();
             // //create the default language's banner
-            $unTransBanner_id = $this->banner->where('banners.id', $id)
+            $unTransBanner_id = $this->banner->where('banners.id', $banner->id)
                 ->update([
                     'link' => $request['link'],
                     'is_active' => $request->is_active = 1,
@@ -115,7 +115,7 @@ class BannerRepository implements BannerRepositoryInterface{
                         'title' => $allbanner ['title'],
                         'local' => $allbanner['local'],
                         'desc' => $allbanner['desc'],
-                        'banner_id' => $unTransBanner_id
+                        'banner_id' =>  $banner->id
                     ]);
                 }
             DB::commit();

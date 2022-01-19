@@ -5,7 +5,7 @@ namespace App\Repositories\Interfaces;
 use Illuminate\Http\Request;
 
 interface ServiceRepositoryInterface{
-    
+
     public function index();
 
     public function create();
@@ -16,7 +16,7 @@ interface ServiceRepositoryInterface{
 
     public function edit($id);
 
-    public function update(Request $request, $id);
+    public function update($id);
 
     public function destroy($id);
 }

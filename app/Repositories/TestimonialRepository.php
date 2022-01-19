@@ -7,20 +7,23 @@ use App\Models\Testimonial\TestimonialTranslation;
 use App\Repositories\Interfaces\TestimonialRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TestimonialRepository implements TestimonialRepositoryInterface{
 
+    private $request;
     private $testimonial;
     private $testimonialTranslation;
-    public function __construct(Testimonial $testimonial, TestimonialTranslation $testimonialTranslation)
+    public function __construct(Testimonial $testimonial, TestimonialTranslation $testimonialTranslation,Request $request)
     {
         $this->testimonial = $testimonial;
         $this->testimonialTranslation = $testimonialTranslation;
+        $this->request = $request;
     }
 
     public function index()
     {
-        $testi = Testimonial::orderBy('id','desc')->get();
+        $testi = $this->testimonial::orderBy('id','desc')->get();
 
         return view('admin.testi.index',compact('testi'));
     }
@@ -74,11 +77,67 @@ class TestimonialRepository implements TestimonialRepositoryInterface{
             return $ex->getMessage();
             return redirect()->route('admin.testi.create')->with('error', 'Data failed to add');
         }
-        // $testi = new Testimonial();
+    }
+
+    public function show($id)
+    {
+
+    }
+
+    public function edit($id)
+    {
+        $testi = $this->testimonial::findOrFail($id);
+
+        return view('admin.testi.edit',compact('testi'));
+    }
+
+    public function update($id)
+    {
+        try{
+            $testimonial = $this->testimonial::findOrFail($id);
+
+            $photo = $this->request->file('photo');
+            if($photo){
+                if($this->request->photo && file_exists(storage_path('app/public/images/' . $this->request->photo))){
+                    Storage::delete('public/'. $this->request->photo);
+                }
+                $cover_path = $photo->store('images/testi', 'public');
+            }
+
+            DB::beginTransaction();
+            // //create the default language's testimonial
+            $unTransTestimonial_id = $this->testimonial->where('testimonials.id', $testimonial->id)
+                ->update([
+                    'status' => $this->request['status'],
+                    'is_active' => $this->request->is_active = 1,
+                    'photo' => $cover_path,
+            ]);
+
+            $alltestimoniales = array_values($this->request->testimonial);
+                //insert other translations for testimonial
+                foreach ($alltestimoniales as $alltestimonial) {
+                    $this->testimonialTranslation->where('testimonial_id', $id)
+                    ->where('local', $alltestimonial['local'])
+                    ->update([
+                        'name' => $alltestimonial ['name'],
+                        'local' => $alltestimonial['local'],
+                        'profession' => $alltestimonial['profession'],
+                        'desc' => $alltestimonial['desc'],
+                        'testimonial_id' =>  $unTransTestimonial_id
+                    ]);
+                }
+            DB::commit();
+            return redirect()->route('admin.testi')->with('success', 'Data updated successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.testi.edit')->with('error', 'Data failed to update');
+        }
+        // $testi = Testimonial::findOrFail($id);
         // $testi->name = $request->name;
         // $testi->profession = $request->profession;
         // $testi->desc = $request->desc;
-        // $testi->status = 'PUBLISH';
+        // $testi->status = $request->status;
 
         // $photo = $request->file('photo');
 
@@ -94,62 +153,18 @@ class TestimonialRepository implements TestimonialRepositoryInterface{
 
         // if ($testi->save()) {
 
-        //     return redirect()->route('admin.testi')->with('success', 'Data added successfully');
+        //     return redirect()->route('admin.testi')->with('success', 'Data updated successfully');
 
         //    } else {
 
-        //     return redirect()->route('admin.testi.create')->with('error', 'Data failed to add');
+        //     return redirect()->route('admin.testi.edit')->with('error', 'Data failed to update');
 
         //    }
-
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        $testi = Testimonial::findOrFail($id);
-
-        return view('admin.testi.edit',compact('testi'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $testi = Testimonial::findOrFail($id);
-        $testi->name = $request->name;
-        $testi->profession = $request->profession;
-        $testi->desc = $request->desc;
-        $testi->status = $request->status;
-
-        $photo = $request->file('photo');
-
-        if($photo){
-
-            $cover_path = $photo->store('images/testi', 'public');
-
-            $testi['photo'] = $cover_path;
-
-        }else{
-            $testi->photo = 'images/testi/avatar.png';
-        }
-
-        if ($testi->save()) {
-
-            return redirect()->route('admin.testi')->with('success', 'Data updated successfully');
-
-           } else {
-
-            return redirect()->route('admin.testi.edit')->with('error', 'Data failed to update');
-
-           }
     }
 
     public function destroy($id)
     {
-        $testi = Testimonial::findOrFail($id);
+        $testi = $this->testimonial::findOrFail($id);
 
         $testi->delete();
 

@@ -32,8 +32,8 @@ class TagService
         return $this->tagManager->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->tagManager->update($request, $id);
+    public function update($id){
+        return $this->tagManager->update($id);
     }
 
     public function destroy($id){

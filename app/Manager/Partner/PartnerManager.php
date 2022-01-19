@@ -32,8 +32,8 @@ class PartnerManager
         return $this->partnerRepository->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->partnerRepository->update($id,$request);
+    public function update($id){
+        return $this->partnerRepository->update($id);
     }
 
     public function destroy($id){

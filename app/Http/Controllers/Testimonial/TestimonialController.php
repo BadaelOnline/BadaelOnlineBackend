@@ -34,8 +34,8 @@ class TestimonialController extends Controller
         return $this->testimonialService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->testimonialService->update($request, $id);
+    public function update($id){
+        return $this->testimonialService->update($id);
     }
 
     public function destroy($id){

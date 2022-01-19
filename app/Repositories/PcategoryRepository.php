@@ -11,17 +11,19 @@ use Illuminate\Support\Facades\Validator;
 
 class PcategoryRepository implements PcategoryRepositoryInterface{
 
+    private $request;
     private $pcategory;
     private $pcategoryTranslation;
-    public function __construct(Pcategory $pcategory, PcategoryTranslation $pcategoryTranslation)
+    public function __construct(Pcategory $pcategory, PcategoryTranslation $pcategoryTranslation, Request $request)
     {
+        $this->request = $request;
         $this->pcategory = $pcategory;
         $this->pcategoryTranslation = $pcategoryTranslation;
     }
 
     public function index()
     {
-        $pcategory = Pcategory::orderBy('id','desc')->get();
+        $pcategory = $this->pcategory::orderBy('id','desc')->get();
 
         return view('admin.pcategory.index',compact('pcategory'));
     }
@@ -61,22 +63,6 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
             // return $ex->getMessage();
             return redirect()->route('admin.pcategory')->with('error', 'Data failed to add');
         }
-        // Validator::make($request->all(), [
-        //     "name" => "required|unique:pcategories"
-        // ])->validate();
-
-        // $pcategory = new Pcategory();
-        // $pcategory->name = $request->name;
-
-        // if ( $pcategory->save()) {
-
-        //     return redirect()->route('admin.pcategory')->with('success', 'Data added successfully');
-
-        //    } else {
-
-        //     return redirect()->route('admin.pcategory')->with('error', 'Data failed to add');
-
-        //    }
     }
 
     public function show($id)
@@ -86,34 +72,46 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
 
     public function edit($id)
     {
-        $pcategory = Pcategory::findOrFail($id);
+        $pcategory = $this->pcategory::findOrFail($id);
 
         return view('admin.pcategory.edit',compact('pcategory'));
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        Validator::make($request->all(), [
-            "name" => "required"
-        ])->validate();
+        try{
 
-        $pcategory = Pcategory::findOrFail($id);
-        $pcategory->name = $request->name;
+            $pcategory = $this->pcategory::findOrFail($id);
 
-        if ( $pcategory->save()) {
+            DB::beginTransaction();
 
-            return redirect()->route('admin.pcategory')->with('success', 'Data updated successfully');
+            $unTransPcategory_id = $pcategory->where('pcategories.id',$pcategory->id)
+                ->update([
+                    'is_active' => $this->request->is_active = 1
+                ]);
 
-           } else {
-
+                $allpcategories = array_values($this->request->pcategory);
+                // insert other translations for Pcategory
+                foreach ($allpcategories as $allpcategory){
+                    $this->pcategoryTranslation->where('pcategory_id',$id)
+                    ->where('local',$allpcategory['local'])
+                    ->update([
+                        'name' => $allpcategory ['name'],
+                        'pcategory_id' =>  $unTransPcategory_id
+                    ]);
+                }
+                DB::commit();
+                return redirect()->route('admin.pcategory')->with('success', 'Data updated successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.pcategory.create')->with('error', 'Data failed to update');
-
-           }
+        }
     }
 
     public function destroy($id)
     {
-        $pcategory = Pcategory::findOrFail($id);
+        $pcategory = $this->pcategory::findOrFail($id);
         $pcategory->delete();
 
         return redirect()->route('admin.pcategory')->with('success', 'Data deleted successfully');

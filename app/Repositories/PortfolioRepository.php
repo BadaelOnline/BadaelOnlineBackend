@@ -16,24 +16,28 @@ use Illuminate\Support\Facades\DB;
 
 class PortfolioRepository implements PortfolioRepositoryInterface{
 
+    private $request;
+    private $pcategory;
     private $portfolio;
     private $portfolioTranslation;
-    public function __construct(Portfolio $portfolio, PortfolioTranslation $portfolioTranslation)
+    public function __construct(Portfolio $portfolio, PortfolioTranslation $portfolioTranslation, Pcategory $pcategory, Request $request)
     {
+        $this->request = $request;
+        $this->pcategory = $pcategory;
         $this->portfolio = $portfolio;
         $this->portfolioTranslation = $portfolioTranslation;
     }
 
     public function index()
     {
-        $portfolio = Portfolio::orderBy('id','desc')->get();
+        $portfolio = $this->portfolio::orderBy('id','desc')->get();
 
         return view('admin.portfolio.index',compact('portfolio'));
     }
 
     public function create()
     {
-        $categories = Pcategory::get();
+        $categories = $this->portfolio::get();
 
         return view('admin.portfolio.create',compact('categories'));
     }
@@ -44,24 +48,22 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
             /** transformation to collection */
             $allportfolioes = collect($request->portfolio)->all();
 
-            $slug= $request->portfolio['English']['name'];
+            $slug= $request->portfolio['en']['name'];
 
             $cover = $request->file('cover');
             if($cover){
-            $cover_path = $cover->store('images/portfolio', 'public');
-            // $coverName= 'images/banner'. 'public' . '/' .$cover-> getClientOriginalName();
+                $cover_path = $cover->store('images/portfolio', 'public');
             }
 
             $mobileImage = $request->file('mobileImage');
             if($mobileImage){
-            $mobileImage_path = $mobileImage->store('images/portfolio', 'public');
-            // $coverName= 'images/banner'. 'public' . '/' .$cover-> getClientOriginalName();
+                $mobileImage_path = $mobileImage->store('images/portfolio', 'public');
             }
 
             $request->is_active ? $is_active = true : $is_active = false;
 
             DB::beginTransaction();
-            // create the default language's banner
+            // create the default language's portfolio
             $unTransPortfolio_id = $this->portfolio->insertGetId([
                 'slug' => $slug ,
                 'pcategory_id' => $request['category'],
@@ -72,9 +74,9 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
                 'is_active' => $request->is_active = 1
             ]);
 
-            // check the Category and request
+            // check the Portfolio and request
             if(isset($allportfolioes) && count($allportfolioes)){
-                // insert other translation for Categories
+                // insert other translation for Portfolioes
                 foreach ($allportfolioes as $allportfolio){
                     $transPortfolio_arr[] = [
                         'name' => $allportfolio ['name'],
@@ -104,68 +106,78 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
 
     public function edit($id)
     {
-        $portfolio = Portfolio::findOrFail($id);
-        $categories = Pcategory::get();
+        $portfolio = $this->portfolio::findOrFail($id);
+        $categories = $this->pcategory::get();
 
         return view('admin.portfolio.edit',compact('portfolio','categories'));
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        Validator::make($request->all(), [
-            "category" => "required",
-            "desc" => "required"
-        ])->validate();
+        try{
+            $portfolio = $this->portfolio::findOrFail($id);
 
-        $portfolio = Portfolio::findOrFail($id);
-        $portfolio->pcategory_id = $request->category;
-        $portfolio->name = $request->name;
-        $portfolio->client = $request->client;
-        $portfolio->desc = $request->desc;
-        $portfolio->date = $request->date;
+            $slug= $this->request->portfolio['en']['name'];
 
         // image desktop
-        $new_cover = $request->file('cover');
+        $new_cover = $this->request->file('cover');
 
         if($new_cover){
-        if($portfolio->cover && file_exists(storage_path('app/public/' . $portfolio->cover))){
-            Storage::delete('public/'. $portfolio->cover);
+            if($this->request->cover && file_exists(storage_path('app/public/' .$this->request->cover))){
+                Storage::delete('public/'. $this->request->cover);
+
+                $new_cover_path = $new_cover->store('images/portfolio', 'public');
+            }
         }
-
-        $new_cover_path = $new_cover->store('images/portfolio', 'public');
-
-        $portfolio->cover = $new_cover_path;
-
-        }
-
         // image mobile
-        $new_mobileImage = $request->file('mobileImage');
+        $new_mobileImage = $this->request->file('mobileImage');
 
         if($new_mobileImage){
-        if($portfolio->mobileImage && file_exists(storage_path('app/public/' . $portfolio->mobileImage))){
-            Storage::delete('public/'. $portfolio->mobileImage);
+            if($portfolio->mobileImage && file_exists(storage_path('app/public/' . $portfolio->mobileImage))){
+                Storage::delete('public/'. $portfolio->mobileImage);
+
+                $new_mobileImage_path = $new_mobileImage->store('images/portfolio', 'public');
+            }
         }
 
-        $new_mobileImage_path = $new_mobileImage->store('images/portfolio', 'public');
+            DB::beginTransaction();
+            // //create the default language's portfolio
+            $unTransPortfolio_id = $this->portfolio->where('portfolios.id', $portfolio->id)
+                ->update([
+                    'slug' => $slug,
+                    'pcategory_id' => $this->request['category'],
+                    'link' => $this->request['link'],
+                    'date' => $this->request['date'],
+                    'is_active' => $this->request->is_active = 1,
+                    'cover' => $new_cover_path,
+                    'mobileImage' => $new_mobileImage_path
+            ]);
 
-        $portfolio->mobileImage = $new_mobileImage_path;
-
+            $allportfolioes = array_values($this->request->portfolio);
+                //insert other translations for Portfolio
+                foreach ($allportfolioes as $allportfolio) {
+                    $this->portfolioTranslation->where('portfolio_id', $id)
+                    ->where('local', $allportfolio['local'])
+                    ->update([
+                        'name' => $allportfolio ['name'],
+                        'local' => $allportfolio['local'],
+                        'client' => $allportfolio['client'],
+                        'desc' => $allportfolio['desc'],
+                        'portfolio_id' =>  $unTransPortfolio_id
+                    ]);
+                }
+            DB::commit();
+            return redirect()->route('admin.portfolio')->with('success', 'Data updated successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.portfolio.edit')->with('error', 'Data failed to update');
         }
-
-        if ($portfolio->save()) {
-
-                return redirect()->route('admin.portfolio')->with('success', 'Data updated successfully');
-
-               } else {
-
-                return redirect()->route('admin.portfolio.edit')->with('error', 'Data failed to update');
-
-               }
     }
 
     public function destroy($id)
     {
-        $portfolio = Portfolio::findOrFail($id);
+        $portfolio = $this->portfolio::findOrFail($id);
         $portfolio->delete();
 
         return redirect()->route('admin.portfolio')->with('success', 'Data deleted successfully');

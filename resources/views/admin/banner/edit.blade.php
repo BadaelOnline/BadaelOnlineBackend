@@ -69,31 +69,73 @@
 
       </div>
 
-      @foreach(config('app.languages') as $index => $lang)
-
       <div class="form-group ml-5">
-        <label for="title" class="col-sm-2 col-form-label">Title [{{$lang}}]</label>
+
+        <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+
+        <div class="col-sm-9">
+            <select class="form-control" id="selectLang">
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
+        </div>
+
+    </div>
+
+    {{-- title --}}
+    <div class="form-group ml-5 en">
+        <label for="title" class="col-sm-2 col-form-label">Title English</label>
         <div class="col-sm-7">
-            <input type="text" name='banner[{{$index}}][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $banner->title}}" id="title" placeholder="Title">
-            <input type="text" name='banner[{{$index}}][local]' value='{{$lang}}' hidden>
+            <input type="text" name='banner[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $banner->title}}" id="title" placeholder="Title">
+            <input type="text" name='banner[en][local]' value='en' hidden>
             <div class="invalid-feedback">
                 {{ $errors->first('title') }}
             </div>
         </div>
     </div>
 
-    <div class="form-group ml-5">
-        <label for="desc" class="col-sm-2 col-form-label">Desc [{{$lang}}]</label>
+    <div class="form-group ml-5 ar">
+        <label for="title" class="col-sm-2 col-form-label">Title Arabic</label>
         <div class="col-sm-7">
-          <textarea name="banner[{{$index}}][desc]" id="desc" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $banner->desc}}</textarea>
-          <input type="text" name='banner[{{$index}}][local]' value='{{$lang}}' hidden>
+            <input type="text" name='banner[ar][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $banner->title}}" id="title" placeholder="Title">
+            <input type="text" name='banner[ar][local]' value='ar' hidden>
+            <div class="invalid-feedback">
+                {{ $errors->first('title') }}
+            </div>
+        </div>
+    </div>
+    {{-- desc --}}
+    <div class="form-group ml-5 en">
+
+        <label for="desc" class="col-sm-2 col-form-label">Desc English</label>
+
+        <div class="col-sm-7">
+          <textarea name="banner[en][desc]" id="desc" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $banner->desc}}</textarea>
+          <input type="text" name='banner[en][local]' value='en' hidden>
           <div class="invalid-feedback">
             {{ $errors->first('desc') }}
         </div>
+
         </div>
 
     </div>
-    @endforeach
+
+    <div class="form-group ml-5 ar">
+
+        <label for="desc" class="col-sm-2 col-form-label">Desc Arabic</label>
+
+        <div class="col-sm-7">
+          <textarea name="banner[ar][desc]" id="desc" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $banner->desc}}</textarea>
+          <input type="text" name='banner[ar][local]' value='ar' hidden>
+          <div class="invalid-feedback">
+            {{ $errors->first('desc') }}
+        </div>
+
+        </div>
+
+    </div>
+
     <div class="form-group ml-5">
       <label for="link" class="col-sm-2 col-form-label">Link</label>
       <div class="col-sm-7">
@@ -114,6 +156,30 @@
 
 @push('scripts')
 <script>
+    // language
+    window.onload = function () {
+        if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+    }
+
+    $(function () {
+        $("#selectLang").change(function() {
+            var val = $(this).val();
+            localStorage.setItem('local',val);
+            if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+        });
+    });
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){
       readURL(this);

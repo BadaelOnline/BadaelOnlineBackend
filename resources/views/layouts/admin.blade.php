@@ -207,25 +207,17 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             {{-- dropdown language --}}
-            <div class="col-sm-4 m-2">
-                <select class="form-control" id="selectTeam" >
-                    {{-- @foreach(config('app.languages') as $lang) --}}
-                    <option value="en" <?php  ( App::setLocale('en'))?>>EN</option>
-                    <option value="ar" <?php  ( App::setLocale('ar'))?>>AR</option>
-                    {{-- @endforeach --}}
-                </select>
-            </div>
-                {{-- @foreach (config('app.languages') as $locale)
-                    <li class="nav-item">
-                        <a class="nav-link"
-                            href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), $locale) }}"
-                            @if (app()->getLocale() == $locale)
-                            style="font-weight: bold; text-decoration: underline" @endif>
-                            {{ strtoupper($locale) }}</a>
-                    </li>
-                @endforeach --}}
-              {{-- <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>
-              <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a> --}}
+            {{-- <li class="dropdown m-4">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button">Languages</a>
+              <ul class="dropdown-menu">
+                <li><a href="{{url("locale/en")}}">EN</a></li>
+                <li><a href="{{url("locale/ar")}}">AR</a></li>
+              </ul>
+            </li> --}}
+            
+            <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>      
+            <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a> 
+            {{--  --}}
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -400,19 +392,6 @@
         },
     });
   });
-  //language
-    $("#selectTeam").change(function(){
-      var lang = document.getElementById("selectTeam").value;
-      if(lang == 'en'){
-        App::setLocale('en')
-        console.log(lang);
-      }else{
-        console.log(lang);
-        App::setLocale('ar')
-      }
-        // var lang = document.getElementById("selectTeam").value;
-        // localStorage.setItem('lang',lang);
-    });
   // notification count
   var count = $('#count'), c ;
     c = parseInt(count.html());

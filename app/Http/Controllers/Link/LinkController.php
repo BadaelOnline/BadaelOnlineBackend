@@ -33,8 +33,8 @@ class LinkController extends Controller
         return $this->linkService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->linkService->update($request, $id);
+    public function update($id){
+        return $this->linkService->update($id);
     }
 
     public function destroy($id){

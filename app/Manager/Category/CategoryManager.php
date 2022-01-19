@@ -32,8 +32,8 @@ class CategoryManager
         return $this->categoryRepository->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->categoryRepository->update($id,$request);
+    public function update($id){
+        return $this->categoryRepository->update($id);
     }
 
     public function destroy($id){

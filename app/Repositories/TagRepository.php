@@ -12,10 +12,12 @@ use Illuminate\Support\Str;
 
 class TagRepository implements TagRepositoryInterface{
 
+    private $request;
     private $tag;
     private $tagTranslation;
-    public function __construct(Tag $tag, TagTranslation $tagTranslation)
+    public function __construct(Tag $tag, TagTranslation $tagTranslation,Request $request)
     {
+        $this->request = $request;
         $this->tag = $tag;
         $this->tagTranslation = $tagTranslation;
     }
@@ -38,7 +40,7 @@ class TagRepository implements TagRepositoryInterface{
             /** transformation to collection */
             $alltags = collect($request->tag)->all();
 
-            $slug= $request->tag['English']['name'];
+            $slug= $request->tag['en']['name'];
 
             $request->is_active ? $is_active = true : $is_active = false;
 
@@ -72,27 +74,6 @@ class TagRepository implements TagRepositoryInterface{
             return $ex->getMessage();
             return redirect()->route('admin.tag')->with('error', 'Data failed to add');
         }
-        // Validator::make($request->all(), [
-        //     "name" => "required|unique:tags",
-        //     "keyword" => "required",
-        //     "meta_desc" => "required"
-        // ])->validate();
-
-        // $tag = new Tag();
-        // $tag->name = $request->name;
-        // $tag->slug = Str::slug($request->name);
-        // $tag->keyword = $request->keyword;
-        // $tag->meta_desc = $request->meta_desc;
-
-        // if ( $tag->save()) {
-
-        //     return redirect()->route('admin.tag')->with('success', 'Data added successfully');
-
-        //    } else {
-
-        //     return redirect()->route('admin.tag')->with('error', 'Data failed to add');
-
-        //    }
     }
 
     public function show($id)
@@ -102,33 +83,45 @@ class TagRepository implements TagRepositoryInterface{
 
     public function edit($id)
     {
-        $tag = Tag::findOrFail($id);
+        $tag = $this->tag::findOrFail($id);
         return view('admin.tag.edit',compact('tag'));
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        Validator::make($request->all(), [
-            "name" => "required|unique:tags",
-            "keyword" => "required",
-            "meta_desc" => "required"
-        ])->validate();
+        try{
+            $tag = $this->tag::findOrFail($id);
 
-        $tag = Tag::findOrFail($id);
-        $tag->name = $request->name;
-        $tag->slug = Str::slug($request->name);
-        $tag->keyword = $request->keyword;
-        $tag->meta_desc = $request->meta_desc;
+            $slug= $this->request->tag['en']['name'];
 
-        if ( $tag->save()) {
+            DB::beginTransaction();
 
-            return redirect()->route('admin.tag')->with('success', 'Data updated successfully');
+            $unTransTag_id = $tag->where('tags.id',$tag->id)
+                ->update([
+                    'slug' => $slug,
+                    'is_active' => $this->request->is_active = 1
+                ]);
 
-           } else {
-
+                $alltags = array_values($this->request->tag);
+                // insert other translations for Link
+                foreach ($alltags as $alltag){
+                    $this->tagTranslation->where('tag_id',$id)
+                    ->where('local',$alltag['local'])
+                    ->update([
+                        'name' => $alltag ['name'],
+                        'local' => $alltag['local'],
+                        'keyword' => $alltag['keyword'],
+                        'meta_desc' => $alltag['meta_desc'],
+                        'tag_id' =>  $unTransTag_id
+                    ]);
+                }
+                DB::commit();
+                return redirect()->route('admin.tag')->with('success', 'Data updated successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.tag')->with('error', 'Data failed to update');
-
-           }
+        }
     }
 
     public function destroy($id)

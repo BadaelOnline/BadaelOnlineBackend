@@ -21,8 +21,8 @@ class GeneralManager
         return $this->generalRepository->general();
     }
 
-    public function generalUpdate(Request $request){
-        return $this->generalRepository->generalUpdate($request);
+    public function generalUpdate(){
+        return $this->generalRepository->generalUpdate();
     }
 
     public function about(){

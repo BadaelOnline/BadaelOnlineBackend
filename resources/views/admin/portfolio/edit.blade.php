@@ -129,11 +129,27 @@
 
         <div class="form-group ml-5">
 
-            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+        </div>
+
+        {{-- name --}}
+        <div class="form-group ml-5 en">
+
+            <label for="name" class="col-sm-2 col-form-label">Name English</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='name' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $portfolio->name}}" id="name" placeholder="Project Name">
+                <input type="text" name='portfolio[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $portfolio->name}}" id="name" placeholder="Project Name">
+                <input type="text" name='portfolio[en][local]' value='en' hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('name') }}
@@ -143,14 +159,84 @@
 
         </div>
 
+        <div class="form-group ml-5 ar">
 
-        <div class="form-group ml-5">
-
-            <label for="client" class="col-sm-2 col-form-label">Client</label>
+            <label for="name" class="col-sm-2 col-form-label">Name Arabic</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='client' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client') ? old('client') : $portfolio->client}}" id="client" placeholder="client">
+                <input type="text" name='portfolio[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $portfolio->name}}" id="name" placeholder="Project Name">
+                <input type="text" name='portfolio[ar][local]' value='ar' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('name') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- desc --}}
+        <div class="form-group ml-5 en">
+
+            <label for="desc" class="col-sm-2 col-form-label">Desc English</label>
+
+            <div class="col-sm-9">
+
+                <textarea name="portfolio[en][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc') ? old('desc') : $portfolio->desc}}</textarea>
+                <input type="text" name='portfolio[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('desc') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group ml-5 ar">
+
+            <label for="desc" class="col-sm-2 col-form-label">Desc Arabic</label>
+
+            <div class="col-sm-9">
+
+                <textarea name="portfolio[ar][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc') ? old('desc') : $portfolio->desc}}</textarea>
+                <input type="text" name='portfolio[ar][local]' value='ar' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('desc') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- client --}}
+        <div class="form-group ml-5 en">
+
+            <label for="client" class="col-sm-2 col-form-label">Client English</label>
+
+            <div class="col-sm-9">
+
+                <input type="text" name='portfolio[en][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client') ? old('client') : $portfolio->client}}" id="client" placeholder="client">
+                <input type="text" name='portfolio[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('client') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group ml-5 ar">
+
+            <label for="client" class="col-sm-2 col-form-label">Client Arabic</label>
+
+            <div class="col-sm-9">
+
+                <input type="text" name='portfolio[ar][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client') ? old('client') : $portfolio->client}}" id="client" placeholder="client">
+                <input type="text" name='portfolio[ar][local]' value='ar' hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('client') }}
@@ -178,23 +264,6 @@
 
         <div class="form-group ml-5">
 
-            <label for="desc" class="col-sm-2 col-form-label">Desc</label>
-
-            <div class="col-sm-9">
-
-                <textarea name="desc" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc') ? old('desc') : $portfolio->desc}}</textarea>
-                <div class="invalid-feedback">
-                    {{ $errors->first('desc') }}
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="form-group ml-5">
-
             <div class="col-sm-3">
 
                 <button type="submit" class="btn btn-primary">Update</button>
@@ -211,6 +280,30 @@
 @push('scripts')
 
 <script>
+    // language
+    window.onload = function () {
+        if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+    }
+
+    $(function () {
+        $("#selectLang").change(function() {
+            var val = $(this).val();
+            localStorage.setItem('local',val);
+            if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+        });
+    });
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){
       readURL(this);

@@ -74,14 +74,46 @@
     
         </div>
 
-
         <div class="form-group ml-5">
 
-            <label for="title" class="col-sm-2 col-form-label">Title</label>
+            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+        </div>
+
+        {{-- title --}}
+        <div class="form-group ml-5 ar">
+
+            <label for="title" class="col-sm-2 col-form-label">Title Arabic</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='title' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $post->title}}" id="title" placeholder="Title">
+                <input type="text" name='post[ar][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $post->title}}" id="title" placeholder="Title">
+                <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('title') }}    
+                </div>   
+
+            </div>
+
+        </div>
+
+        <div class="form-group ml-5 en">
+
+            <label for="title" class="col-sm-2 col-form-label">Title English</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='post[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $post->title}}" id="title" placeholder="Title">
+                <input type="text" name='post[en][local]' id="local" value="en" hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('title') }}    
@@ -118,9 +150,9 @@
             <div class="col-sm-7">
 
                 <select name='tags[]' class="form-control {{$errors->first('tags') ? "is-invalid" : "" }} select2" id="tags" multiple>
-                    @foreach ($post->tags as $tag)
+                    {{-- @foreach ($post->tags as $tag)
                     <option selected value="{{ $tag->id }}">{{ $tag->name }}</option>
-                    @endforeach
+                    @endforeach --}}
                     
                     @foreach ($tags as $tags)
                         <option value="{{ $tags->id }}">{{ $tags->name }}</option>
@@ -133,14 +165,16 @@
             </div>
 
         </div>
+        {{-- desc --}}
+        <div class="form-group ml-5 ar">
 
-        <div class="form-group ml-5">
-
-            <label for="body" class="col-sm-2 col-form-label">Desc</label>
+            <label for="body" class="col-sm-2 col-form-label">Desc Arabic</label>
 
             <div class="col-sm-8">
 
-                <textarea name="body" class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body') ? old('body') : $post->body}}</textarea>
+                <textarea name="post[ar][body]" class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body') ? old('body') : $post->body}}</textarea>
+                <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
+
                 <div class="invalid-feedback">
                     {{ $errors->first('body') }}    
                 </div>   
@@ -149,13 +183,31 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 en">
 
-            <label for="keyword" class="col-sm-2 col-form-label">Keyword</label>
+            <label for="body" class="col-sm-2 col-form-label">Desc English</label>
+
+            <div class="col-sm-8">
+
+                <textarea name="post[en][body]" class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body') ? old('body') : $post->body}}</textarea>
+                <input type="text" name='post[en][local]' id="local" value="en" hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('body') }}    
+                </div>   
+
+            </div>
+
+        </div>
+        {{-- keyword --}}
+        <div class="form-group ml-5 ar">
+
+            <label for="keyword" class="col-sm-2 col-form-label">Keyword Arabic</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='keyword' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword') ? old('keyword') : $post->keyword}}" id="keyword" placeholder="Keyword">
+                <input type="text" name='post[ar][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword') ? old('keyword') : $post->keyword}}" id="keyword" placeholder="Keyword">
+                <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('keyword') }}    
@@ -165,13 +217,48 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 en">
 
-            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc</label>
+            <label for="keyword" class="col-sm-2 col-form-label">Keyword English</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='meta_desc' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc') ? old('meta_desc') : $post->meta_desc}}" id="meta_desc" placeholder="Meta Description">
+                <input type="text" name='post[en][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword') ? old('keyword') : $post->keyword}}" id="keyword" placeholder="Keyword">
+                <input type="text" name='post[en][local]' id="local" value="en" hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('keyword') }}    
+                </div>   
+
+            </div>
+
+        </div>
+        {{-- meta desc --}}
+        <div class="form-group ml-5 ar">
+
+            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc Arabic</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='post[ar][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc') ? old('meta_desc') : $post->meta_desc}}" id="meta_desc" placeholder="Meta Description">
+                <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('meta_desc') }}    
+                </div>   
+
+            </div>
+
+        </div>
+
+        <div class="form-group ml-5 en">
+
+            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc English</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='post[en][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc') ? old('meta_desc') : $post->meta_desc}}" id="meta_desc" placeholder="Meta Description">
+                <input type="text" name='post[en][local]' id="local" value="en" hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('meta_desc') }}    
@@ -219,6 +306,32 @@
 @push('scripts')
 
 <script>
+    // language
+
+    window.onload = function () {
+        if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+    }
+
+    $(function () {
+        $("#selectLang").change(function() {
+            var val = $(this).val();
+            localStorage.setItem('local',val);
+            if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+        });
+    });
+
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){
       readURL(this);

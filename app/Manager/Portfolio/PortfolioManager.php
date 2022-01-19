@@ -32,8 +32,8 @@ class PortfolioManager
         return $this->portfolioRepository->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->portfolioRepository->update($id,$request);
+    public function update($id){
+        return $this->portfolioRepository->update($id);
     }
 
     public function destroy($id){

@@ -32,8 +32,8 @@ class FaqService
         return $this->faqManager->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->faqManager->update($request, $id);
+    public function update($id){
+        return $this->faqManager->update($id);
     }
 
     public function destroy($id){

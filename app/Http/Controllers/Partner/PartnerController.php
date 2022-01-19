@@ -33,8 +33,8 @@ class PartnerController extends Controller
         return $this->partnerService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->partnerService->update($request, $id);
+    public function update($id){
+        return $this->partnerService->update($id);
     }
 
     public function destroy($id){

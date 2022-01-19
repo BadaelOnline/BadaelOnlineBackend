@@ -32,8 +32,8 @@ class PageService
         return $this->pageManager->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->pageManager->update($request, $id);
+    public function update($id){
+        return $this->pageManager->update($id);
     }
 
     public function destroy($id){

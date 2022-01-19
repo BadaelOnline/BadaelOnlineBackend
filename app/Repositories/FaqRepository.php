@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class FaqRepository implements FaqRepositoryInterface{
 
+    private $request;
     private $faq;
     private $faqTranslation;
-    public function __construct(Faq $faq, FaqTranslation $faqTranslation)
+    public function __construct(Faq $faq, FaqTranslation $faqTranslation, Request $request)
     {
+        $this->request = $request;
         $this->faq = $faq;
         $this->faqTranslation = $faqTranslation;
     }
@@ -80,20 +82,38 @@ class FaqRepository implements FaqRepositoryInterface{
         return view('admin.faq.edit',compact('faq'));
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $faq = Faq::findOrFail($id);
-        $faq->question = $request->question;
-        $faq->answer = $request->answer;
-        if ( $faq->save()) {
+        try{
 
+            $faq = $this->faq->find($id);
+
+            DB::beginTransaction();
+            // //create the default language's faq
+            $unTransFaq_id = $this->faq->where('faqs.id', $faq->id)
+                ->update([
+                    'is_active' =>  $this->request->is_active = 1,
+            ]);
+
+            $allfaqs = array_values( $this->request->faq);
+                //insert other translations for Faqs
+                foreach ($allfaqs as $allfaq) {
+                    $this->faqTranslation->where('faq_id', $id)
+                    ->where('local', $allfaq['local'])
+                    ->update([
+                        'question' => $allfaq ['question'],
+                        'local' => $allfaq['local'],
+                        'answer' => $allfaq['answer'],
+                        'faq_id' => $faq->id
+                    ]);
+                }
+            DB::commit();
             return redirect()->route('admin.faq')->with('success', 'Data updated successfully');
-
-           } else {
-
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.faq.create')->with('error', 'Data failed to update');
-
-           }
+        }
     }
 
     public function destroy($id)

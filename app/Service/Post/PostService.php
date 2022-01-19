@@ -32,8 +32,8 @@ class PostService
         return $this->postManager->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->postManager->update($request, $id);
+    public function update($id){
+        return $this->postManager->update($id);
     }
 
     public function destroy($id){

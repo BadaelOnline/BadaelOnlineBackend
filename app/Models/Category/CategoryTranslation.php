@@ -10,7 +10,7 @@ class CategoryTranslation extends Model
     use HasFactory;
     protected $table='category_translations';
     protected $fillable=['id','category_id','name','keyword','meta_desc','local'];
-    protected $hidden=['banner_id','local'];
+    protected $hidden=['category_id','local'];
 
     public function category()
     {

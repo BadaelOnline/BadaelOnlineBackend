@@ -32,8 +32,8 @@ class CategoryService
         return $this->categoryManager->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->categoryManager->update($request, $id);
+    public function update($id){
+        return $this->categoryManager->update($id);
     }
 
     public function destroy($id){

@@ -13,17 +13,19 @@ use Illuminate\Support\Facades\Storage;
 
 class ServiceRepository implements ServiceRepositoryInterface{
 
+    private $request;
     private $service;
     private $serviceTranslation;
-    public function __construct(Service $service, ServiceTranslation $serviceTranslation)
+    public function __construct(Service $service, ServiceTranslation $serviceTranslation, Request $request)
     {
+        $this->request = $request;
         $this->service = $service;
         $this->serviceTranslation = $serviceTranslation;
     }
 
     public function index()
     {
-        $service = Service::orderBy('id','desc')->get();
+        $service = $this->service::orderBy('id','desc')->get();
         return view('admin.service.index',compact('service'));
     }
 
@@ -39,7 +41,7 @@ class ServiceRepository implements ServiceRepositoryInterface{
             /** transformation to collection */
             $allservices = collect($request->service)->all();
 
-            $slug= $request->service['English']['title'];
+            $slug= $request->service['en']['title'];
 
             $icon = $request->file('icon');
             if($icon){
@@ -80,35 +82,6 @@ class ServiceRepository implements ServiceRepositoryInterface{
             return $ex->getMessage();
             return redirect()->route('admin.service.create')->with('error', 'Data failed to add');
         }
-    //     Validator::make($request->all(), [
-    //         "icon" => "required",
-    //         "title" => "required",
-    //         "quote" => "required|max:255"
-    //     ])->validate();
-
-    //     $service = new Service();
-    //     // $service->icon = $request->icon;
-    //     $service->title = $request->title;
-    //     $service->slug = Str::slug(request('title'));
-    //     $service->quote = $request->quote;
-    //     $service->desc = $request->desc;
-
-    //     $icon = $request->file('icon');
-
-    //     if($icon){
-    //     $cover_path = $icon->store('images/service', 'public');
-
-    //     $service->icon = $cover_path;
-    //     }
-    //    if ( $service->save()) {
-
-    //     return redirect()->route('admin.service')->with('success', 'Data added successfully');
-
-    //    } else {
-
-    //     return redirect()->route('admin.service.create')->with('error', 'Data failed to add');
-
-    //    }
     }
 
     public function show($id)
@@ -118,51 +91,61 @@ class ServiceRepository implements ServiceRepositoryInterface{
 
     public function edit($id)
     {
-        $service = Service::findOrFail($id);
+        $service = $this->service::findOrFail($id);
 
         return view('admin.service.edit',compact('service'));
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        Validator::make($request->all(), [
-            "icon" => "required",
-            "title" => "required",
-            "quote" => "required|max:255"
-        ])->validate();
+        try{
 
-        $service = Service::findOrFail($id);
-        // $service->icon = $request->icon;
-        $service->title = $request->title;
-        $service->slug = Str::slug(request('title'));
-        $service->quote = $request->quote;
-        $service->desc = $request->desc;
+            $service = $this->service::findOrFail($id);
 
-        $new_photo = $request->file('icon');
+            $slug= $this->request->service['en']['title'];
 
-        if($new_photo){
-        if($service->icon && file_exists(storage_path('app/public/' . $service->icon))){
-            Storage::delete('public/'. $service->icon);
+        $icon = $this->request->file('icon');
+        if($icon){
+            if($this->request->icon && file_exists(storage_path('app/public/' .$this->request->icon))){
+                Storage::delete('public/'. $this->request->icon);
+            }
+            $new_cover_path = $icon->store('images/service', 'public');
         }
 
-        $new_cover_path = $new_photo->store('images/service', 'public');
+            DB::beginTransaction();
+            // //create the default language's post
+            $unTransService_id = $this->service->where('services.id', $service->id)
+                ->update([
+                    'slug' => $slug,
+                    'is_active' => $this->request->is_active = 1,
+                    'icon' => $new_cover_path,
+            ]);
 
-        $service->icon = $new_cover_path;
+            $allservices = array_values($this->request->service);
+                //insert other translations for Service
+                foreach ($allservices as $allservice) {
+                    $this->serviceTranslation->where('service_id', $id)
+                    ->where('local', $allservice['local'])
+                    ->update([
+                        'title' => $allservice ['title'],
+                        'local' => $allservice['local'],
+                        'quote' => $allservice['quote'],
+                        'desc' => $allservice['desc'],
+                        'service_id' =>  $unTransService_id
+                    ]);
+                }
+            DB::commit();
+            return redirect()->route('admin.service')->with('success', 'Data added successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.service.create')->with('error', 'Data failed to add');
         }
-       if ( $service->save()) {
-
-        return redirect()->route('admin.service')->with('success', 'Data added successfully');
-
-       } else {
-
-        return redirect()->route('admin.service.create')->with('error', 'Data failed to add');
-
-       }
     }
 
     public function destroy($id)
     {
-         $service = Service::findOrFail($id);
+         $service = $this->service::findOrFail($id);
 
         $service->delete();
 

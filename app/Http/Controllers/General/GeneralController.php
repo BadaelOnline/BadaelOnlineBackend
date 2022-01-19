@@ -22,8 +22,8 @@ class GeneralController extends Controller
         return $this->generalService->general();
     }
 
-    public function generalUpdate(Request $request){
-        return $this->generalService->generalUpdate($request);
+    public function generalUpdate(){
+        return $this->generalService->generalUpdate();
     }
 
     public function about(){

@@ -13,16 +13,18 @@ use Illuminate\Support\Facades\DB;
 class LinkRepository implements LinkRepositoryInterface{
 
     private $link;
+    private $request;
     private $linkTranslation;
-    public function __construct(Link $link, LinkTranslation $linkTranslation)
+    public function __construct(Link $link, LinkTranslation $linkTranslation, Request $request)
     {
         $this->link = $link;
+        $this->request = $request;
         $this->linkTranslation = $linkTranslation;
     }
 
     public function index()
     {
-        $link = Link::orderBy('id','desc')->get();
+        $link = $this->link::orderBy('id','desc')->get();
         return view('admin.link.index',compact('link'));
     }
 
@@ -34,26 +36,22 @@ class LinkRepository implements LinkRepositoryInterface{
     public function store(Request $request)
     {
         try{
+            return $request->all();
             /** transformation to collection */
-            // return $request->all();
-
             $alllinks = collect($request->link)->all();
-
-            // $slug= $request->category['English']['name'];
 
             $request->is_active ? $is_active = true : $is_active = false;
 
             DB::beginTransaction();
-            // create the default language's banner
+            // create the default language's Link
             $unTransLink_id = $this->link->insertGetId([
-                // 'slug' => $slug ,
                 'link' => $request['link'],
                 'is_active' => $request->is_active = 1
             ]);
 
-            // check the Category and request
+            // check the Link and request
             if(isset($alllinks) && count($alllinks)){
-                // insert other translation for Categories
+                // insert other translation for Links
                 foreach ($alllinks as $alllink){
                     $transLink_arr[] = [
                         'name' => $alllink ['name'],
@@ -62,7 +60,7 @@ class LinkRepository implements LinkRepositoryInterface{
                     ];
                 }
 
-           return     $this->linkTranslation->insert($transLink_arr);
+           $this->linkTranslation->insert($transLink_arr);
             }
             DB::commit();
 
@@ -72,19 +70,6 @@ class LinkRepository implements LinkRepositoryInterface{
             return $ex->getMessage();
             return redirect()->route('admin.link.create')->with('error', 'Data failed to add');
         }
-        // $link = new Link();
-        // $link->name = $request->name;
-        // $link->link = $request->link;
-
-        // if ( $link->save()) {
-
-        //     return redirect()->route('admin.link')->with('success', 'Data added successfully');
-
-        //    } else {
-
-        //     return redirect()->route('admin.link.create')->with('error', 'Data failed to add');
-
-        //    }
     }
 
     public function show($id)
@@ -94,30 +79,46 @@ class LinkRepository implements LinkRepositoryInterface{
 
     public function edit($id)
     {
-        $link = Link::findOrFail($id);
+        $link = $this->link::findOrFail($id);
         return view('admin.link.edit',compact('link'));
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $link = Link::findOrFail($id);
-        $link->name = $request->name;
-        $link->link = $request->link;
+        try{
+            $link = $this->link::findOrFail($id);
 
-        if ( $link->save()) {
+            DB::beginTransaction();
 
-            return redirect()->route('admin.link')->with('success', 'Data updated successfully');
+            $unTransLink_id = $link->where('links.id',$link->id)
+                ->update([
+                    'link' => $this->request['link'],
+                    'is_active' => $this->request->is_active = 1
+                ]);
 
-           } else {
-
+                $alllinks = array_values($this->request->link);
+                // insert other translations for Link
+                foreach ($alllinks as $alllink){
+                    $this->linkTranslation->where('link_id',$id)
+                    ->where('local',$alllink['local'])
+                    ->update([
+                        'name' => $alllink ['name'],
+                        'local' => $alllink['local'],
+                        'link_id' =>  $link->id
+                    ]);
+                }
+                DB::commit();
+                return redirect()->route('admin.link')->with('success', 'Data updated successfully');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.link.create')->with('error', 'Data failed to update');
-
-           }
+        }
     }
 
     public function destroy($id)
     {
-        $link = Link::findOrFail($id);
+        $link = $this->link::findOrFail($id);
         $link->delete();
 
         return redirect()->route('admin.link')->with('success', 'Data deleted successfully');

@@ -21,8 +21,8 @@ class GeneralService
         return $this->generalManager->general();
     }
 
-    public function generalUpdate(Request $request){
-        return $this->generalManager->generalUpdate($request);
+    public function generalUpdate(){
+        return $this->generalManager->generalUpdate();
     }
 
     public function about(){

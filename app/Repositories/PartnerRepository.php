@@ -15,10 +15,12 @@ class PartnerRepository implements PartnerRepositoryInterface{
 
     private $partner;
     private $partnerTranslation;
-    public function __construct(Partner $partner, PartnerTranslation $partnerTranslation)
+    private $request;
+    public function __construct(Partner $partner, PartnerTranslation $partnerTranslation , Request $request)
     {
         $this->partner = $partner;
         $this->partnerTranslation = $partnerTranslation;
+        $this->request = $request;
     }
 
     public function index()
@@ -75,28 +77,6 @@ class PartnerRepository implements PartnerRepositoryInterface{
         return $ex->getMessage();
         return redirect()->route('admin.partner.create')->with('error', 'partner failed to add');
     }
-
-    //    $partner = new Partner();
-    //    $partner->name = $request->name;
-    //    $partner->link = $request->link;
-
-    //    $cover = $request->file('cover');
-
-    //    if($cover){
-    //    $cover_path = $cover->store('images/partner', 'public');
-
-    //    $partner->cover = $cover_path;
-    //    }
-
-    //   if ( $partner->save()) {
-
-    //    return redirect()->route('admin.partner')->with('success', 'partner added successfully');
-
-    //   } else {
-
-    //    return redirect()->route('admin.partner.create')->with('error', 'partner failed to add');
-
-    //   }
    }
 
    public function show($id)
@@ -111,39 +91,53 @@ class PartnerRepository implements PartnerRepositoryInterface{
        return view('admin.partner.edit',compact('partner'));
    }
 
-   public function update(Request $request, $id)
+   public function update($id)
    {
-       $partner = Partner::findOrFail($id);
-       $partner->name = $request->name;
-       $partner->link = $request->link;
+    try{
 
-       $new_cover = $request->file('cover');
+        $partner = $this->partner::findOrFail($id);
 
-       if($new_cover){
-       if($partner->cover && file_exists(storage_path('app/public/' . $partner->cover))){
-           Storage::delete('public/'. $partner->cover);
-       }
+        $new_cover = $this->request->file('cover');
 
-       $new_cover_path = $new_cover->store('images/partner', 'public');
+        if($new_cover){
+            if($this->request->cover && file_exists(storage_path('app/public/' . $this->request->cover))){
+               Storage::delete('public/'. $this->request->cover);
+            }
 
-       $partner->cover = $new_cover_path;
+           $cover_path = $new_cover->store('images/partner', 'public');
+        }
 
-       }
+        DB::beginTransaction();
 
-      if ( $partner->save()) {
+        $unTransPartner_id = $partner->where('partners.id',$partner->id)
+            ->update([
+                'link' =>$this->request['link'],
+                'cover' =>$cover_path,
+                'is_active' => $this->request->is_active = 1
+            ]);
 
-       return redirect()->route('admin.partner')->with('success', 'Data added successfully');
-
-      } else {
-
-       return redirect()->route('admin.partner.create')->with('error', 'Data failed to add');
-
-      }
+            $allpartners = array_values($this->request->partner);
+            // insert other translations for Partner
+            foreach ($allpartners as $allpartner){
+                $this->partnerTranslation->where('partner_id',$id)
+                ->where('local',$allpartner['local'])
+                ->update([
+                    'name' => $allpartner ['name'],
+                    'partner_id' =>  $unTransPartner_id
+                ]);
+            }
+            DB::commit();
+            return redirect()->route('admin.partner')->with('success', 'Data added successfully');
+    }catch(\Exception $ex){
+        DB::rollback();
+        return $ex->getMessage();
+        return redirect()->route('admin.partner.create')->with('error', 'Data failed to add');
+    }
    }
 
    public function destroy($id)
    {
-       $partner = Partner::findOrFail($id);
+       $partner = $this->partner::findOrFail($id);
 
        if($partner->cover && file_exists(storage_path('app/public/' . $partner->cover))){
         Storage::delete('public/'. $partner->cover);

@@ -29,8 +29,8 @@ class PCategoryController extends Controller
         return $this->pcategoryService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->pcategoryService->update($request, $id);
+    public function update($id){
+        return $this->pcategoryService->update($id);
     }
 
     public function destroy($id){
