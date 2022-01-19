@@ -33,8 +33,8 @@ class PageController extends Controller
         return $this->pageService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->pageService->update($request, $id);
+    public function update($id){
+        return $this->pageService->update($id);
     }
 
     public function destroy($id){

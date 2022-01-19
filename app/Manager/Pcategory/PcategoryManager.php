@@ -28,8 +28,8 @@ class PcategoryManager
         return $this->pcategoryRepository->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->pcategoryRepository->update($id,$request);
+    public function update($id){
+        return $this->pcategoryRepository->update($id);
     }
 
     public function destroy($id){

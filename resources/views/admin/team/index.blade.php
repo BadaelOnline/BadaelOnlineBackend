@@ -11,7 +11,6 @@
 <!-- Page Heading -->
 
 <h1 class="h3 mb-2 text-gray-800">{{__('team.Team')}}</h1>     
-   
 @if (session('success'))
 
 <div class="alert alert-success">

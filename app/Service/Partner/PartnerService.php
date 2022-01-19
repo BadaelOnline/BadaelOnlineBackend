@@ -32,8 +32,8 @@ class PartnerService
         return $this->partnerManager->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->partnerManager->update($request, $id);
+    public function update($id){
+        return $this->partnerManager->update($id);
     }
 
     public function destroy($id){

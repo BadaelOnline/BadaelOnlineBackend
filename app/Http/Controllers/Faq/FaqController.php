@@ -33,8 +33,8 @@ class FaqController extends Controller
         return $this->faqService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->faqService->update($request, $id);
+    public function update($id){
+        return $this->faqService->update($id);
     }
 
     public function destroy($id){

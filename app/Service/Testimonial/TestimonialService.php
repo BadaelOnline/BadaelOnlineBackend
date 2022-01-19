@@ -32,8 +32,8 @@ class TestimonialService
         return $this->testimonialManager->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->testimonialManager->update($request, $id);
+    public function update($id){
+        return $this->testimonialManager->update($id);
     }
 
     public function destroy($id){

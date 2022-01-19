@@ -32,8 +32,8 @@ class ServiceManager
         return $this->serviceRepository->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->serviceRepository->update($id,$request);
+    public function update($id){
+        return $this->serviceRepository->update($id);
     }
 
     public function destroy($id){

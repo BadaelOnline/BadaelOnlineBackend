@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\DB;
 class PageRepository implements PageRepositoryInterface{
 
     private $page;
+    private $request;
     private $pageTranslation;
-    public function __construct(Page $page, PageTranslation $pageTranslation)
+    public function __construct(Page $page, PageTranslation $pageTranslation, Request $request)
     {
         $this->page = $page;
+        $this->request = $request;
         $this->pageTranslation = $pageTranslation;
     }
 
@@ -36,7 +38,7 @@ class PageRepository implements PageRepositoryInterface{
             /** transformation to collection */
             $allpages = collect($request->page)->all();
 
-            $slug= $request->page['English']['title'];
+            $slug= $request->page['en']['title'];
 
             $request->is_active ? $is_active = true : $is_active = false;
 
@@ -69,21 +71,6 @@ class PageRepository implements PageRepositoryInterface{
             // return $ex->getMessage();
             return redirect()->route('admin.page.create')->with('error', 'Data failed to add');
         }
-        // $data = $request->all();
-
-        // $data['slug'] = Str::slug(request('title'));
-
-        // $page = Page::create($data);
-
-        // if ($page) {
-
-        //         return redirect()->route('admin.page')->with('success', 'Data Berhasil Ditambahkan');
-
-        //        } else {
-
-        //         return redirect()->route('admin.page.create')->with('error', 'Data Gagal Ditambahkan');
-
-        //        }
     }
 
     public function show($id)
@@ -93,34 +80,50 @@ class PageRepository implements PageRepositoryInterface{
 
     public function edit($id)
     {
-        $page = Page::findOrFail($id);
+        $page = $this->page::findOrFail($id);
         return view ('admin.page.edit', compact('page'));
     }
 
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $page = Page::findOrFail($id);
+        try{
 
-        $data = $request->all();
-//
-        $data['slug'] = Str::slug(request('title'));
+            $page = $this->page::findOrFail($id);
 
-        $update = $page->update($data);
+            $slug= $this->request->page['en']['title'];
 
-        if ($update) {
+            DB::beginTransaction();
 
+            $unTransPage_id = $page->where('pages.id',$page->id)
+                ->update([
+                    'slug' => $slug,
+                    'is_active' => $this->request->is_active = 1
+                ]);
+
+                $allpages = array_values($this->request->page);
+                // insert other translations for Category
+                foreach ($allpages as $allpage){
+                    $this->pageTranslation->where('page_id',$id)
+                    ->where('local',$allpage['local'])
+                    ->update([
+                        'title' => $allpage ['title'],
+                        'local' => $allpage['local'],
+                        'text' => $allpage['text'],
+                        'page_id' =>  $unTransPage_id
+                    ]);
+                }
+                DB::commit();
                 return redirect()->route('admin.page')->with('success', 'Data Berhasil Diperbarui');
-
-               } else {
-
-                return redirect()->route('admin.page.edit')->with('error', 'Data Gagal Diperbarui');
-
-               }
+        }catch(\Exception $ex){
+            DB::rollback();
+            return $ex->getMessage();
+            return redirect()->route('admin.page.edit')->with('error', 'Data Gagal Diperbarui');
+        }
     }
 
     public function destroy($id)
     {
-        $page = Page::findOrFail($id);
+        $page = $this->page::findOrFail($id);
 
         $page->delete();
 

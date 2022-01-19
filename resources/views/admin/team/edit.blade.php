@@ -62,8 +62,8 @@
                 <input type="file" id="wizard-picture" name="photo" class="form-control {{$errors->first('photo') ? "is-invalid" : "" }} ">
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('photo') }}    
-                </div>  
+                    {{ $errors->first('photo') }}
+                </div>
 
             </div>
 
@@ -71,59 +71,122 @@
 
         </div>
 
-    </div>   
+    </div>
 
-    @foreach(config('app.languages') as $index => $lang)
-    
     <div class="form-group ml-5">
 
-        <label for="name" class="col-sm-2 col-form-label">Name  {{$lang}}</label>
+        <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+
+        <div class="col-sm-9">
+            <select class="form-control" id="selectLang">
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
+        </div>
+
+    </div>
+
+    {{-- name --}}
+    <div class="form-group ml-5 en">
+
+        <label for="name" class="col-sm-2 col-form-label">Name English</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='team[{{$index}}][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $team->name}}" id="name" placeholder="Example: Susi Similikiti">
-            <input type="text" name='team[{{$index}}][local]' value='{{$lang}}' hidden>
+            <input type="text" name='team[en][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $team->name}}" id="name" placeholder="Example: Susi Similikiti">
+            <input type="text" name='team[en][local]' value='en' hidden>
 
             <div class="invalid-feedback">
-                {{ $errors->first('team.$index.name') }}    
-            </div>   
+                {{ $errors->first('team.en.name') }}
+            </div>
 
         </div>
 
     </div>
 
-    <div class="form-group ml-5">
+    <div class="form-group ml-5 ar">
 
-        <label for="position" class="col-sm-2 col-form-label">Position  {{$lang}}</label>
+        <label for="name" class="col-sm-2 col-form-label">Name Arabic</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='team[{{$index}}][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position') ? old('position') : $team->position}}" id="position" placeholder="Example: Product Manager">
-            <input type="text" name='team[{{$index}}][local]' value='{{$lang}}' hidden>
+            <input type="text" name='team[ar][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $team->name}}" id="name" placeholder="Example: Susi Similikiti">
+            <input type="text" name='team[ar][local]' value='ar' hidden>
+
+            <div class="invalid-feedback">
+                {{ $errors->first('team.ar.name') }}
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- position --}}
+    <div class="form-group ml-5 en">
+
+        <label for="position" class="col-sm-2 col-form-label">Position English</label>
+
+        <div class="col-sm-7">
+
+            <input type="text" name='team[en][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position') ? old('position') : $team->position}}" id="position" placeholder="Example: Product Manager">
+            <input type="text" name='team[en][local]' value='en' hidden>
             <div class="invalid-feedback">
                 {{ $errors->first('team.$index.position') }}
-            </div>  
+            </div>
 
         </div>
 
     </div>
 
-    <div class="form-group ml-5">
+    <div class="form-group ml-5 ar">
 
-        <label for="qoute" class="col-sm-2 col-form-label">Qoute {{$lang}}</label>
+        <label for="position" class="col-sm-2 col-form-label">Position Arabic</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='team[{{$index}}][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute') ? old('linkedin') : $team->qoute}}" id="qoute" placeholder="Qoute">
-            <input type="text" name='team[{{$index}}][local]' value='{{$lang}}' hidden>
+            <input type="text" name='team[ar][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position') ? old('position') : $team->position}}" id="position" placeholder="Example: Product Manager">
+            <input type="text" name='team[ar][local]' value='ar' hidden>
             <div class="invalid-feedback">
-                {{ $errors->first('team.$index.qoute') }}
-            </div>   
+                {{ $errors->first('team.$index.position') }}
+            </div>
 
         </div>
 
     </div>
-    @endforeach
+
+    {{-- quote --}}
+    <div class="form-group ml-5 en">
+
+        <label for="qoute" class="col-sm-2 col-form-label">Qoute English</label>
+
+        <div class="col-sm-7">
+
+            <input type="text" name='team[en][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute') ? old('linkedin') : $team->qoute}}" id="qoute" placeholder="Qoute">
+            <input type="text" name='team[en][local]' value='en' hidden>
+            <div class="invalid-feedback">
+                {{ $errors->first('team.$index.qoute') }}
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-group ml-5 ar">
+
+        <label for="qoute" class="col-sm-2 col-form-label">Qoute Arabic</label>
+
+        <div class="col-sm-7">
+
+            <input type="text" name='team[ar][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute') ? old('linkedin') : $team->qoute}}" id="qoute" placeholder="Qoute">
+            <input type="text" name='team[ar][local]' value='ar' hidden>
+            <div class="invalid-feedback">
+                {{ $errors->first('team.$index.qoute') }}
+            </div>
+
+        </div>
+
+    </div>
 
     <div class="form-group ml-5">
 
@@ -134,8 +197,8 @@
             <input type="text" name='twitter' class="form-control {{$errors->first('twitter') ? "is-invalid" : "" }} " value="{{old('twitter') ? old('twitter') : $team->twitter}}" id="twitter" placeholder="Link Twitter">
 
             <div class="invalid-feedback">
-                {{ $errors->first('twitter') }}    
-            </div>   
+                {{ $errors->first('twitter') }}
+            </div>
 
         </div>
 
@@ -150,8 +213,8 @@
             <input type="text" name='facebook' class="form-control {{$errors->first('facebook') ? "is-invalid" : "" }} " value="{{old('facebook') ? old('facebook') : $team->facebook}}" id="facebook" placeholder="Link Facebook">
 
             <div class="invalid-feedback">
-                {{ $errors->first('facebook') }}    
-            </div>   
+                {{ $errors->first('facebook') }}
+            </div>
 
         </div>
 
@@ -166,8 +229,8 @@
             <input type="text" name='instagram' class="form-control {{$errors->first('instagram') ? "is-invalid" : "" }} " value="{{old('instagram') ? old('instagram') : $team->instagram}}" id="instagram" placeholder="Link Instagram">
 
             <div class="invalid-feedback">
-                {{ $errors->first('instagram') }}    
-            </div>   
+                {{ $errors->first('instagram') }}
+            </div>
 
         </div>
 
@@ -182,15 +245,15 @@
             <input type="text" name='linkedin' class="form-control {{$errors->first('linkedin') ? "is-invalid" : "" }} " value="{{old('linkedin') ? old('linkedin') : $team->linkedin}}" id="linkedin" placeholder="Link Linkedin">
 
             <div class="invalid-feedback">
-                {{ $errors->first('linkedin') }}    
-            </div>   
+                {{ $errors->first('linkedin') }}
+            </div>
 
         </div>
 
     </div>
 
 
-   
+
 
       <div class="form-group ml-5">
         <div class="col-sm-3">
@@ -202,6 +265,30 @@
 
 @push('scripts')
 <script>
+    // language
+    window.onload = function () {
+        if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+    }
+
+    $(function () {
+        $("#selectLang").change(function() {
+            var val = $(this).val();
+            localStorage.setItem('local',val);
+            if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+        });
+    });
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){
       readURL(this);
@@ -217,5 +304,5 @@ function readURL(input) {
   }
 }
 </script>
-  
+
 @endpush

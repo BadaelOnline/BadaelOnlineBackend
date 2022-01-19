@@ -78,7 +78,7 @@
         <label for="lang" class="col-sm-2 col-form-label">Languages</label>
 
         <div class="col-sm-9">
-            <select class="form-control" id="selectTeam" >
+            <select class="form-control" id="selectLang">
                 @foreach(config('app.languages') as $index => $lang)
                 <option id="lang">{{ $lang }}</option>
                 @endforeach
@@ -86,17 +86,16 @@
         </div>
 
     </div>
-    
-    @foreach(config('app.languages') as $index => $lang)
 
-    <div class="form-group ml-5">
+    {{-- name --}}
+    <div class="form-group ml-5 en">
 
-        <label for="name" class="col-sm-2 col-form-label">Name {{$lang}}</label>
+        <label for="name" class="col-sm-2 col-form-label">Name English</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='team[{{$index}}][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Example: Susi Similikiti">
-            <input type="text" name='team[{{$index}}][local]' value='{{$lang}}' hidden>
+            <input type="text" name='team[en][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Example: Susi Similikiti">
+            <input type="text" name='team[en][local]' value='en' hidden>
             <div class="invalid-feedback">
                 {{ $errors->first('team.$index.name') }}
             </div>
@@ -105,14 +104,31 @@
 
     </div>
 
-    <div class="form-group ml-5">
+    <div class="form-group ml-5 ar">
 
-        <label for="position" class="col-sm-2 col-form-label">Position {{$lang}}</label>
+        <label for="name" class="col-sm-2 col-form-label">Name Arabic</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='team[{{$index}}][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position')}}" id="position" placeholder="Example: Product Manager">
-            <input type="text" name='team[{{$index}}][local]' value='{{$lang}}' hidden>
+            <input type="text" name='team[ar][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Example: Susi Similikiti">
+            <input type="text" name='team[ar][local]' value='ar' hidden>
+            <div class="invalid-feedback">
+                {{ $errors->first('team.$index.name') }}
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- position --}}
+    <div class="form-group ml-5 en">
+
+        <label for="position" class="col-sm-2 col-form-label">Position English</label>
+
+        <div class="col-sm-7">
+
+            <input type="text" name='team[en][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position')}}" id="position" placeholder="Example: Product Manager">
+            <input type="text" name='team[en][local]' value='en' hidden>
             <div class="invalid-feedback">
                 {{ $errors->first('team.$index.position') }}
             </div>
@@ -121,14 +137,30 @@
 
     </div>
 
-    <div class="form-group ml-5">
+    <div class="form-group ml-5 ar">
 
-        <label for="qoute" class="col-sm-2 col-form-label">Qoute {{$lang}}</label>
+        <label for="position" class="col-sm-2 col-form-label">Position Arabic</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='team[{{$index}}][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute')}}" id="qoute" placeholder="Qoute">
-            <input type="text" name='team[{{$index}}][local]' value='{{$lang}}' hidden>
+            <input type="text" name='team[ar][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position')}}" id="position" placeholder="Example: Product Manager">
+            <input type="text" name='team[ar][local]' value='ar' hidden>
+            <div class="invalid-feedback">
+                {{ $errors->first('team.$index.position') }}
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-group ml-5 en">
+
+        <label for="qoute" class="col-sm-2 col-form-label">Qoute English</label>
+
+        <div class="col-sm-7">
+
+            <input type="text" name='team[en][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute')}}" id="qoute" placeholder="Qoute">
+            <input type="text" name='team[en][local]' value='en' hidden>
             <div class="invalid-feedback">
                 {{ $errors->first('team.$index.qoute') }}
             </div>
@@ -137,7 +169,21 @@
 
     </div>
 
-    @endforeach
+    <div class="form-group ml-5 ar">
+
+        <label for="qoute" class="col-sm-2 col-form-label">Qoute Arabic</label>
+
+        <div class="col-sm-7">
+
+            <input type="text" name='team[ar][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute')}}" id="qoute" placeholder="Qoute">
+            <input type="text" name='team[ar][local]' value='ar' hidden>
+            <div class="invalid-feedback">
+                {{ $errors->first('team.$index.qoute') }}
+            </div>
+
+        </div>
+
+    </div>
 
     <div class="form-group ml-5">
 
@@ -214,6 +260,30 @@
 
 @push('scripts')
 <script>
+     // language
+     window.onload = function () {
+        if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+    }
+
+    $(function () {
+        $("#selectLang").change(function() {
+            var val = $(this).val();
+            localStorage.setItem('local',val);
+            if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+        });
+    });
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){
       readURL(this);

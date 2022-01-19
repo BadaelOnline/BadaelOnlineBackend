@@ -48,8 +48,7 @@ class TeamRepository implements TeamRepositoryInterface{
 
             $photo = $request->file('photo');
             if($photo){
-            $cover_path = $photo->store('images/team', 'public');
-            $photo = $cover_path;
+                $cover_path = $photo->store('images/team', 'public');
             }
 
             DB::beginTransaction();
@@ -60,7 +59,7 @@ class TeamRepository implements TeamRepositoryInterface{
                 'instagram' => $request['instagram'],
                 'linkedin' => $request['linkedin'],
                 'is_active' => $request->is_active = 1,
-                'photo' => $request->file('photo'),
+                'photo' => $cover_path,
             ]);
 
             //check the Team and request
@@ -106,20 +105,22 @@ class TeamRepository implements TeamRepositoryInterface{
 
             $photo = $request->file('photo');
             if($photo){
-            $cover_path = $photo->store('images/team', 'public');
-            $photo = $cover_path;
+                if($request->photo && file_exists(storage_path('app/public/' .$request->photo))){
+                    Storage::delete('public/'. $request->photo);
+                }
+                $cover_path = $photo->store('images/team', 'public');
             }
 
             DB::beginTransaction();
             // //create the default language's team
-            $unTransTeam_id = $this->team->where('teams.id', $id)
+            $unTransTeam_id = $this->team->where('teams.id', $team->id)
                 ->update([
                 'facebook' => $request['facebook'],
                 'twitter' => $request['twitter'],
                 'instagram' => $request['instagram'],
                 'linkedin' => $request['linkedin'],
                 'is_active' => $request->is_active = 1,
-                'photo' => $request->file('photo'),
+                'photo' => $cover_path,
             ]);
 
             $allteams = array_values($request->team);
@@ -132,7 +133,7 @@ class TeamRepository implements TeamRepositoryInterface{
                         'local' => $allteam['local'],
                         'position' => $allteam['position'],
                         'qoute' => $allteam['qoute'],
-                        'team_id' => $unTransTeam_id
+                        'team_id' => $team->id
                     ]);
                 }
             DB::commit();

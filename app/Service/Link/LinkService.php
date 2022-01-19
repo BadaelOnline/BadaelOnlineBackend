@@ -32,8 +32,8 @@ class LinkService
         return $this->linkManager->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->linkManager->update($request, $id);
+    public function update($id){
+        return $this->linkManager->update($id);
     }
 
     public function destroy($id){

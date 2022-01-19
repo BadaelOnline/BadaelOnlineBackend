@@ -33,8 +33,8 @@ class CategoryController extends Controller
         return $this->categoryService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->categoryService->update($request, $id);
+    public function update($id){
+        return $this->categoryService->update($id);
     }
 
     public function destroy($id){

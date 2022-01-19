@@ -94,16 +94,29 @@
 
         </div> --}}
 
-        @foreach(config('app.languages') as $index => $lang)
-
         <div class="form-group ml-5">
 
-            <label for="title" class="col-sm-2 col-form-label">Title [{{ $lang }}]</label>
+            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+        </div>
+
+        {{-- title --}}
+        <div class="form-group ml-5 en">
+
+            <label for="title" class="col-sm-2 col-form-label">Title English</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='service[{{$index}}][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
-                <input type="text" name='service[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='service[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
+                <input type="text" name='service[en][local]' value='en' hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('title') }}
@@ -113,14 +126,32 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="quote" class="col-sm-2 col-form-label">Quote [{{ $lang }}]</label>
+            <label for="title" class="col-sm-2 col-form-label">Title Arabic</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='service[{{$index}}][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote')}}" id="quote" placeholder="Quote">
-                <input type="text" name='service[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='service[ar][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
+                <input type="text" name='service[ar][local]' value='ar' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('title') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- quote --}}
+        <div class="form-group ml-5 en">
+
+            <label for="quote" class="col-sm-2 col-form-label">Quote English</label>
+
+            <div class="col-sm-9">
+
+                <input type="text" name='service[en][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote')}}" id="quote" placeholder="Quote">
+                <input type="text" name='service[en][local]' value='en' hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('quote') }}
@@ -130,16 +161,34 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="desc" class="col-sm-2 col-form-label">Desc [{{ $lang }}]</label>
+            <label for="quote" class="col-sm-2 col-form-label">Quote Arabic</label>
+
+            <div class="col-sm-9">
+
+                <input type="text" name='service[ar][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote')}}" id="quote" placeholder="Quote">
+                <input type="text" name='service[ar][local]' value='ar' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('quote') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- desc --}}
+        <div class="form-group ml-5 en">
+
+            <label for="desc" class="col-sm-2 col-form-label">Desc English</label>
 
             <div class="col-sm-9">
 
                 {{-- <input type="text" class="form-control" id="title" placeholder="Title"> --}}
 
-                <textarea name="service[{{$index}}][desc]" id="summernote" cols="40" rows="10"  class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc')}}</textarea>
-                <input type="text" name='service[{{$index}}][local]' value='{{$lang}}' hidden>
+                <textarea name="service[en][desc]" id="summernote" cols="40" rows="10"  class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc')}}</textarea>
+                <input type="text" name='service[en][local]' value='en' hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('desc') }}
@@ -149,7 +198,24 @@
 
         </div>
 
-        @endforeach
+        <div class="form-group ml-5 ar">
+
+            <label for="desc" class="col-sm-2 col-form-label">Desc Arabic</label>
+
+            <div class="col-sm-9">
+
+                {{-- <input type="text" class="form-control" id="title" placeholder="Title"> --}}
+
+                <textarea name="service[ar][desc]" id="summernote" cols="40" rows="10"  class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc')}}</textarea>
+                <input type="text" name='service[ar][local]' value='ar' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('desc') }}
+                </div>
+
+            </div>
+
+        </div>
 
         <div class="form-group ml-5">
 
@@ -166,7 +232,32 @@
   </form>
 @endsection
 
+@push('scripts')
 <script>
+        // language
+        window.onload = function () {
+        if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+    }
+
+    $(function () {
+        $("#selectLang").change(function() {
+            var val = $(this).val();
+            localStorage.setItem('local',val);
+            if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+        });
+    });
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){
       readURL(this);
@@ -182,3 +273,4 @@ function readURL(input) {
   }
 }
 </script>
+@endpush

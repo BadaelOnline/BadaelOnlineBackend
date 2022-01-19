@@ -34,8 +34,8 @@ class PortfolioController extends Controller
         return $this->portfolioService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->portfolioService->update($request, $id);
+    public function update($id){
+        return $this->portfolioService->update($id);
     }
 
     public function destroy($id){

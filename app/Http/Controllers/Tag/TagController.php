@@ -33,8 +33,8 @@ class TagController extends Controller
         return $this->tagService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->tagService->update($request, $id);
+    public function update($id){
+        return $this->tagService->update($id);
     }
 
     public function destroy($id){

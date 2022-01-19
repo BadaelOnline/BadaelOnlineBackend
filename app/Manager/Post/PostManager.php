@@ -32,8 +32,8 @@ class PostManager
         return $this->postRepository->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->postRepository->update($id,$request);
+    public function update($id){
+        return $this->postRepository->update($id);
     }
 
     public function destroy($id){

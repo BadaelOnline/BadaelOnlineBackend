@@ -33,8 +33,8 @@ class PostController extends Controller
         return $this->postService->edit($id);
     }
 
-    public function update(Request $request, $id){
-        return $this->postService->update($request, $id);
+    public function update($id){
+        return $this->postService->update($id);
     }
 
     public function destroy($id){

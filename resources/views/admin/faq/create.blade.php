@@ -13,16 +13,29 @@
 
     <div class="container">
 
-        @foreach(config('app.languages') as $index => $lang)
-
         <div class="form-group ml-5">
 
-            <label for="question" class="col-sm-2 col-form-label">Question [{{ $lang }}]</label>
+            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+        </div>
+
+        {{-- question --}}
+        <div class="form-group ml-5 en">
+
+            <label for="question" class="col-sm-2 col-form-label">Question English</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='faq[{{$index}}][question]' class="form-control {{$errors->first('question') ? "is-invalid" : "" }} " value="{{old('question')}}" id="question" placeholder="Question">
-                <input type="text" name='faq[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='faq[en][question]' class="form-control {{$errors->first('question') ? "is-invalid" : "" }} " value="{{old('question')}}" id="question" placeholder="Question">
+                <input type="text" name='faq[en][local]' value='en' hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('question') }}
@@ -32,14 +45,32 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="answer" class="col-sm-2 col-form-label">Answer [{{ $lang }}]</label>
+            <label for="question" class="col-sm-2 col-form-label">Question Arabic</label>
 
             <div class="col-sm-7">
 
-                <textarea name="faq[{{$index}}][answer]" class="form-control {{$errors->first('answer') ? "is-invalid" : "" }} "  id="" cols="30" rows="10">{{old('answer')}}</textarea>
-                <input type="text" name='faq[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='faq[ar][question]' class="form-control {{$errors->first('question') ? "is-invalid" : "" }} " value="{{old('question')}}" id="question" placeholder="Question">
+                <input type="text" name='faq[ar][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('question') }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- answer --}}
+        <div class="form-group ml-5 en">
+
+            <label for="answer" class="col-sm-2 col-form-label">Answer English</label>
+
+            <div class="col-sm-7">
+
+                <textarea name="faq[en][answer]" class="form-control {{$errors->first('answer') ? "is-invalid" : "" }} "  id="" cols="30" rows="10">{{old('answer')}}</textarea>
+                <input type="text" name='faq[en][local]' value='en' hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('answer') }}
@@ -49,7 +80,22 @@
 
         </div>
 
-        @endforeach
+        <div class="form-group ml-5 ar">
+
+            <label for="answer" class="col-sm-2 col-form-label">Answer Arabic</label>
+
+            <div class="col-sm-7">
+
+                <textarea name="faq[ar][answer]" class="form-control {{$errors->first('answer') ? "is-invalid" : "" }} "  id="" cols="30" rows="10">{{old('answer')}}</textarea>
+                <input type="text" name='faq[ar][local]' value='ar' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('answer') }}
+                </div>
+
+            </div>
+
+        </div>
 
         <div class="form-group ml-5">
 
@@ -65,3 +111,34 @@
 
   </form>
 @endsection
+
+@push('scripts')
+<script>
+    // language
+    window.onload = function () {
+        if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+    }
+
+    $(function () {
+        $("#selectLang").change(function() {
+            var val = $(this).val();
+            localStorage.setItem('local',val);
+            if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+        });
+    });
+
+</script>
+
+@endpush
