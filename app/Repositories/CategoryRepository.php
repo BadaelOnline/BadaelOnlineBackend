@@ -104,7 +104,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
                 $allcategories = array_values($this->request->category);
                 // insert other translations for Category
                 foreach ($allcategories as $allcategory){
-                    $this->categoryTranslation->where('category_id',$id)
+                    $this->categoryTranslation->where('category_id',$category->id)
                     ->where('local',$allcategory['local'])
                     ->update([
                         'name' => $allcategory ['name'],

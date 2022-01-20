@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Models\Faq\Faq;
-use App\Models\Faq\FaqTranslation;
 use App\Models\Link\Link;
 use App\Models\Link\LinkTranslation;
 use App\Repositories\Interfaces\LinkRepositoryInterface;
@@ -36,7 +34,6 @@ class LinkRepository implements LinkRepositoryInterface{
     public function store(Request $request)
     {
         try{
-            return $request->all();
             /** transformation to collection */
             $alllinks = collect($request->link)->all();
 
@@ -60,7 +57,7 @@ class LinkRepository implements LinkRepositoryInterface{
                     ];
                 }
 
-           $this->linkTranslation->insert($transLink_arr);
+            $this->linkTranslation->insert($transLink_arr);
             }
             DB::commit();
 

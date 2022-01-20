@@ -90,9 +90,9 @@
 
                 <div class="picture">
 
-                    <img src="{{ asset('storage/'.$portfolio->mobileImage) }}" class="picture-src" id="wizardPicturePreview" height="200px" width="400px" title=""/>
+                    <img src="{{ asset('storage/'.$portfolio->mobileImage) }}" class="picture-src" id="wizardPicturePreview1" height="200px" width="400px" title=""/>
 
-                    <input type="file" id="wizard-picture" name="mobileImage" class="form-control {{$errors->first('mobileImage') ? "is-invalid" : "" }} ">
+                    <input type="file" id="wizard-picture1" name="mobileImage" class="form-control {{$errors->first('mobileImage') ? "is-invalid" : "" }} ">
 
                     <div class="invalid-feedback">
                         {{ $errors->first('mobileImage') }}
@@ -314,6 +314,22 @@ function readURL(input) {
       var reader = new FileReader();
       reader.onload = function (e) {
           $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
+      }
+      reader.readAsDataURL(input.files[0]);
+  }
+}
+
+//image mobile
+  // Prepare the preview for profile picture
+  $("#wizard-picture1").change(function(){
+      readURL1(this);
+  });
+  //Function to show image before upload
+function readURL1(input) {
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+          $('#wizardPicturePreview1').attr('src', e.target.result).fadeIn('slow');
       }
       reader.readAsDataURL(input.files[0]);
   }

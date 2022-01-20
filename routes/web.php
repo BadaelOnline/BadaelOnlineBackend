@@ -24,11 +24,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 // change language
-Route::get('locale/{locale?}', array('en'=>'set-locale', 'uses'=>['LanguageController@changeLang'));
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->middleware(['auth','Localization'])->group(function () {
+
 
     Route::group(['namespace'=>'General'],function()
         {
@@ -165,7 +165,7 @@ Route::prefix('admin')->middleware(['auth','Localization'])->group(function () {
             Route::post('/edit/{id}', 'ServiceController@update')->name('admin.service.update');
             Route::delete('/destroy/{id}', 'ServiceController@destroy')->name('admin.service.destroy');
         });
-        
+
     // Manage Team
     Route::group(['prefix'=>'teams','namespace'=>'Team'],function()
         {
@@ -215,3 +215,5 @@ Route::prefix('admin')->middleware(['auth','Localization'])->group(function () {
 
     // Route::post('/lang')
 });
+
+Route::get('locale/{local}','Languages\LanguageController@changeLang');

@@ -62,7 +62,7 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        {{-- <div class="form-group ml-5">
 
             <label for="link" class="col-sm-2 col-form-label">Link</label>
 
@@ -76,7 +76,7 @@
 
             </div>
 
-        </div>
+        </div> --}}
 
         <div class="form-group ml-5">
 

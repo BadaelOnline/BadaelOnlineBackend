@@ -207,16 +207,16 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
             {{-- dropdown language --}}
-            {{-- <li class="dropdown m-4">
+            <li class="dropdown m-4">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button">Languages</a>
               <ul class="dropdown-menu">
                 <li><a href="{{url("locale/en")}}">EN</a></li>
                 <li><a href="{{url("locale/ar")}}">AR</a></li>
               </ul>
-            </li> --}}
-            
-            <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>      
-            <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a> 
+            </li>
+
+            {{-- <a class = "language{{ App::isLocale('en') ? ' active' : '' }}" href="/locale/en">En</a>       --}}
+            {{-- <a class = "language{{ App::isLocale('ar') ? ' active' : '' }}" href="/locale/ar">Ar</a>  --}}
             {{--  --}}
 
             <div class="topbar-divider d-none d-sm-block"></div>

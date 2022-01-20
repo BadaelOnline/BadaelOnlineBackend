@@ -105,7 +105,7 @@
             <div class="col-sm-7">
 
                 <input type="text" name='category[en][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc') ? old('meta_desc') : $category->meta_desc}}" id="meta_desc" placeholder="Meta Description">
-                <input type="text" name='category[en}][local]' value='en' hidden>
+                {{-- <input type="text" name='category[en}][local]' value='en' hidden> --}}
 
                 <div class="invalid-feedback">
                     {{ $errors->first('meta_desc') }}
@@ -122,7 +122,7 @@
             <div class="col-sm-7">
 
                 <input type="text" name='category[ar][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc') ? old('meta_desc') : $category->meta_desc}}" id="meta_desc" placeholder="Meta Description">
-                <input type="text" name='category[ar}][local]' value='ar' hidden>
+                {{-- <input type="text" name='category[ar}][local]' value='ar' hidden> --}}
 
                 <div class="invalid-feedback">
                     {{ $errors->first('meta_desc') }}

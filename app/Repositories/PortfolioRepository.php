@@ -37,7 +37,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
 
     public function create()
     {
-        $categories = $this->portfolio::get();
+        $categories = $this->pcategory::get();
 
         return view('admin.portfolio.create',compact('categories'));
     }
@@ -125,9 +125,9 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
         if($new_cover){
             if($this->request->cover && file_exists(storage_path('app/public/' .$this->request->cover))){
                 Storage::delete('public/'. $this->request->cover);
-
-                $new_cover_path = $new_cover->store('images/portfolio', 'public');
             }
+            $new_cover_path = $new_cover->store('images/portfolio', 'public');
+
         }
         // image mobile
         $new_mobileImage = $this->request->file('mobileImage');
@@ -135,9 +135,9 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
         if($new_mobileImage){
             if($portfolio->mobileImage && file_exists(storage_path('app/public/' . $portfolio->mobileImage))){
                 Storage::delete('public/'. $portfolio->mobileImage);
-
-                $new_mobileImage_path = $new_mobileImage->store('images/portfolio', 'public');
             }
+            $new_mobileImage_path = $new_mobileImage->store('images/portfolio', 'public');
+
         }
 
             DB::beginTransaction();
@@ -146,7 +146,6 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
                 ->update([
                     'slug' => $slug,
                     'pcategory_id' => $this->request['category'],
-                    'link' => $this->request['link'],
                     'date' => $this->request['date'],
                     'is_active' => $this->request->is_active = 1,
                     'cover' => $new_cover_path,
@@ -163,7 +162,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
                         'local' => $allportfolio['local'],
                         'client' => $allportfolio['client'],
                         'desc' => $allportfolio['desc'],
-                        'portfolio_id' =>  $unTransPortfolio_id
+                        'portfolio_id' =>  $portfolio->id
                     ]);
                 }
             DB::commit();
