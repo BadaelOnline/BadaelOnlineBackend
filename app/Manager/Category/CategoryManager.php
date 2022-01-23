@@ -2,6 +2,8 @@
 
 namespace App\Manager\Category;
 
+use App\Http\Requests\Banner\BannerRequest;
+use App\Http\Requests\Category\CategoryRequest;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,7 @@ class CategoryManager
         return $this->categoryRepository->create();
     }
 
-    public function store(Request $request){
+    public function store(CategoryRequest $request){
         return $this->categoryRepository->store($request);
     }
 
@@ -32,8 +34,8 @@ class CategoryManager
         return $this->categoryRepository->edit($id);
     }
 
-    public function update($id){
-        return $this->categoryRepository->update($id);
+    public function update($id, CategoryRequest $request){
+        return $this->categoryRepository->update($id, $request);
     }
 
     public function destroy($id){

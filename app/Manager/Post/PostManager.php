@@ -2,6 +2,7 @@
 
 namespace App\Manager\Post;
 
+use App\Http\Requests\Post\PostRequest;
 use App\Repositories\Interfaces\PostRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class PostManager
         return $this->postRepository->create();
     }
 
-    public function store(Request $request){
+    public function store(PostRequest $request){
         return $this->postRepository->store($request);
     }
 
@@ -32,8 +33,8 @@ class PostManager
         return $this->postRepository->edit($id);
     }
 
-    public function update($id){
-        return $this->postRepository->update($id);
+    public function update(PostRequest $request,$id){
+        return $this->postRepository->update($request,$id);
     }
 
     public function destroy($id){

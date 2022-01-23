@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\Partner\PartnerRequest;
 use App\Models\Page\Page;
 use App\Models\Page\PageTranslation;
 use App\Models\Partner\Partner;
@@ -34,7 +35,7 @@ class PartnerRepository implements PartnerRepositoryInterface{
        return view('admin.partner.create');
    }
 
-   public function store(Request $request)
+   public function store(PartnerRequest $request)
    {
     try {
         /** transformation to collection */
@@ -74,7 +75,7 @@ class PartnerRepository implements PartnerRepositoryInterface{
 
     } catch (\Exception $ex) {
         DB::rollback();
-        return $ex->getMessage();
+        // return $ex->getMessage();
         return redirect()->route('admin.partner.create')->with('error', 'partner failed to add');
     }
    }
@@ -91,17 +92,17 @@ class PartnerRepository implements PartnerRepositoryInterface{
        return view('admin.partner.edit',compact('partner'));
    }
 
-   public function update($id)
+   public function update(PartnerRequest $request,$id)
    {
     try{
 
         $partner = $this->partner::findOrFail($id);
 
-        $new_cover = $this->request->file('cover');
+        $new_cover = $request->file('cover');
 
         if($new_cover){
-            if($this->request->cover && file_exists(storage_path('app/public/' . $this->request->cover))){
-               Storage::delete('public/'. $this->request->cover);
+            if($request->cover && file_exists(storage_path('app/public/' . $request->cover))){
+               Storage::delete('public/'. $request->cover);
             }
 
            $cover_path = $new_cover->store('images/partner', 'public');
@@ -111,12 +112,12 @@ class PartnerRepository implements PartnerRepositoryInterface{
 
         $unTransPartner_id = $partner->where('partners.id',$partner->id)
             ->update([
-                'link' =>$this->request['link'],
+                'link' =>$request['link'],
                 'cover' =>$cover_path,
-                'is_active' => $this->request->is_active = 1
+                'is_active' => $request->is_active = 1
             ]);
 
-            $allpartners = array_values($this->request->partner);
+            $allpartners = array_values($request->partner);
             // insert other translations for Partner
             foreach ($allpartners as $allpartner){
                 $this->partnerTranslation->where('partner_id',$id)
@@ -130,7 +131,7 @@ class PartnerRepository implements PartnerRepositoryInterface{
             return redirect()->route('admin.partner')->with('success', 'Data added successfully');
     }catch(\Exception $ex){
         DB::rollback();
-        return $ex->getMessage();
+        // return $ex->getMessage();
         return redirect()->route('admin.partner.create')->with('error', 'Data failed to add');
     }
    }

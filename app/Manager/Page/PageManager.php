@@ -2,6 +2,7 @@
 
 namespace App\Manager\Page;
 
+use App\Http\Requests\Page\PageRequest;
 use App\Repositories\Interfaces\PageRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class PageManager
         return $this->pageRepository->create();
     }
 
-    public function store(Request $request){
+    public function store(PageRequest $request){
         return $this->pageRepository->store($request);
     }
 
@@ -32,8 +33,8 @@ class PageManager
         return $this->pageRepository->edit($id);
     }
 
-    public function update($id){
-        return $this->pageRepository->update($id);
+    public function update(PageRequest $request, $id){
+        return $this->pageRepository->update($request,$id);
     }
 
     public function destroy($id){

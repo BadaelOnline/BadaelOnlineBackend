@@ -2,6 +2,7 @@
 
 namespace App\Manager\Pcategory;
 
+use App\Http\Requests\PCategory\PCategoryRequest;
 use App\Repositories\Interfaces\PcategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class PcategoryManager
         return $this->pcategoryRepository->index();
     }
 
-    public function store(Request $request){
+    public function store(PCategoryRequest $request){
         return $this->pcategoryRepository->store($request);
     }
 
@@ -28,8 +29,8 @@ class PcategoryManager
         return $this->pcategoryRepository->edit($id);
     }
 
-    public function update($id){
-        return $this->pcategoryRepository->update($id);
+    public function update(PCategoryRequest $request,$id){
+        return $this->pcategoryRepository->update($request,$id);
     }
 
     public function destroy($id){

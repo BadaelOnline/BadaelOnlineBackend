@@ -2,6 +2,8 @@
 
 namespace App\Manager\General;
 
+use App\Http\Requests\About\AboutRequest;
+use App\Http\Requests\General\GeneralRequest;
 use App\Repositories\Interfaces\GeneralRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -21,15 +23,15 @@ class GeneralManager
         return $this->generalRepository->general();
     }
 
-    public function generalUpdate(){
-        return $this->generalRepository->generalUpdate();
+    public function generalUpdate(GeneralRequest $request){
+        return $this->generalRepository->generalUpdate($request);
     }
 
     public function about(){
         return $this->generalRepository->about();
     }
 
-    public function aboutUpdate(Request $request){
+    public function aboutUpdate(AboutRequest $request){
         return $this->generalRepository->aboutUpdate($request);
     }
 

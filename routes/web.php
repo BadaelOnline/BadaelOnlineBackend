@@ -24,6 +24,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 // change language
+Route::get('locale/{locale}','Languages\LanguageController@changeLang');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -216,4 +217,3 @@ Route::prefix('admin')->middleware(['auth','Localization'])->group(function () {
     // Route::post('/lang')
 });
 
-Route::get('locale/{local}','Languages\LanguageController@changeLang');

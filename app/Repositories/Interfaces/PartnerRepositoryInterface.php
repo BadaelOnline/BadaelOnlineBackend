@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
+use App\Http\Requests\Partner\PartnerRequest;
 use Illuminate\Http\Request;
 
 interface PartnerRepositoryInterface{
@@ -10,13 +11,13 @@ interface PartnerRepositoryInterface{
 
    public function create();
 
-   public function store(Request $request);
+   public function store(PartnerRequest $request);
 
    public function show($id);
 
    public function edit($id);
 
-   public function update($id);
+   public function update(PartnerRequest $request,$id);
 
    public function destroy($id);
 }

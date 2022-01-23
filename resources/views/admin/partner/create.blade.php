@@ -100,9 +100,9 @@
                 <input type="text" name='partner[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="ex: Wiklop">
                 <input type="text" name='partner[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
+                @error('partner.en.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -117,9 +117,9 @@
                 <input type="text" name='partner[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="ex: Wiklop">
                 <input type="text" name='partner[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
+                @error('partner.ar.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 

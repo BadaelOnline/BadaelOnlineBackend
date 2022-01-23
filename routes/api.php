@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\App;
 // change language
 Route::get('locale/{locale?}', array('en'=>'set-locale', 'uses'=>'App\Http\Controllers\Languages\LanguageController@changeLang'));
 
-Route::group(['namespace'=>'Front','middleware' => ['Localization'],'prefix' => app()->setLocale('{lang}')],function()
+Route::group(['namespace'=>'Front','middleware' => ['ChangeLang'],'prefix' => app()->setLocale('{lang}')],function()
     {
         // api layout side front
         Route::get('/home',  'FrontController@home')->name('homepage');

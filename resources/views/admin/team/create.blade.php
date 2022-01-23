@@ -96,9 +96,9 @@
 
             <input type="text" name='team[en][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Example: Susi Similikiti">
             <input type="text" name='team[en][local]' value='en' hidden>
-            <div class="invalid-feedback">
-                {{ $errors->first('team.$index.name') }}
-            </div>
+            @error('team.en.name')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
 
         </div>
 
@@ -112,9 +112,9 @@
 
             <input type="text" name='team[ar][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Example: Susi Similikiti">
             <input type="text" name='team[ar][local]' value='ar' hidden>
-            <div class="invalid-feedback">
-                {{ $errors->first('team.$index.name') }}
-            </div>
+            @error('team.ar.name')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
 
         </div>
 
@@ -129,9 +129,9 @@
 
             <input type="text" name='team[en][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position')}}" id="position" placeholder="Example: Product Manager">
             <input type="text" name='team[en][local]' value='en' hidden>
-            <div class="invalid-feedback">
-                {{ $errors->first('team.$index.position') }}
-            </div>
+            @error('team.en.position')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
 
         </div>
 
@@ -145,9 +145,9 @@
 
             <input type="text" name='team[ar][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position')}}" id="position" placeholder="Example: Product Manager">
             <input type="text" name='team[ar][local]' value='ar' hidden>
-            <div class="invalid-feedback">
-                {{ $errors->first('team.$index.position') }}
-            </div>
+            @error('team.ar.position')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
 
         </div>
 
@@ -161,9 +161,9 @@
 
             <input type="text" name='team[en][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute')}}" id="qoute" placeholder="Qoute">
             <input type="text" name='team[en][local]' value='en' hidden>
-            <div class="invalid-feedback">
-                {{ $errors->first('team.$index.qoute') }}
-            </div>
+            @error('team.en.qoute')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
 
         </div>
 
@@ -177,9 +177,9 @@
 
             <input type="text" name='team[ar][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute')}}" id="qoute" placeholder="Qoute">
             <input type="text" name='team[ar][local]' value='ar' hidden>
-            <div class="invalid-feedback">
-                {{ $errors->first('team.$index.qoute') }}
-            </div>
+            @error('team.ar.qoute')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
 
         </div>
 

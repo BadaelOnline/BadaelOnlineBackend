@@ -2,6 +2,7 @@
 
 namespace App\Manager\Partner;
 
+use App\Http\Requests\Partner\PartnerRequest;
 use App\Repositories\Interfaces\PartnerRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class PartnerManager
         return $this->partnerRepository->create();
     }
 
-    public function store(Request $request){
+    public function store(PartnerRequest $request){
         return $this->partnerRepository->store($request);
     }
 
@@ -32,8 +33,8 @@ class PartnerManager
         return $this->partnerRepository->edit($id);
     }
 
-    public function update($id){
-        return $this->partnerRepository->update($id);
+    public function update(PartnerRequest $request,$id){
+        return $this->partnerRepository->update($request,$id);
     }
 
     public function destroy($id){

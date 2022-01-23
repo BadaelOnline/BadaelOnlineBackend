@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\About\AboutRequest;
+use App\Http\Requests\General\GeneralRequest;
 use App\Service\General\GeneralService;
 use Illuminate\Http\Request;
 
@@ -22,15 +24,15 @@ class GeneralController extends Controller
         return $this->generalService->general();
     }
 
-    public function generalUpdate(){
-        return $this->generalService->generalUpdate();
+    public function generalUpdate(GeneralRequest $request){
+        return $this->generalService->generalUpdate($request);
     }
 
     public function about(){
         return $this->generalService->about();
     }
 
-    public function aboutUpdate(Request $request){
+    public function aboutUpdate(AboutRequest $request){
         return $this->generalService->aboutUpdate($request);
     }
 }

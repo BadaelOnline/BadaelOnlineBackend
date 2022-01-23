@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Portfolio;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Portfolio\PortfolioRequest;
 use App\Service\Portfolio\PortfolioService;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class PortfolioController extends Controller
         return $this->portfolioService->create();
     }
 
-    public function store(Request $request){
+    public function store(PortfolioRequest $request){
         return $this->portfolioService->store($request);
     }
 
@@ -34,8 +35,8 @@ class PortfolioController extends Controller
         return $this->portfolioService->edit($id);
     }
 
-    public function update($id){
-        return $this->portfolioService->update($id);
+    public function update(PortfolioRequest $request,$id){
+        return $this->portfolioService->update($request,$id);
     }
 
     public function destroy($id){

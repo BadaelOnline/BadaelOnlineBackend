@@ -2,6 +2,7 @@
 
 namespace App\Service\Page;
 
+use App\Http\Requests\Page\PageRequest;
 use App\Manager\Page\PageManager;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class PageService
         return $this->pageManager->create();
     }
 
-    public function store(Request $request){
+    public function store(PageRequest $request){
         return $this->pageManager->store($request);
     }
 
@@ -32,8 +33,8 @@ class PageService
         return $this->pageManager->edit($id);
     }
 
-    public function update($id){
-        return $this->pageManager->update($id);
+    public function update(PageRequest $request,$id){
+        return $this->pageManager->update($request,$id);
     }
 
     public function destroy($id){

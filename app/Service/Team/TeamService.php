@@ -2,6 +2,7 @@
 
 namespace App\Service\Team;
 
+use App\Http\Requests\Team\TeamRequest;
 use App\Manager\Team\TeamManager;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class TeamService
         return $this->teamManager->create();
     }
 
-    public function store(Request $request){
+    public function store(TeamRequest $request){
         return $this->teamManager->store($request);
     }
 
@@ -33,7 +34,7 @@ class TeamService
         return $this->teamManager->edit($id);
     }
 
-    public function update(Request $request, $id){
+    public function update(TeamRequest $request, $id){
         return $this->teamManager->update($request, $id);
     }
 

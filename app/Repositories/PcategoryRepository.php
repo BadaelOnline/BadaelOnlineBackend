@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\PCategory\PCategoryRequest;
 use App\Models\Pcategory\Pcategory;
 use App\Models\Pcategory\PcategoryTranslation;
 use App\Repositories\Interfaces\PcategoryRepositoryInterface;
@@ -28,7 +29,7 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
         return view('admin.pcategory.index',compact('pcategory'));
     }
 
-    public function store(Request $request)
+    public function store(PCategoryRequest $request)
     {
         try{
             /** transformation to collection */
@@ -77,7 +78,7 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
         return view('admin.pcategory.edit',compact('pcategory'));
     }
 
-    public function update($id)
+    public function update(PCategoryRequest $request,$id)
     {
         try{
 
@@ -87,10 +88,10 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
 
             $unTransPcategory_id = $pcategory->where('pcategories.id',$pcategory->id)
                 ->update([
-                    'is_active' => $this->request->is_active = 1
+                    'is_active' => $request->is_active = 1
                 ]);
 
-                $allpcategories = array_values($this->request->pcategory);
+                $allpcategories = array_values($request->pcategory);
                 // insert other translations for Pcategory
                 foreach ($allpcategories as $allpcategory){
                     $this->pcategoryTranslation->where('pcategory_id',$id)
@@ -104,7 +105,7 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
                 return redirect()->route('admin.pcategory')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.pcategory.create')->with('error', 'Data failed to update');
         }
     }

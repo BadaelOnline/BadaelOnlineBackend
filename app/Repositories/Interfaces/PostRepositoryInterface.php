@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
+use App\Http\Requests\Post\PostRequest;
 use Illuminate\Http\Request;
 
 interface PostRepositoryInterface{
@@ -10,13 +11,13 @@ interface PostRepositoryInterface{
 
     public function create();
 
-    public function store(Request $request);
+    public function store(PostRequest $request);
 
     public function show($id);
 
     public function edit($id);
 
-    public function update($id);
+    public function update(PostRequest $request,$id);
 
     public function destroy($id);
 

@@ -44,6 +44,7 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             // \App\Http\Middleware\Localization::class
+            \App\Http\Middleware\ChangeLang::class
         ],
     ];
 
@@ -64,7 +65,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'Localization' => \App\Http\Middleware\Localization::class
+        'Localization' => \App\Http\Middleware\Localization::class,
+        'ChangeLang' => \App\Http\Middleware\ChangeLang::class
     ];
 
 }

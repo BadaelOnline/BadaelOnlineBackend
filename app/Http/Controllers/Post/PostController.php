@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Post\PostRequest;
 use App\Service\Post\PostService;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class PostController extends Controller
         return $this->postService->create();
     }
 
-    public function store(Request $request){
+    public function store(PostRequest $request){
         return $this->postService->store($request);
     }
 
@@ -33,8 +34,8 @@ class PostController extends Controller
         return $this->postService->edit($id);
     }
 
-    public function update($id){
-        return $this->postService->update($id);
+    public function update(PostRequest $request,$id){
+        return $this->postService->update($request,$id);
     }
 
     public function destroy($id){

@@ -118,9 +118,9 @@
                 <input type="text" name='service[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
                 <input type="text" name='service[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('title') }}
-                </div>
+                @error('service.en.title')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -135,9 +135,9 @@
                 <input type="text" name='service[ar][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
                 <input type="text" name='service[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('title') }}
-                </div>
+                @error('service.ar.title')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -153,9 +153,9 @@
                 <input type="text" name='service[en][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote')}}" id="quote" placeholder="Quote">
                 <input type="text" name='service[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('quote') }}
-                </div>
+                @error('service.en.quote')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -170,9 +170,9 @@
                 <input type="text" name='service[ar][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote')}}" id="quote" placeholder="Quote">
                 <input type="text" name='service[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('quote') }}
-                </div>
+                @error('service.ar.quote')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -190,9 +190,9 @@
                 <textarea name="service[en][desc]" id="summernote" cols="40" rows="10"  class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc')}}</textarea>
                 <input type="text" name='service[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('desc') }}
-                </div>
+                @error('service.en.desc')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -209,9 +209,9 @@
                 <textarea name="service[ar][desc]" id="summernote" cols="40" rows="10"  class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc')}}</textarea>
                 <input type="text" name='service[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('desc') }}
-                </div>
+                @error('service.ar.desc')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 

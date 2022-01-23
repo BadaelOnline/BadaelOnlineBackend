@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\Banner\BannerRequest;
 use App\Models\Banner\Banner;
 use App\Models\Banner\BannerTranslation;
 use App\Repositories\Interfaces\BannerRepositoryInterface;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +15,7 @@ class BannerRepository implements BannerRepositoryInterface{
 
     private $banner;
     private $bannerTranslation;
-    public function __construct(Banner $banner, BannerTranslation $bannerTranslation)
+    public function __construct(Banner $banner, BannerTranslation $bannerTranslation )
     {
         $this->banner = $banner;
         $this->bannerTranslation = $bannerTranslation;
@@ -29,7 +31,7 @@ class BannerRepository implements BannerRepositoryInterface{
 
     }
 
-    public function store(Request $request)
+    public function store(BannerRequest $request)
     {
         try {
             /** transformation to collection */
@@ -69,7 +71,7 @@ class BannerRepository implements BannerRepositoryInterface{
 
         } catch (\Exception $ex) {
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.banner.create')->with('error', 'Data failed to create');
         }
     }
@@ -84,9 +86,10 @@ class BannerRepository implements BannerRepositoryInterface{
         return $this->banner::findOrFail($id);
     }
 
-    public function update(Request $request, $id)
+    public function update(BannerRequest $request, $id)
     {
         try{
+
             $banner = $this->banner::findOrFail($id);
 
             $cover = $request->file('cover');
@@ -122,7 +125,7 @@ class BannerRepository implements BannerRepositoryInterface{
             return redirect()->route('admin.banner')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.banner.edit')->with('error', 'Data failed to update');
         }
     }
@@ -147,8 +150,3 @@ class BannerRepository implements BannerRepositoryInterface{
     }
 }
 
-
-
-// request url  , headers{
-//     lang = ${lang}
-// }

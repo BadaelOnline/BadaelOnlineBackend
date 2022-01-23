@@ -2,6 +2,7 @@
 
 namespace App\Manager\Banner;
 
+use App\Http\Requests\Banner\BannerRequest;
 use App\Repositories\Interfaces\BannerRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class BannerManager
         return $this->bannerRepository->create();
     }
 
-    public function store(Request $request){
+    public function store(BannerRequest $request){
         return $this->bannerRepository->store($request);
     }
 
@@ -32,7 +33,7 @@ class BannerManager
         return $this->bannerRepository->edit($id);
     }
 
-    public function update(Request $request, $id){
+    public function update(BannerRequest $request, $id){
         return $this->bannerRepository->update($request, $id);
     }
 

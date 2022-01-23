@@ -34,12 +34,12 @@
 
             <div class="col-sm-7">
 
-                <input type="text" name='link[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Name">
-                <input type="text" name='link[en][local]' value='en' hidden>
+                <input type="text" name='links[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Name">
+                <input type="text" name='links[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
+                @error('links.en.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -51,18 +51,18 @@
 
             <div class="col-sm-7">
 
-                <input type="text" name='link[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Name">
-                <input type="text" name='link[ar][local]' value='ar' hidden>
+                <input type="text" name='links[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Name">
+                <input type="text" name='links[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
+                @error('links.ar.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
         </div>
 
-        {{-- <div class="form-group ml-5">
+        <div class="form-group ml-5">
 
             <label for="link" class="col-sm-2 col-form-label">Link</label>
 
@@ -76,7 +76,7 @@
 
             </div>
 
-        </div> --}}
+        </div>
 
         <div class="form-group ml-5">
 

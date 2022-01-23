@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\Page\PageRequest;
 use App\Models\Page\Page;
 use App\Models\Page\PageTranslation;
 use Illuminate\Support\Str;
@@ -32,7 +33,7 @@ class PageRepository implements PageRepositoryInterface{
         return view('admin.page.create');
     }
 
-    public function store(Request $request)
+    public function store(PageRequest $request)
     {
         try{
             /** transformation to collection */
@@ -84,23 +85,23 @@ class PageRepository implements PageRepositoryInterface{
         return view ('admin.page.edit', compact('page'));
     }
 
-    public function update($id)
+    public function update(PageRequest $request,$id)
     {
         try{
 
             $page = $this->page::findOrFail($id);
 
-            $slug= $this->request->page['en']['title'];
+            $slug= $request->page['en']['title'];
 
             DB::beginTransaction();
 
             $unTransPage_id = $page->where('pages.id',$page->id)
                 ->update([
                     'slug' => $slug,
-                    'is_active' => $this->request->is_active = 1
+                    'is_active' => $request->is_active = 1
                 ]);
 
-                $allpages = array_values($this->request->page);
+                $allpages = array_values($request->page);
                 // insert other translations for Category
                 foreach ($allpages as $allpage){
                     $this->pageTranslation->where('page_id',$id)
@@ -116,7 +117,7 @@ class PageRepository implements PageRepositoryInterface{
                 return redirect()->route('admin.page')->with('success', 'Data Berhasil Diperbarui');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.page.edit')->with('error', 'Data Gagal Diperbarui');
         }
     }
