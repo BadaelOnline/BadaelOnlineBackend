@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\Portfolio\PortfolioRequest;
 use App\Models\Pcategory\Pcategory;
 use App\Models\Pcategory\PcategoryTranslation;
 use App\Models\Portfolio\Portfolio;
@@ -37,12 +38,12 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
 
     public function create()
     {
-        $categories = $this->portfolio::get();
+        $categories = $this->pcategory::get();
 
         return view('admin.portfolio.create',compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(PortfolioRequest $request)
     {
         try{
             /** transformation to collection */
@@ -94,7 +95,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
             return redirect()->route('admin.portfolio')->with('success', 'Data added successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.portfolio.create')->with('error', 'Data failed to add');
         }
     }
@@ -112,32 +113,32 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
         return view('admin.portfolio.edit',compact('portfolio','categories'));
     }
 
-    public function update($id)
+    public function update(PortfolioRequest $request,$id)
     {
         try{
             $portfolio = $this->portfolio::findOrFail($id);
 
-            $slug= $this->request->portfolio['en']['name'];
+            $slug= $request->portfolio['en']['name'];
 
         // image desktop
-        $new_cover = $this->request->file('cover');
+        $new_cover = $request->file('cover');
 
         if($new_cover){
-            if($this->request->cover && file_exists(storage_path('app/public/' .$this->request->cover))){
-                Storage::delete('public/'. $this->request->cover);
-
-                $new_cover_path = $new_cover->store('images/portfolio', 'public');
+            if($request->cover && file_exists(storage_path('app/public/' .$request->cover))){
+                Storage::delete('public/'. $request->cover);
             }
+            $new_cover_path = $new_cover->store('images/portfolio', 'public');
+
         }
         // image mobile
-        $new_mobileImage = $this->request->file('mobileImage');
+        $new_mobileImage = $request->file('mobileImage');
 
         if($new_mobileImage){
             if($portfolio->mobileImage && file_exists(storage_path('app/public/' . $portfolio->mobileImage))){
                 Storage::delete('public/'. $portfolio->mobileImage);
-
-                $new_mobileImage_path = $new_mobileImage->store('images/portfolio', 'public');
             }
+            $new_mobileImage_path = $new_mobileImage->store('images/portfolio', 'public');
+
         }
 
             DB::beginTransaction();
@@ -146,7 +147,6 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
                 ->update([
                     'slug' => $slug,
                     'pcategory_id' => $this->request['category'],
-                    'link' => $this->request['link'],
                     'date' => $this->request['date'],
                     'is_active' => $this->request->is_active = 1,
                     'cover' => $new_cover_path,
@@ -163,14 +163,14 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
                         'local' => $allportfolio['local'],
                         'client' => $allportfolio['client'],
                         'desc' => $allportfolio['desc'],
-                        'portfolio_id' =>  $unTransPortfolio_id
+                        'portfolio_id' =>  $portfolio->id
                     ]);
                 }
             DB::commit();
             return redirect()->route('admin.portfolio')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.portfolio.edit')->with('error', 'Data failed to update');
         }
     }

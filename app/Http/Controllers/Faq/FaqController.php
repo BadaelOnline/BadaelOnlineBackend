@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Faq;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Faq\FaqRequest;
 use Illuminate\Http\Request;
 use App\Service\Faq\FaqService;
 
@@ -21,7 +22,7 @@ class FaqController extends Controller
         return $this->faqService->create();
     }
 
-    public function store(Request $request){
+    public function store(FaqRequest $request){
         return $this->faqService->store($request);
     }
 
@@ -33,8 +34,8 @@ class FaqController extends Controller
         return $this->faqService->edit($id);
     }
 
-    public function update($id){
-        return $this->faqService->update($id);
+    public function update(FaqRequest $request,$id){
+        return $this->faqService->update($request,$id);
     }
 
     public function destroy($id){

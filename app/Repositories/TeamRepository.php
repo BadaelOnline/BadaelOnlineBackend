@@ -36,7 +36,7 @@ class TeamRepository implements TeamRepositoryInterface{
         Gate::authorize('team-create',$this->user);
     }
 
-    public function store(Request $request)
+    public function store(TeamRequest $request)
     {
         try {
             Gate::authorize('team-create',$this->user);
@@ -96,7 +96,7 @@ class TeamRepository implements TeamRepositoryInterface{
         return $this->team::findOrFail($id);
     }
 
-    public function update(Request $request, $id)
+    public function update(TeamRequest $request, $id)
     {
         try{
             Gate::authorize('team-update',$this->user);
@@ -140,6 +140,7 @@ class TeamRepository implements TeamRepositoryInterface{
             return redirect()->route('admin.team')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.team.edit')->with('error', 'Data failed to update');
         }
 

@@ -90,9 +90,9 @@
 
                 <div class="picture">
 
-                    <img src="{{ asset('storage/'.$portfolio->mobileImage) }}" class="picture-src" id="wizardPicturePreview" height="200px" width="400px" title=""/>
+                    <img src="{{ asset('storage/'.$portfolio->mobileImage) }}" class="picture-src" id="wizardPicturePreview1" height="200px" width="400px" title=""/>
 
-                    <input type="file" id="wizard-picture" name="mobileImage" class="form-control {{$errors->first('mobileImage') ? "is-invalid" : "" }} ">
+                    <input type="file" id="wizard-picture1" name="mobileImage" class="form-control {{$errors->first('mobileImage') ? "is-invalid" : "" }} ">
 
                     <div class="invalid-feedback">
                         {{ $errors->first('mobileImage') }}
@@ -119,9 +119,9 @@
                     <option {{ $category->id == $portfolio->pcategory_id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
-                <div class="invalid-feedback">
-                    {{ $errors->first('category') }}
-                </div>
+                @error('category')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -151,9 +151,9 @@
                 <input type="text" name='portfolio[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $portfolio->name}}" id="name" placeholder="Project Name">
                 <input type="text" name='portfolio[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
+                @error('portfolio.en.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -168,9 +168,9 @@
                 <input type="text" name='portfolio[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $portfolio->name}}" id="name" placeholder="Project Name">
                 <input type="text" name='portfolio[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
+                @error('portfolio.ar.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -186,9 +186,9 @@
                 <textarea name="portfolio[en][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc') ? old('desc') : $portfolio->desc}}</textarea>
                 <input type="text" name='portfolio[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('desc') }}
-                </div>
+                @error('portfolio.en.desc')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -203,9 +203,9 @@
                 <textarea name="portfolio[ar][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('desc') ? old('desc') : $portfolio->desc}}</textarea>
                 <input type="text" name='portfolio[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('desc') }}
-                </div>
+                @error('portfolio.ar.desc')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -221,9 +221,9 @@
                 <input type="text" name='portfolio[en][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client') ? old('client') : $portfolio->client}}" id="client" placeholder="client">
                 <input type="text" name='portfolio[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('client') }}
-                </div>
+                @error('portfolio.en.client')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -238,9 +238,9 @@
                 <input type="text" name='portfolio[ar][client]' class="form-control {{$errors->first('client') ? "is-invalid" : "" }} " value="{{old('client') ? old('client') : $portfolio->client}}" id="client" placeholder="client">
                 <input type="text" name='portfolio[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('client') }}
-                </div>
+                @error('portfolio.ar.client')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -314,6 +314,22 @@ function readURL(input) {
       var reader = new FileReader();
       reader.onload = function (e) {
           $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
+      }
+      reader.readAsDataURL(input.files[0]);
+  }
+}
+
+//image mobile
+  // Prepare the preview for profile picture
+  $("#wizard-picture1").change(function(){
+      readURL1(this);
+  });
+  //Function to show image before upload
+function readURL1(input) {
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+          $('#wizardPicturePreview1').attr('src', e.target.result).fadeIn('slow');
       }
       reader.readAsDataURL(input.files[0]);
   }

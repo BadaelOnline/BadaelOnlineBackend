@@ -2,6 +2,7 @@
 
 namespace App\Service\Partner;
 
+use App\Http\Requests\Partner\PartnerRequest;
 use App\Manager\Partner\PartnerManager;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class PartnerService
         return $this->partnerManager->create();
     }
 
-    public function store(Request $request){
+    public function store(PartnerRequest $request){
         return $this->partnerManager->store($request);
     }
 
@@ -32,8 +33,8 @@ class PartnerService
         return $this->partnerManager->edit($id);
     }
 
-    public function update($id){
-        return $this->partnerManager->update($id);
+    public function update(PartnerRequest $request,$id){
+        return $this->partnerManager->update($request,$id);
     }
 
     public function destroy($id){

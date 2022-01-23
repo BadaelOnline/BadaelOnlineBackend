@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Partner\PartnerRequest;
 use App\Service\Partner\PartnerService;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class PartnerController extends Controller
         return $this->partnerService->create();
     }
 
-    public function store(Request $request){
+    public function store(PartnerRequest $request){
         return $this->partnerService->store($request);
     }
 
@@ -33,8 +34,8 @@ class PartnerController extends Controller
         return $this->partnerService->edit($id);
     }
 
-    public function update($id){
-        return $this->partnerService->update($id);
+    public function update(PartnerRequest $request,$id){
+        return $this->partnerService->update($request,$id);
     }
 
     public function destroy($id){

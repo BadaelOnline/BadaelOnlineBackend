@@ -69,9 +69,9 @@
 
                     <input type="file" id="wizard-picture" name="logo" class="form-control {{$errors->first('logo') ? "is-invalid" : "" }} ">
 
-                    <div class="invalid-feedback">
-                        {{ $errors->first('logo') }}
-                    </div>
+                    @error('logo')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
 
                 </div>
 
@@ -90,187 +90,380 @@
                 <img src="{{asset('storage/' . $general->favicon)}}" alt="">
                 <input type="file" name='favicon' class="form-control {{$errors->first('favicon') ? "is-invalid" : "" }} " value="{{old('favicon') ? old('favicon') : $general->favicon}}" id="favicon" placeholder="Title">
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('favicon') }}
-                </div>
+                @error('favicon')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
         </div>
 
-        @foreach(config('app.languages') as $index => $lang)
-
         <div class="form-group ml-5">
 
-            <label for="title" class="col-sm-2 col-form-label">Title [{{$lang}}]</label>
+            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+
+            <div class="col-sm-9">
+                <select class="form-control" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+        </div>
+
+        {{-- title --}}
+        <div class="form-group ml-5 en">
+
+            <label for="title" class="col-sm-2 col-form-label">Title English</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='general[{{$index}}][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $general->title}}" id="title" placeholder="Title">
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='general[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $general->title}}" id="title" placeholder="Title">
+                <input type="text" name='general[en][local]' value='en' hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('title') }}
                 </div>
+                @error('general.en.title')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="address1" class="col-sm-2 col-form-label">Address 1 [{{$lang}}]</label>
+            <label for="title" class="col-sm-2 col-form-label">Title Arabic</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='general[{{$index}}][address1]' class="form-control {{$errors->first('address1') ? "is-invalid" : "" }} " value="{{old('address1') ? old('address1') : $general->address1}}" id="address1" placeholder="Address 1">
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='general[ar][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $general->title}}" id="title" placeholder="Title">
+                <input type="text" name='general[ar][local]' value='ar' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('title') }}
+                </div>
+                @error('general.ar.title')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
+
+            </div>
+
+        </div>
+        {{-- address 1 --}}
+        <div class="form-group ml-5 en">
+
+            <label for="address1" class="col-sm-2 col-form-label">Address 1 English</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='general[en][address1]' class="form-control {{$errors->first('address1') ? "is-invalid" : "" }} " value="{{old('address1') ? old('address1') : $general->address1}}" id="address1" placeholder="Address 1">
+                <input type="text" name='general[en][local]' value='en' hidden>
 
                 <div class="invalid-feedback">
                     {{ $errors->first('address1') }}
                 </div>
+                @error('general.en.address1')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="address2" class="col-sm-2 col-form-label">Address 2 [{{$lang}}]</label>
+            <label for="address1" class="col-sm-2 col-form-label">Address 1 Arabic</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='general[{{$index}}][address2]' class="form-control {{$errors->first('address2') ? "is-invalid" : "" }} " value="{{old('address2') ? old('address2') : $general->address2}}" id="address2" placeholder="Address 2">
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='general[ar][address1]' class="form-control {{$errors->first('address1') ? "is-invalid" : "" }} " value="{{old('address1') ? old('address1') : $general->address1}}" id="address1" placeholder="Address 1">
+                <input type="text" name='general[ar][local]' value='ar' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('address2') }}
+                    {{ $errors->first('address1') }}
+                </div>
+                @error('general.ar.address1')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
+
+            </div>
+
+        </div>
+        {{-- address 2 --}}
+        <div class="form-group ml-5 en">
+
+            <label for="address2" class="col-sm-2 col-form-label">Address 2 English</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='general[en][address2]' class="form-control {{$errors->first('address2') ? "is-invalid" : "" }} " value="{{old('address2') ? old('address2') : $general->address2}}" id="address2" placeholder="Address 2">
+                <input type="text" name='general[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('general.en.address2') }}
                 </div>
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="tawkto" class="col-sm-2 col-form-label">Tawk to [{{$lang}}]</label>
+            <label for="address2" class="col-sm-2 col-form-label">Address 2 Arabic</label>
 
             <div class="col-sm-7">
 
-                <textarea name="general[{{$index}}][tawkto]" id="tawkto" cols="30" rows="10" class="form-control {{$errors->first('tawkto') ? "is-invalid" : "" }} ">{{old('tawkto') ? old('tawkto') : $general->tawkto}}</textarea>
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='general[ar][address2]' class="form-control {{$errors->first('address2') ? "is-invalid" : "" }} " value="{{old('address2') ? old('address2') : $general->address2}}" id="address2" placeholder="Address 2">
+                <input type="text" name='general[ar][local]' value='ar' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('tawkto') }}
+                    {{ $errors->first('general.ar.address2') }}
+                </div>
+
+            </div>
+
+        </div>
+        {{-- Tawk to --}}
+        <div class="form-group ml-5 en">
+
+            <label for="tawkto" class="col-sm-2 col-form-label">Tawk to English</label>
+
+            <div class="col-sm-7">
+
+                <textarea name="general[en][tawkto]" id="tawkto" cols="30" rows="10" class="form-control {{$errors->first('tawkto') ? "is-invalid" : "" }} ">{{old('tawkto') ? old('tawkto') : $general->tawkto}}</textarea>
+                <input type="text" name='general[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('general.en.tawkto') }}
                 </div>
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="disqus" class="col-sm-2 col-form-label">Disqus [{{$lang}}]</label>
+            <label for="tawkto" class="col-sm-2 col-form-label">Tawk to Arabic</label>
 
             <div class="col-sm-7">
 
-                <textarea name="general[{{$index}}][disqus]" id="disqus" cols="30" rows="10" class="form-control {{$errors->first('disqus') ? "is-invalid" : "" }} ">{{old('disqus') ? old('disqus') : $general->disqus}}</textarea>
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <textarea name="general[ar][tawkto]" id="tawkto" cols="30" rows="10" class="form-control {{$errors->first('tawkto') ? "is-invalid" : "" }} ">{{old('tawkto') ? old('tawkto') : $general->tawkto}}</textarea>
+                <input type="text" name='general[ar][local]' value='ar' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('disqus') }}
+                    {{ $errors->first('general.ar.tawkto') }}
+                </div>
+
+            </div>
+
+        </div>
+        {{-- disgus --}}
+        <div class="form-group ml-5 en">
+
+            <label for="disqus" class="col-sm-2 col-form-label">Disqus English</label>
+
+            <div class="col-sm-7">
+
+                <textarea name="general[en][disqus]" id="disqus" cols="30" rows="10" class="form-control {{$errors->first('disqus') ? "is-invalid" : "" }} ">{{old('disqus') ? old('disqus') : $general->disqus}}</textarea>
+                <input type="text" name='general[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('general.en.disqus') }}
                 </div>
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="sharethis" class="col-sm-2 col-form-label">Sharethis [{{$lang}}]</label>
+            <label for="disqus" class="col-sm-2 col-form-label">Disqus Arabic</label>
 
             <div class="col-sm-7">
 
-                <textarea name="general[{{$index}}][sharethis]" id="sharethis" cols="30" rows="10" class="form-control {{$errors->first('sharethis') ? "is-invalid" : "" }} ">{{old('sharethis') ? old('sharethis') : $general->sharethis}}</textarea>
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <textarea name="general[ar][disqus]" id="disqus" cols="30" rows="10" class="form-control {{$errors->first('disqus') ? "is-invalid" : "" }} ">{{old('disqus') ? old('disqus') : $general->disqus}}</textarea>
+                <input type="text" name='general[ar][local]' value='ar' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('sharethis') }}
+                    {{ $errors->first('general.ar.disqus') }}
+                </div>
+
+            </div>
+
+        </div>
+        {{-- Sharethis --}}
+        <div class="form-group ml-5 en">
+
+            <label for="sharethis" class="col-sm-2 col-form-label">Sharethis English</label>
+
+            <div class="col-sm-7">
+
+                <textarea name="general[en][sharethis]" id="sharethis" cols="30" rows="10" class="form-control {{$errors->first('sharethis') ? "is-invalid" : "" }} ">{{old('sharethis') ? old('sharethis') : $general->sharethis}}</textarea>
+                <input type="text" name='general[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('general.en.sharethis') }}
                 </div>
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="gverification" class="col-sm-2 col-form-label">Google Verification [{{$lang}}]</label>
+            <label for="sharethis" class="col-sm-2 col-form-label">Sharethis Arabic</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='general[{{$index}}][gverification]' class="form-control {{$errors->first('gverification') ? "is-invalid" : "" }} " value="{{old('gverification') ? old('gverification') : $general->gverification}}" id="footer" placeholder="Google Verification">
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <textarea name="general[ar][sharethis]" id="sharethis" cols="30" rows="10" class="form-control {{$errors->first('sharethis') ? "is-invalid" : "" }} ">{{old('sharethis') ? old('sharethis') : $general->sharethis}}</textarea>
+                <input type="text" name='general[ar][local]' value='ar' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('gverification') }}
+                    {{ $errors->first('general.ar.sharethis') }}
+                </div>
+
+            </div>
+
+        </div>
+        {{-- Google Verification --}}
+        <div class="form-group ml-5 en">
+
+            <label for="gverification" class="col-sm-2 col-form-label">Google Verification English</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='general[en][gverification]' class="form-control {{$errors->first('gverification') ? "is-invalid" : "" }} " value="{{old('gverification') ? old('gverification') : $general->gverification}}" id="footer" placeholder="Google Verification">
+                <input type="text" name='general[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('general.en.gverification') }}
                 </div>
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="footer" class="col-sm-2 col-form-label">Footer [{{$lang}}]</label>
+            <label for="gverification" class="col-sm-2 col-form-label">Google Verification Arabic</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='general[{{$index}}][footer]' class="form-control {{$errors->first('footer') ? "is-invalid" : "" }} " value="{{old('footer') ? old('footer') : $general->footer}}" id="footer" placeholder="Footer">
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='general[ar][gverification]' class="form-control {{$errors->first('gverification') ? "is-invalid" : "" }} " value="{{old('gverification') ? old('gverification') : $general->gverification}}" id="footer" placeholder="Google Verification">
+                <input type="text" name='general[ar][local]' value='ar' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('footer') }}
+                    {{ $errors->first('general.ar.gverification') }}
+                </div>
+
+            </div>
+
+        </div>
+        {{-- footer --}}
+        <div class="form-group ml-5 en">
+
+            <label for="footer" class="col-sm-2 col-form-label">Footer English</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='general[en][footer]' class="form-control {{$errors->first('footer') ? "is-invalid" : "" }} " value="{{old('footer') ? old('footer') : $general->footer}}" id="footer" placeholder="Footer">
+                <input type="text" name='general[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('general.en.footer') }}
                 </div>
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="keyword" class="col-sm-2 col-form-label">Keyword [{{$lang}}]</label>
+            <label for="footer" class="col-sm-2 col-form-label">Footer Arabic</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='general[{{$index}}][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword') ? old('keyword') : $general->keyword}}" id="keyword" placeholder="Keyword">
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='general[ar][footer]' class="form-control {{$errors->first('footer') ? "is-invalid" : "" }} " value="{{old('footer') ? old('footer') : $general->footer}}" id="footer" placeholder="Footer">
+                <input type="text" name='general[ar][local]' value='ar' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('keyword') }}
+                    {{ $errors->first('general.ar.footer') }}
+                </div>
+
+            </div>
+
+        </div>
+        {{-- Keyword --}}
+        <div class="form-group ml-5 en">
+
+            <label for="keyword" class="col-sm-2 col-form-label">Keyword English</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='general[en][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword') ? old('keyword') : $general->keyword}}" id="keyword" placeholder="Keyword">
+                <input type="text" name='general[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('general.en.keyword') }}
                 </div>
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-5 ar">
 
-            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc [{{$lang}}]</label>
+            <label for="keyword" class="col-sm-2 col-form-label">Keyword Arabic</label>
 
             <div class="col-sm-7">
 
-                <input type="text" name='general[{{$index}}][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc') ? old('meta_desc') : $general->meta_desc}}" id="meta_desc" placeholder="Meta Description">
-                <input type="text" name='general[{{$index}}][local]' value='{{$lang}}' hidden>
+                <input type="text" name='general[ar][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword') ? old('keyword') : $general->keyword}}" id="keyword" placeholder="Keyword">
+                <input type="text" name='general[ar][local]' value='ar' hidden>
 
                 <div class="invalid-feedback">
-                    {{ $errors->first('meta_desc') }}
+                    {{ $errors->first('general.ar.keyword') }}
+                </div>
+
+            </div>
+
+        </div>
+        {{-- description --}}
+        <div class="form-group ml-5 en">
+
+            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc English</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='general[en][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc') ? old('meta_desc') : $general->meta_desc}}" id="meta_desc" placeholder="Meta Description">
+                <input type="text" name='general[en][local]' value='en' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('general.en.meta_desc') }}
                 </div>
 
             </div>
 
         </div>
 
-        @endforeach
+        <div class="form-group ml-5 ar">
+
+            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc Arabic</label>
+
+            <div class="col-sm-7">
+
+                <input type="text" name='general[ar][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc') ? old('meta_desc') : $general->meta_desc}}" id="meta_desc" placeholder="Meta Description">
+                <input type="text" name='general[ar][local]' value='ar' hidden>
+
+                <div class="invalid-feedback">
+                    {{ $errors->first('general.ar.meta_desc') }}
+                </div>
+
+            </div>
+
+        </div>
 
         <div class="form-group ml-5">
 
@@ -401,6 +594,30 @@
 
 @push('scripts')
 <script>
+    // language
+    window.onload = function () {
+        if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+    }
+
+    $(function () {
+        $("#selectLang").change(function() {
+            var val = $(this).val();
+            localStorage.setItem('local',val);
+            if(localStorage.getItem('local') == 'en'){
+                $('.ar').css({display: "none"});
+                $('.en').css({display: "block"});
+        }else{
+                $('.ar').css({display: "block"});
+                $('.en').css({display: "none"});
+        }
+        });
+    });
     // Prepare the preview for profile picture
     $("#wizard-picture").change(function(){
       readURL(this);

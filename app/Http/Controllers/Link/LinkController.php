@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Link;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Link\LinkRequest;
 use App\Service\Link\LinkService;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class LinkController extends Controller
         return $this->linkService->create();
     }
 
-    public function store(Request $request){
+    public function store(LinkRequest $request){
         return $this->linkService->store($request);
     }
 
@@ -33,8 +34,8 @@ class LinkController extends Controller
         return $this->linkService->edit($id);
     }
 
-    public function update($id){
-        return $this->linkService->update($id);
+    public function update(LinkRequest $request,$id){
+        return $this->linkService->update($id,$request);
     }
 
     public function destroy($id){

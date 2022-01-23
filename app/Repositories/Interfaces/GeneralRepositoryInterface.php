@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Interfaces;
 
+use App\Http\Requests\About\AboutRequest;
+use App\Http\Requests\General\GeneralRequest;
 use Illuminate\Http\Request;
 
 interface GeneralRepositoryInterface{
@@ -10,9 +12,9 @@ interface GeneralRepositoryInterface{
 
     public function general();
 
-    public function generalUpdate();
+    public function generalUpdate(GeneralRequest $request);
 
     public function about();
 
-    public function aboutUpdate(Request $request);
+    public function aboutUpdate(AboutRequest $request);
 }

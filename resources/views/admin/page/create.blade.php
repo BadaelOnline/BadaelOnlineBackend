@@ -43,9 +43,9 @@
                 <input type="text" name='page[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
                 <input type="text" name='page[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('title') }}
-                </div>
+                @error('page.en.title')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -60,9 +60,9 @@
                 <input type="text" name='page[ar][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
                 <input type="text" name='page[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('title') }}
-                </div>
+                @error('page.ar.title')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -78,9 +78,9 @@
                 <textarea name="page[en][text]" class="form-control {{$errors->first('text') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('text')}}</textarea>
                 <input type="text" name='page[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('text') }}
-                </div>
+                @error('page.en.text')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -95,9 +95,9 @@
                 <textarea name="page[ar][text]" class="form-control {{$errors->first('text') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('text')}}</textarea>
                 <input type="text" name='page[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('text') }}
-                </div>
+                @error('page.ar.text')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 

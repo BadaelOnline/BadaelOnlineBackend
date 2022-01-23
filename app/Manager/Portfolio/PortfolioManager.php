@@ -2,6 +2,7 @@
 
 namespace App\Manager\Portfolio;
 
+use App\Http\Requests\Portfolio\PortfolioRequest;
 use App\Repositories\Interfaces\PortfolioRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class PortfolioManager
         return $this->portfolioRepository->create();
     }
 
-    public function store(Request $request){
+    public function store(PortfolioRequest $request){
         return $this->portfolioRepository->store($request);
     }
 
@@ -32,8 +33,8 @@ class PortfolioManager
         return $this->portfolioRepository->edit($id);
     }
 
-    public function update($id){
-        return $this->portfolioRepository->update($id);
+    public function update(PortfolioRequest $request,$id){
+        return $this->portfolioRepository->update($request,$id);
     }
 
     public function destroy($id){

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\Category\CategoryRequest;
 use App\Models\Category\Category;
 use App\Models\Category\CategoryTranslation;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
@@ -31,7 +32,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
         return view('admin.category.create');
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         try{
             /** transformation to collection */
@@ -68,7 +69,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
             return redirect()->route('admin.category')->with('success', 'Data added successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.category')->with('error', 'Data failed to add');
         }
     }
@@ -85,26 +86,26 @@ class CategoryRepository implements CategoryRepositoryInterface{
         return view('admin.category.edit',compact('category'));
     }
 
-    public function update($id)
+    public function update($id ,CategoryRequest $request)
     {
         try{
 
             $category = $this->category::findOrFail($id);
 
-            $slug= $this->request->category['en']['name'];
+            $slug= $request->category['en']['name'];
 
             DB::beginTransaction();
 
             $unTransCategory_id = $category->where('categories.id',$category->id)
                 ->update([
                     'slug' => $slug,
-                    'is_active' => $this->request->is_active = 1
+                    'is_active' => $request->is_active = 1
                 ]);
 
-                $allcategories = array_values($this->request->category);
+                $allcategories = array_values($request->category);
                 // insert other translations for Category
                 foreach ($allcategories as $allcategory){
-                    $this->categoryTranslation->where('category_id',$id)
+                    $this->categoryTranslation->where('category_id',$category->id)
                     ->where('local',$allcategory['local'])
                     ->update([
                         'name' => $allcategory ['name'],
@@ -118,7 +119,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
                 return redirect()->route('admin.category')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.category')->with('error', 'Data failed to update');
         }
     }

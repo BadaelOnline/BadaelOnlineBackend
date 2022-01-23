@@ -40,6 +40,9 @@
                 <div class="invalid-feedback">
                     {{ $errors->first('question') }}
                 </div>
+                @error('faq.en.question')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
 
             </div>
 
@@ -58,6 +61,10 @@
                     {{ $errors->first('question') }}
                 </div>
 
+                @error('faq.ar.question')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
+
             </div>
 
         </div>
@@ -75,6 +82,9 @@
                 <div class="invalid-feedback">
                     {{ $errors->first('answer') }}
                 </div>
+                @error('faq.en.answer')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -92,6 +102,9 @@
                 <div class="invalid-feedback">
                     {{ $errors->first('answer') }}
                 </div>
+                @error('faq.ar.answer')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 

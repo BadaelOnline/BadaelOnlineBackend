@@ -2,6 +2,7 @@
 
 namespace App\Service\Services;
 
+use App\Http\Requests\Service\ServiceRequest;
 use App\Manager\Service\ServiceManager;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class ServicesService
         return $this->serviceManager->create();
     }
 
-    public function store(Request $request){
+    public function store(ServiceRequest $request){
         return $this->serviceManager->store($request);
     }
 
@@ -32,8 +33,8 @@ class ServicesService
         return $this->serviceManager->edit($id);
     }
 
-    public function update($id){
-        return $this->serviceManager->update($id);
+    public function update(ServiceRequest $request, $id){
+        return $this->serviceManager->update($request,$id);
     }
 
     public function destroy($id){

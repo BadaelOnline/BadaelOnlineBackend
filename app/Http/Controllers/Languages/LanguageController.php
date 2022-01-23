@@ -10,6 +10,10 @@ class LanguageController extends Controller
 {
     public function changeLang(Request $request,$locale){
 
+        // $request->session()->put('local',$local);
+        // dd($request->session());
+        // return back();
+
         if (!in_array($locale, config('app.languages'))){
             $locale = 'en';
         }

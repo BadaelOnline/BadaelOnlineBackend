@@ -2,6 +2,7 @@
 
 namespace App\Manager\Faq;
 
+use App\Http\Requests\Faq\FaqRequest;
 use App\Repositories\Interfaces\FaqRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class FaqManager
         return $this->faqRepository->create();
     }
 
-    public function store(Request $request){
+    public function store(FaqRequest $request){
         return $this->faqRepository->store($request);
     }
 
@@ -32,8 +33,8 @@ class FaqManager
         return $this->faqRepository->edit($id);
     }
 
-    public function update($id){
-        return $this->faqRepository->update($id);
+    public function update(FaqRequest $request,$id){
+        return $this->faqRepository->update($request,$id);
     }
 
     public function destroy($id){

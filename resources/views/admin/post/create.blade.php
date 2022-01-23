@@ -98,9 +98,9 @@
             <div class="col-sm-9">
                 <input type="text" name='post[ar][title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
                 <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
-                <div class="invalid-feedback">
-                    {{ $errors->first('post.title') }}
-                </div>
+                @error('post.ar.title')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -113,9 +113,9 @@
             <div class="col-sm-9">
                 <input type="text" name='post[en][title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
                 <input type="text" name='post[en][local]' id="local" value="en" hidden>
-                <div class="invalid-feedback">
-                    {{ $errors->first('post.title') }}
-                </div>
+                @error('post.en.title')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -130,9 +130,9 @@
 
                 <textarea name='post[ar][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
                 <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
-                <div class="invalid-feedback">
-                    {{ $errors->first('body') }}
-                </div>
+                @error('post.ar.body')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -146,9 +146,9 @@
 
                 <textarea name='post[en][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
                 <input type="text" name='post[en][local]' id="local" value="en" hidden>
-                <div class="invalid-feedback">
-                    {{ $errors->first('body') }}
-                </div>
+                @error('post.en.body')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -163,9 +163,9 @@
 
                 <input type="text" name='post[en][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword" placeholder="Keyword">
                 <input type="text" name='post[en][local]' value='en' hidden>
-                <div class="invalid-feedback">
-                    {{ $errors->first('keyword') }}
-                </div>
+                @error('post.en.keyword')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -179,9 +179,9 @@
 
                 <input type="text" name='post[ar][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword" placeholder="Keyword">
                 <input type="text" name='post[ar][local]' value='ar' hidden>
-                <div class="invalid-feedback">
-                    {{ $errors->first('keyword') }}
-                </div>
+                @error('post.ar.keyword')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -196,9 +196,9 @@
 
                 <input type="text" name='post[en][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc" placeholder="Meta Description">
                 <input type="text" name='post[en][local]' value='en' hidden>
-                <div class="invalid-feedback">
-                    {{ $errors->first('meta_desc') }}
-                </div>
+                @error('post.en.meta_desc')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -212,9 +212,9 @@
 
                 <input type="text" name='post[ar][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc" placeholder="Meta Description">
                 <input type="text" name='post[ar][local]' value='ar' hidden>
-                <div class="invalid-feedback">
-                    {{ $errors->first('meta_desc') }}
-                </div>
+                @error('post.ar.meta_desc')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -232,9 +232,9 @@
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
-                <div class="invalid-feedback">
-                    {{ $errors->first('category') }}
-                </div>
+                @error('category')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -251,9 +251,9 @@
                         <option value="{{ $tags->id }}">{{ $tags->name }}</option>
                     @endforeach
                 </select>
-                <div class="invalid-feedback">
-                    {{ $errors->first('tags') }}
-                </div>
+                @error('tags')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 

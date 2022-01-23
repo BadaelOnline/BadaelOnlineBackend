@@ -37,9 +37,9 @@
                 <input type="text" name='pcategory[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $pcategory->name}}" id="name" placeholder="Name">
                 <input type="text" name='pcategory[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
+                @error('pcategory.en.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 
@@ -54,9 +54,9 @@
                 <input type="text" name='pcategory[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $pcategory->name}}" id="name" placeholder="Name">
                 <input type="text" name='pcategory[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
+                @error('pcategory.ar.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
 
             </div>
 

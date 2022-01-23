@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Faq\Faq;
-use App\Models\Faq\FaqTranslation;
+use App\Http\Requests\Link\LinkRequest;
 use App\Models\Link\Link;
 use App\Models\Link\LinkTranslation;
 use App\Repositories\Interfaces\LinkRepositoryInterface;
@@ -33,12 +32,11 @@ class LinkRepository implements LinkRepositoryInterface{
         return view('admin.link.create');
     }
 
-    public function store(Request $request)
+    public function store(LinkRequest $request)
     {
         try{
-            return $request->all();
             /** transformation to collection */
-            $alllinks = collect($request->link)->all();
+            $alllinks = collect($request->links)->all();
 
             $request->is_active ? $is_active = true : $is_active = false;
 
@@ -60,14 +58,14 @@ class LinkRepository implements LinkRepositoryInterface{
                     ];
                 }
 
-           $this->linkTranslation->insert($transLink_arr);
+            $this->linkTranslation->insert($transLink_arr);
             }
             DB::commit();
 
             return redirect()->route('admin.link')->with('success', 'Data added successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.link.create')->with('error', 'Data failed to add');
         }
     }
@@ -83,7 +81,7 @@ class LinkRepository implements LinkRepositoryInterface{
         return view('admin.link.edit',compact('link'));
     }
 
-    public function update($id)
+    public function update(LinkRequest $request,$id)
     {
         try{
             $link = $this->link::findOrFail($id);
@@ -92,11 +90,11 @@ class LinkRepository implements LinkRepositoryInterface{
 
             $unTransLink_id = $link->where('links.id',$link->id)
                 ->update([
-                    'link' => $this->request['link'],
-                    'is_active' => $this->request->is_active = 1
+                    'link' => $request['link'],
+                    'is_active' => $request->is_active = 1
                 ]);
 
-                $alllinks = array_values($this->request->link);
+                $alllinks = array_values($request->links);
                 // insert other translations for Link
                 foreach ($alllinks as $alllink){
                     $this->linkTranslation->where('link_id',$id)
@@ -111,7 +109,7 @@ class LinkRepository implements LinkRepositoryInterface{
                 return redirect()->route('admin.link')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.link.create')->with('error', 'Data failed to update');
         }
     }

@@ -60,7 +60,9 @@
                 <img src="" class="picture-src" id="wizardPicturePreview" height="200px" width="400px" title=""/>
 
                 <input type="file" id="wizard-picture" name="cover">
-
+                @error('cover')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
             </div>
 
             <h6>Pilih Cover</h6>
@@ -83,7 +85,7 @@
         </div>
 
     </div>
-    
+
     {{-- title --}}
     <div class="form-group ml-5 en">
         <label for="title" class="col-sm-2 col-form-label">Title English</label>
@@ -93,6 +95,9 @@
             <div class="invalid-feedback">
                 {{ $errors->first('title') }}
             </div>
+            @error('banner.en.title')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
         </div>
     </div>
 
@@ -104,6 +109,9 @@
             <div class="invalid-feedback">
                 {{ $errors->first('title') }}
             </div>
+            @error('banner.ar.title')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
         </div>
     </div>
     {{-- desc --}}
@@ -112,9 +120,12 @@
         <div class="col-sm-7">
           <textarea name="banner[en][desc]" id="desc" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} " id="summernote">{{old('desc')}}</textarea>
           <input type="text" name='banner[en][local]' value='en' hidden>
-          <div class="invalid-feedback">
-            {{ $errors->first('desc') }}
-        </div>
+            <div class="invalid-feedback">
+                {{ $errors->first('desc') }}
+            </div>
+            @error('banner.en.desc')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
         </div>
     </div>
 
@@ -123,9 +134,12 @@
         <div class="col-sm-7">
           <textarea name="banner[ar][desc]" id="desc" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} " id="summernote">{{old('desc')}}</textarea>
           <input type="text" name='banner[ar][local]' value='ar' hidden>
-          <div class="invalid-feedback">
-            {{ $errors->first('desc') }}
-        </div>
+            <div class="invalid-feedback">
+                {{ $errors->first('desc') }}
+            </div>
+            @error('banner.ar.desc')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
         </div>
     </div>
 

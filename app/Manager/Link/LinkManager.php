@@ -2,6 +2,7 @@
 
 namespace App\Manager\Link;
 
+use App\Http\Requests\Link\LinkRequest;
 use App\Repositories\Interfaces\LinkRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class LinkManager
         return $this->linkRepository->create();
     }
 
-    public function store(Request $request){
+    public function store(LinkRequest $request){
         return $this->linkRepository->store($request);
     }
 
@@ -32,8 +33,8 @@ class LinkManager
         return $this->linkRepository->edit($id);
     }
 
-    public function update($id){
-        return $this->linkRepository->update($id);
+    public function update(LinkRequest $request,$id){
+        return $this->linkRepository->update($id,$request);
     }
 
     public function destroy($id){

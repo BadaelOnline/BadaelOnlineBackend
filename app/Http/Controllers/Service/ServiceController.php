@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Service;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Service\ServiceRequest;
 use App\Service\Services\ServicesService;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class ServiceController extends Controller
         return $this->servicesService->create();
     }
 
-    public function store(Request $request){
+    public function store(ServiceRequest $request){
         return $this->servicesService->store($request);
     }
 
@@ -33,7 +34,7 @@ class ServiceController extends Controller
         return $this->servicesService->edit($id);
     }
 
-    public function update(Request $request, $id){
+    public function update(ServiceRequest $request, $id){
         return $this->servicesService->update($request, $id);
     }
 

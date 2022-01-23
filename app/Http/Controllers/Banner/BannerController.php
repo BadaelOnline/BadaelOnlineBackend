@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Banner;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Banner\BannerRequest;
 use App\Service\Banner\BannerService;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class BannerController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(BannerRequest $request){
         return $this->bannerService->store($request);
     }
 
@@ -41,7 +42,7 @@ class BannerController extends Controller
         return view ('admin.banner.edit',compact('banner'));
     }
 
-    public function update(Request $request, $id){
+    public function update(BannerRequest $request, $id){
         return $this->bannerService->update($request, $id);
     }
 

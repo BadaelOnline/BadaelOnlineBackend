@@ -2,6 +2,8 @@
 
 namespace App\Service\General;
 
+use App\Http\Requests\About\AboutRequest;
+use App\Http\Requests\General\GeneralRequest;
 use App\Manager\General\GeneralManager;
 use Illuminate\Http\Request;
 
@@ -21,15 +23,15 @@ class GeneralService
         return $this->generalManager->general();
     }
 
-    public function generalUpdate(){
-        return $this->generalManager->generalUpdate();
+    public function generalUpdate(GeneralRequest $request){
+        return $this->generalManager->generalUpdate($request);
     }
 
     public function about(){
         return $this->generalManager->about();
     }
 
-    public function aboutUpdate(Request $request){
+    public function aboutUpdate(AboutRequest $request){
         return $this->generalManager->aboutUpdate($request);
     }
 

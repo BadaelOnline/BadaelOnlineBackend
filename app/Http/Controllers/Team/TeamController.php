@@ -43,7 +43,7 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store(TeamRequest $request){
         return $this->teamService->store($request);
     }
 
@@ -74,7 +74,7 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id){
+    public function update(TeamRequest $request, $id){
         return $this->teamService->update($request, $id);
     }
 

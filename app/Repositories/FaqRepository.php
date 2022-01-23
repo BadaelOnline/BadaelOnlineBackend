@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\Faq\FaqRequest;
 use App\Models\Faq\Faq;
 use App\Models\Faq\FaqTranslation;
 use App\Repositories\Interfaces\FaqRepositoryInterface;
@@ -32,7 +33,7 @@ class FaqRepository implements FaqRepositoryInterface{
         return view('admin.faq.create');
     }
 
-    public function store(Request $request)
+    public function store(FaqRequest $request)
     {
         try{
             /** transformation to collection */
@@ -82,7 +83,7 @@ class FaqRepository implements FaqRepositoryInterface{
         return view('admin.faq.edit',compact('faq'));
     }
 
-    public function update($id)
+    public function update(FaqRequest $request,$id)
     {
         try{
 
@@ -92,10 +93,10 @@ class FaqRepository implements FaqRepositoryInterface{
             // //create the default language's faq
             $unTransFaq_id = $this->faq->where('faqs.id', $faq->id)
                 ->update([
-                    'is_active' =>  $this->request->is_active = 1,
+                    'is_active' =>  $request->is_active = 1,
             ]);
 
-            $allfaqs = array_values( $this->request->faq);
+            $allfaqs = array_values( $request->faq);
                 //insert other translations for Faqs
                 foreach ($allfaqs as $allfaq) {
                     $this->faqTranslation->where('faq_id', $id)
@@ -111,7 +112,7 @@ class FaqRepository implements FaqRepositoryInterface{
             return redirect()->route('admin.faq')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.faq.create')->with('error', 'Data failed to update');
         }
     }

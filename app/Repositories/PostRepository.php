@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Events\PostEvent;
+use App\Http\Requests\Post\PostRequest;
 use App\Models\Category\Category;
 use App\Models\Post\Post;
 use App\Models\Post\PostTranslation;
@@ -51,7 +52,7 @@ class PostRepository implements PostRepositoryInterface{
         return view('admin.post.create',compact('categories','tags'));
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
 
         try {
@@ -111,7 +112,7 @@ class PostRepository implements PostRepositoryInterface{
             return redirect()->route('admin.post')->with('success', 'Data added successfully');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
+            // return $ex->getMessage();
             DB::rollback();
             return redirect()->route('admin.post.create')->with('error', 'Data failed to add');
         }
@@ -132,20 +133,20 @@ class PostRepository implements PostRepositoryInterface{
         return view('admin.post.edit',compact('post','categories','tags'));
     }
 
-    public function update($id)
+    public function update(PostRequest $request,$id)
     {
         try{
 
             $post = $this->post::findOrFail($id);
 
-            $slug= $this->request->post['en']['title'];
+            $slug= $request->post['en']['title'];
 
         // image desktop
-        $new_cover = $this->request->file('cover');
+        $new_cover = $request->file('cover');
 
         if($new_cover){
-            if($this->request->cover && file_exists(storage_path('app/public/' .$this->request->cover))){
-                Storage::delete('public/'. $this->request->cover);
+            if($request->cover && file_exists(storage_path('app/public/' .$request->cover))){
+                Storage::delete('public/'. $request->cover);
             }
             $new_cover_path = $new_cover->store('images/blog', 'public');
         }
@@ -155,9 +156,9 @@ class PostRepository implements PostRepositoryInterface{
             $unTransPost_id = $this->post->where('posts.id', $post->id)
                 ->update([
                     'slug' => $slug,
-                    'category_id' => $this->request['category'],
+                    'category_id' => $request['category'],
                     'author_id' => Auth::user()->id,
-                    'is_active' => $this->request->is_active = 1,
+                    'is_active' => $request->is_active = 1,
                     'cover' => $new_cover_path,
                     // 'tags' =>  $this->post->tags()->sync(request('tags'));
             ]);
@@ -181,7 +182,7 @@ class PostRepository implements PostRepositoryInterface{
             return redirect()->route('admin.post')->with('success', 'Data added successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            return $ex->getMessage();
+            // return $ex->getMessage();
             return redirect()->route('admin.post.create')->with('error', 'Data failed to add');
         }
     }

@@ -2,6 +2,7 @@
 
 namespace App\Service\Link;
 
+use App\Http\Requests\Link\LinkRequest;
 use App\Manager\Link\LinkManager;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class LinkService
         return $this->linkManager->create();
     }
 
-    public function store(Request $request){
+    public function store(LinkRequest $request){
         return $this->linkManager->store($request);
     }
 
@@ -32,8 +33,8 @@ class LinkService
         return $this->linkManager->edit($id);
     }
 
-    public function update($id){
-        return $this->linkManager->update($id);
+    public function update(LinkRequest $request,$id){
+        return $this->linkManager->update($id,$request);
     }
 
     public function destroy($id){

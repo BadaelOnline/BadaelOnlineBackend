@@ -19,26 +19,12 @@ class Localization
      */
     public function handle(Request $request, Closure $next)
     {
-        //    Check header request
         if (session()->has('locale')) {
-            // set laravel localization
-                App::setLocale(session()->get('locale'));
-            }
-        /**
-     * requests hasHeader is used to check the Accept-Language header from the REST API's
-     */
-    if ($request->hasHeader("Lang")) {
-        /**
-         * If Accept-Language header found then set it to the default locale
-         */
-        App::setLocale($request->header("lang"));
-    }
-        // route lang
-        App::setLocale('en');
-        if(isset($request->lang)&&$request->lang=='ar')
-        App::setLocale('ar');
+        //     // set laravel localization
+            App::setLocale(session()->get('locale'));
+        }
 
-        // continue request
+        
         return $next($request);
     }
 }

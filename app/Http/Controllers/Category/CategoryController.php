@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Banner\BannerRequest;
+use App\Http\Requests\Category\CategoryRequest;
 use Illuminate\Http\Request;
 use App\Service\Category\CategoryService;
 
@@ -21,7 +23,7 @@ class CategoryController extends Controller
         return $this->categoryService->create();
     }
 
-    public function store(Request $request){
+    public function store(CategoryRequest $request){
         return $this->categoryService->store($request);
     }
 
@@ -33,8 +35,8 @@ class CategoryController extends Controller
         return $this->categoryService->edit($id);
     }
 
-    public function update($id){
-        return $this->categoryService->update($id);
+    public function update(CategoryRequest $request, $id){
+        return $this->categoryService->update($id,$request);
     }
 
     public function destroy($id){

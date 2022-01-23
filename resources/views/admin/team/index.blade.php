@@ -10,7 +10,7 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">{{__('team.Team')}}</h1>     
+<h1 class="h3 mb-2 text-gray-800">{{__('team.Team')}}</h1>
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -58,49 +58,49 @@
                 <tbody>
 
                 @php
-                
+
                 $no=0;
-                
+
                 @endphp
-                
+
                 @foreach ($team as $team)
-                     
-                    <tr> 
-             
-                        <td>{{ ++$no }}</td>  
-             
-                        <td>  
-                
-                            <img src="{{asset('storage/' . $team->photo)}}" width="96px"/>   
-           
-                        </td>    
-                
-                        <td>{{ $team->name }}</td> 
-                        
-                        <td>{{ $team->position }}</td>
-                
-                        <td>    
-                
-                            <a href="{{route('admin.team.edit', [$team->id])}}" class="btn btn-info btn-sm"> Edit </a>
-                
-                            <form method="POST" action="{{route('admin.team.destroy', [$team->id])}}" class="d-inline" onsubmit="return confirm('Delete this team permanently?')">
-                
-                                @csrf
-                
-                                <input type="hidden" name="_method" value="DELETE">
-                
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                
-                            </form>
-                
+
+                    <tr>
+
+                        <td>{{ ++$no }}</td>
+
+                        <td>
+
+                            <img src="{{asset('storage/' . $team->photo)}}" width="96px"/>
+
                         </td>
-            
+
+                        <td>{{ $team->name }}</td>
+
+                        <td>{{ $team->position }}</td>
+
+                        <td>
+
+                            <a href="{{route('admin.team.edit', [$team->id])}}" class="btn btn-info btn-sm"> Edit </a>
+
+                            <form method="POST" action="{{route('admin.team.destroy', [$team->id])}}" class="d-inline" onsubmit="return confirm('Delete this team permanently?')">
+
+                                @csrf
+
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+
+                            </form>
+
+                        </td>
+
                     </tr>
-            
+
                     @endforeach
-        
+
                 </tbody>
-    
+
             </table>
 
         </div>

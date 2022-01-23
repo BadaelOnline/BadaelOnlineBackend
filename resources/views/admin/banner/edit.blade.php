@@ -61,6 +61,10 @@
 
                 <input type="file" id="wizard-picture" name="cover">
 
+                @error('cover')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
+
             </div>
 
             <h6>Pilih Cover</h6>
@@ -92,6 +96,9 @@
             <div class="invalid-feedback">
                 {{ $errors->first('title') }}
             </div>
+            @error('banner.en.title')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
         </div>
     </div>
 
@@ -103,6 +110,9 @@
             <div class="invalid-feedback">
                 {{ $errors->first('title') }}
             </div>
+            @error('banner.ar.title')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
         </div>
     </div>
     {{-- desc --}}
@@ -113,9 +123,12 @@
         <div class="col-sm-7">
           <textarea name="banner[en][desc]" id="desc" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $banner->desc}}</textarea>
           <input type="text" name='banner[en][local]' value='en' hidden>
-          <div class="invalid-feedback">
-            {{ $errors->first('desc') }}
-        </div>
+            <div class="invalid-feedback">
+                {{ $errors->first('desc') }}
+            </div>
+            @error('banner.en.desc')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
 
         </div>
 
@@ -130,7 +143,10 @@
           <input type="text" name='banner[ar][local]' value='ar' hidden>
           <div class="invalid-feedback">
             {{ $errors->first('desc') }}
-        </div>
+          </div>
+            @error('banner.ar.desc')
+                <small class="form-text text-danger"> {{ $message }}</small>
+            @enderror
 
         </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Page\PageRequest;
 use App\Service\Page\PageService;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class PageController extends Controller
         return $this->pageService->create();
     }
 
-    public function store(Request $request){
+    public function store(PageRequest $request){
         return $this->pageService->store($request);
     }
 
@@ -33,8 +34,8 @@ class PageController extends Controller
         return $this->pageService->edit($id);
     }
 
-    public function update($id){
-        return $this->pageService->update($id);
+    public function update(PageRequest $request,$id){
+        return $this->pageService->update($request,$id);
     }
 
     public function destroy($id){
