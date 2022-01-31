@@ -50,11 +50,15 @@
 <form action="{{ route('admin.user.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
+    <div class="form-group m-4">
+        <h2>{{__('user.Cuser')}}</h2>
+    </div>
+
     <div class="container">
 
         <div class="form-group ml-5">
 
-            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <label for="name" class="col-sm-2 col-form-label">{{ __('user.name') }}</label>
 
             <div class="col-sm-9">
 
@@ -70,7 +74,7 @@
 
           <div class="form-group ml-5">
 
-            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <label for="email" class="col-sm-2 col-form-label">{{ __('user.email') }}</label>
 
             <div class="col-sm-9">
 
@@ -86,7 +90,7 @@
 
          <div class="form-group ml-5">
 
-            <label for="password" class="col-sm-2 col-form-label">Password</label>
+            <label for="password" class="col-sm-2 col-form-label">{{ __('user.pass') }}</label>
 
             <div class="col-sm-9">
 
@@ -100,11 +104,11 @@
 
         </div>
 
-        {{-- assign role --}}
+        {{-- role --}}
 
         <div class="form-group ml-5">
 
-            <label class="col-sm-2 col-form-label">Assign Role</label>
+            <label class="col-sm-2 col-form-label">{{ __('user.roles') }}</label>
 
             <div class="col-sm-9 row">
 
@@ -125,20 +129,13 @@
 
             </div>
 
-
-            {{-- <label for="role" class="col-sm-2 col-form-label">Assign Role</label>
-
-            <select name="role" id="" class="form-control">
-                <option value=""></option>
-            </select> --}}
-
         </div>
 
         <div class="form-group ml-5">
 
             <div class="col-sm-3">
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">{{ __('user.create') }}</button>
 
             </div>
 

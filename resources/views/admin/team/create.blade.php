@@ -36,6 +36,13 @@
   width: 100%;
   height: 100%;
 }
+.rowInput {
+    display: flex;
+    gap: 15px;
+}
+.selectLang {
+    margin-top: 38px;
+}
 </style>
 
 @endsection
@@ -50,6 +57,10 @@
 
 <form action="{{ route('admin.team.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
+
+    <div class="form-group m-4">
+        <h2>{{__('team.Cteam')}}</h2>
+    </div>
 
     <div class="form-group">
 
@@ -67,131 +78,119 @@
 
             </div>
 
-            <h6>Choose Photo</h6>
+            <h6>{{ __('team.Scover') }}</h6>
 
-        </div>
-
-    </div>
-
-    <div class="form-group ml-5">
-
-        <label for="lang" class="col-sm-2 col-form-label">Languages</label>
-
-        <div class="col-sm-9">
-            <select class="form-control" id="selectLang">
-                @foreach(config('app.languages') as $index => $lang)
-                <option id="lang">{{ $lang }}</option>
-                @endforeach
-            </select>
         </div>
 
     </div>
 
     {{-- name --}}
-    <div class="form-group ml-5 en">
+    <div class="form-group ml-2 col-sm-7">
+        <div class="rowInput">
 
-        <label for="name" class="col-sm-2 col-form-label">Name English</label>
+            <div class="en col-sm-9">
+                <label class="col-sm-6 col-form-label"{{ __('team.Nenglish') }}</label>
 
-        <div class="col-sm-7">
+                <input type="text" name='team[en][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
+                <input type="text" name='team[en][local]' value='en' hidden>
+                @error('team.en.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
+            </div>
 
-            <input type="text" name='team[en][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Example: Susi Similikiti">
-            <input type="text" name='team[en][local]' value='en' hidden>
-            @error('team.en.name')
-                <small class="form-text text-danger"> {{ $message }}</small>
-            @enderror
+            <div class="ar col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('team.Narabic') }}</label>
+
+                <input type="text" name='team[ar][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
+                <input type="text" name='team[ar][local]' value='ar' hidden>
+                @error('team.ar.name')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
+            </div>
+
+            <select class="form-control col-sm-2 selectLang" id="selectLang">
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
 
         </div>
-
-    </div>
-
-    <div class="form-group ml-5 ar">
-
-        <label for="name" class="col-sm-2 col-form-label">Name Arabic</label>
-
-        <div class="col-sm-7">
-
-            <input type="text" name='team[ar][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Example: Susi Similikiti">
-            <input type="text" name='team[ar][local]' value='ar' hidden>
-            @error('team.ar.name')
-                <small class="form-text text-danger"> {{ $message }}</small>
-            @enderror
-
-        </div>
-
     </div>
 
     {{-- position --}}
-    <div class="form-group ml-5 en">
+    <div class="form-group ml-2 col-sm-7">
+        <div class="rowInput">
 
-        <label for="position" class="col-sm-2 col-form-label">Position English</label>
+            <div class="en col-sm-9">
+                <label class="col-sm-6 col-form-label"{{ __('team.Penglish') }}</label>
 
-        <div class="col-sm-7">
+                <input type="text" name='team[en][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position')}}" id="position">
+                <input type="text" name='team[en][local]' value='en' hidden>
+                @error('team.en.position')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
+            </div>
 
-            <input type="text" name='team[en][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position')}}" id="position" placeholder="Example: Product Manager">
-            <input type="text" name='team[en][local]' value='en' hidden>
-            @error('team.en.position')
-                <small class="form-text text-danger"> {{ $message }}</small>
-            @enderror
+            <div class="ar col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('team.Parabic') }}</label>
 
-        </div>
+                <input type="text" name='team[ar][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position')}}" id="position">
+                <input type="text" name='team[ar][local]' value='ar' hidden>
+                @error('team.ar.position')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
+            </div>
 
-    </div>
-
-    <div class="form-group ml-5 ar">
-
-        <label for="position" class="col-sm-2 col-form-label">Position Arabic</label>
-
-        <div class="col-sm-7">
-
-            <input type="text" name='team[ar][position]' class="form-control {{$errors->first('position') ? "is-invalid" : "" }} " value="{{old('position')}}" id="position" placeholder="Example: Product Manager">
-            <input type="text" name='team[ar][local]' value='ar' hidden>
-            @error('team.ar.position')
-                <small class="form-text text-danger"> {{ $message }}</small>
-            @enderror
-
-        </div>
-
-    </div>
-
-    <div class="form-group ml-5 en">
-
-        <label for="qoute" class="col-sm-2 col-form-label">Qoute English</label>
-
-        <div class="col-sm-7">
-
-            <input type="text" name='team[en][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute')}}" id="qoute" placeholder="Qoute">
-            <input type="text" name='team[en][local]' value='en' hidden>
-            @error('team.en.qoute')
-                <small class="form-text text-danger"> {{ $message }}</small>
-            @enderror
+            <select class="form-control col-sm-2 selectLang" id="selectLang">
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
 
         </div>
-
     </div>
 
-    <div class="form-group ml-5 ar">
+    {{-- quote --}}
+    <div class="form-group ml-2 col-sm-7">
+        <div class="rowInput">
 
-        <label for="qoute" class="col-sm-2 col-form-label">Qoute Arabic</label>
+            <div class="en col-sm-9">
+                <label class="col-sm-6 col-form-label"{{ __('team.Qenglish') }}</label>
 
-        <div class="col-sm-7">
+                <input type="text" name='team[en][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute')}}" id="qoute" >
+                <input type="text" name='team[en][local]' value='en' hidden>
+                @error('team.en.qoute')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
+            </div>
 
-            <input type="text" name='team[ar][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute')}}" id="qoute" placeholder="Qoute">
-            <input type="text" name='team[ar][local]' value='ar' hidden>
-            @error('team.ar.qoute')
-                <small class="form-text text-danger"> {{ $message }}</small>
-            @enderror
+            <div class="ar col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('team.Qarabic') }}</label>
+
+                <input type="text" name='team[ar][qoute]' class="form-control {{$errors->first('qoute') ? "is-invalid" : "" }} " value="{{old('qoute')}}" id="qoute" >
+                <input type="text" name='team[ar][local]' value='ar' hidden>
+                @error('team.ar.qoute')
+                    <small class="form-text text-danger"> {{ $message }}</small>
+                @enderror
+            </div>
+
+            <select class="form-control col-sm-2 selectLang" id="selectLang">
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
 
         </div>
-
     </div>
 
-    <div class="form-group ml-5">
+    {{-- twitter --}}
+    <div class="form-group ml-4">
 
-        <label for="twitter" class="col-sm-2 col-form-label">Twitter</label>
+        <label for="twitter" class="col-sm-2 col-form-label">{{ __('team.twitter') }}</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='twitter' class="form-control {{$errors->first('twitter') ? "is-invalid" : "" }} " value="{{old('twitter')}}" id="twitter" placeholder="Link Twitter">
+            <input type="text" name='twitter' class="form-control {{$errors->first('twitter') ? "is-invalid" : "" }} " value="{{old('twitter')}}" id="twitter" >
 
             <div class="invalid-feedback">
                 {{ $errors->first('twitter') }}
@@ -201,13 +200,14 @@
 
     </div>
 
-    <div class="form-group ml-5">
+    {{-- facebook --}}
+    <div class="form-group ml-4">
 
-        <label for="facebook" class="col-sm-2 col-form-label">Facebook</label>
+        <label for="facebook" class="col-sm-2 col-form-label">{{ __('team.facebook') }}</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='facebook' class="form-control {{$errors->first('facebook') ? "is-invalid" : "" }} " value="{{old('facebook')}}" id="facebook" placeholder="Link Facebook">
+            <input type="text" name='facebook' class="form-control {{$errors->first('facebook') ? "is-invalid" : "" }} " value="{{old('facebook')}}" id="facebook" >
 
             <div class="invalid-feedback">
                 {{ $errors->first('facebook') }}
@@ -217,13 +217,14 @@
 
     </div>
 
-    <div class="form-group ml-5">
+    {{-- instagram --}}
+    <div class="form-group ml-4">
 
-        <label for="instagram" class="col-sm-2 col-form-label">Instagram</label>
+        <label for="instagram" class="col-sm-2 col-form-label">{{ __('team.instagram') }}</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='instagram' class="form-control {{$errors->first('instagram') ? "is-invalid" : "" }} " value="{{old('instagram')}}" id="instagram" placeholder="Link Instagram">
+            <input type="text" name='instagram' class="form-control {{$errors->first('instagram') ? "is-invalid" : "" }} " value="{{old('instagram')}}" id="instagram">
 
             <div class="invalid-feedback">
                 {{ $errors->first('instagram') }}
@@ -233,13 +234,14 @@
 
     </div>
 
-    <div class="form-group ml-5">
+    {{-- linkedin --}}
+    <div class="form-group ml-4">
 
-        <label for="linkedin" class="col-sm-2 col-form-label">Linkedin</label>
+        <label for="linkedin" class="col-sm-2 col-form-label">{{ __('team.linkedin') }}</label>
 
         <div class="col-sm-7">
 
-            <input type="text" name='linkedin' class="form-control {{$errors->first('linkedin') ? "is-invalid" : "" }} " value="{{old('linkedin')}}" id="linkedin" placeholder="Link Linkedin">
+            <input type="text" name='linkedin' class="form-control {{$errors->first('linkedin') ? "is-invalid" : "" }} " value="{{old('linkedin')}}" id="linkedin">
 
             <div class="invalid-feedback">
                 {{ $errors->first('linkedin') }}
@@ -249,9 +251,9 @@
 
     </div>
 
-      <div class="form-group ml-5">
+      <div class="form-group ml-4">
         <div class="col-sm-3">
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">{{ __('team.create') }}</button>
           </div>
       </div>
 
@@ -272,7 +274,7 @@
     }
 
     $(function () {
-        $("#selectLang").change(function() {
+        $(".selectLang").change(function() {
             var val = $(this).val();
             localStorage.setItem('local',val);
             if(localStorage.getItem('local') == 'en'){

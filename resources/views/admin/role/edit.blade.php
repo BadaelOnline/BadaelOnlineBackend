@@ -11,11 +11,15 @@
 <form action="{{ route('admin.role.update',$role->id) }}" method="POST">
     @csrf
 
+    <div class="form-group m-4">
+        <h2>{{ __('user.Urole') }}</h2>
+    </div>
+
     <div class="container">
 
         <div class="form-group ml-5">
 
-            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <label for="name" class="col-sm-2 col-form-label">{{ __('user.name') }}</label>
 
             <div class="col-sm-9">
 
@@ -29,38 +33,29 @@
 
         </div>
 
-        {{-- assign role --}}
+        {{-- role --}}
 
         <div class="form-group ml-5">
 
-            <label for="role" class="col-sm-2 col-form-label">Assign Role</label>
+            <label for="permissions" class="col-sm-2 col-form-label">{{ __('user.perm') }}</label>
 
-            @foreach ($permissions as $permission)
+            <div class="col-sm-9">
 
-                <div class="col-sm-9">
-
-                    <label>
-                        <input type="checkbox" name="permissions[]"
-                            class="{{$errors->first('permissions') ? "is-invalid" : "" }} "
-                            value="{{ $permission->id }}"
+                <select name='permissions[]' class="form-control {{$errors->first('permissions') ? "is-invalid" : "" }} select2" id="permissions" multiple>
+                    @foreach ($permissions as $permission)
+                        <option value="{{ $permission->id }}"
                             @foreach ($role->permissions as $role_premit)
-                                @if ($role_premit->id == $permission->id)
-                                    checked
-                                @endif
-                            @endforeach
-                            > {{ $permission->name }}</label>
-
-                    <div class="invalid-feedback">
-                        {{ $errors->first('permissions') }}
-                    </div>
-
+                            @if ($role_premit->id == $permission->id)
+                                selected
+                            @endif
+                        @endforeach >{{ $permission->name }}</option>
+                    @endforeach
+                </select>
+                <div class="invalid-feedback">
+                    {{ $errors->first('permissions') }}
                 </div>
 
-            @endforeach
-
-            {{-- <select name="role" id="" class="form-control">
-                <option value=""></option>
-            </select> --}}
+            </div>
 
         </div>
 
@@ -68,7 +63,7 @@
 
             <div class="col-sm-3">
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">{{ __('user.update') }}</button>
 
             </div>
 

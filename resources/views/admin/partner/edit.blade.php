@@ -37,7 +37,13 @@
   width: 100%;
   height: 100%;
 }
-
+.rowInput {
+    display: flex;
+    gap: 15px;
+}
+.selectLang {
+    margin-top: 38px;
+}
 </style>
 @endsection
 @section('content')
@@ -50,6 +56,10 @@
 
 <form action="{{ route('admin.partner.update',$partner->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
+
+    <div class="form-group m-4">
+        <h2>{{__('partner.Upartner')}}</h2>
+    </div>
 
     <div class="container">
 
@@ -69,68 +79,55 @@
 
                 </div>
 
-                <h6>Pilih Cover</h6>
+                <h6>{{ __('partner.Scover') }}</h6>
 
-            </div>
-
-        </div>
-
-        <div class="form-group ml-5">
-
-            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
-
-            <div class="col-sm-9">
-                <select class="form-control" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
             </div>
 
         </div>
 
         {{-- name --}}
-        <div class="form-group ml-5 en">
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
+    
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('partner.Nenglish') }}</label>
+    
+                    <input type="text" name='partner[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $partner->name}}" id="title">
+                    <input type="text" name='partner[en][local]' value='en' hidden>
 
-            <label for="name" class="col-sm-2 col-form-label">Name English</label>
+                    @error('partner.en.name')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+    
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('partner.Narabic') }}</label>
+    
+                    <input type="text" name='partner[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $partner->name}}" id="title">
+                    <input type="text" name='partner[ar][local]' value='ar' hidden>
 
-            <div class="col-sm-9">
-
-                <input type="text" name='partner[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $partner->name}}" id="title" placeholder="Name">
-                <input type="text" name='partner[en][local]' value='en' hidden>
-
-                @error('partner.en.name')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
-
+                    @error('partner.ar.name')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+    
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
+    
             </div>
-
         </div>
 
-        <div class="form-group ml-5 ar">
+        {{-- link --}}
+        <div class="form-group ml-4">
 
-            <label for="name" class="col-sm-2 col-form-label">Name Arabic</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='partner[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $partner->name}}" id="title" placeholder="Name">
-                <input type="text" name='partner[ar][local]' value='ar' hidden>
-
-                @error('partner.ar.name')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
-
-            </div>
-
-        </div>
-
-        <div class="form-group ml-5">
-
-            <label for="link" class="col-sm-2 col-form-label">Link</label>
+            <label for="link" class="col-sm-2 col-form-label">{{ __('partner.link') }}</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='link' class="form-control {{$errors->first('link') ? "is-invalid" : "" }} " value="{{old('link') ? old('link') : $partner->link}}" id="link" placeholder="ex: Wiklop.com">
+                <input type="text" name='link' class="form-control {{$errors->first('link') ? "is-invalid" : "" }} " value="{{old('link') ? old('link') : $partner->link}}" id="link">
 
                 <div class="invalid-feedback">
                     {{ $errors->first('link') }}
@@ -140,11 +137,11 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-4">
 
             <div class="col-sm-3">
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">{{ __('partner.update') }}</button>
 
             </div>
 

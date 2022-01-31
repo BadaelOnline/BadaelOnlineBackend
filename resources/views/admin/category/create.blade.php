@@ -8,159 +8,149 @@
 </div>
 @endif
 
+@section('styles')
+<style>
+.rowInput {
+    display: flex;
+    gap: 15px;
+}
+.selectLang {
+    margin-top: 38px;
+}
+</style>
+@endsection
+
 <form action="{{ route('admin.category.store') }}" method="POST">
     @csrf
 
-    <div class="container">
+    <div class="form-group m-4">
+        <h2>{{__('category.Ccategory')}}</h2>
+    </div>
 
-        <div class="form-group ml-5">
+        {{-- name --}}
 
-            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+        <div class="form-group ml-3 col-sm-7">
+            <div class="rowInput">
 
-            <div class="col-sm-9">
-                <select class="form-control" id="selectLang">
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('category.Nenglish') }}</label>
+
+                    <input type="text" name='category[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
+                    <input type="text" name='category[en][local]' value='en' hidden>
+
+                    @error('category.en.name')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('category.Narabic') }}</label>
+                    <input type="text" name='category[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
+                    <input type="text" name='category[ar][local]' value='ar' hidden>
+
+                    @error('category.ar.name')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
                     @foreach(config('app.languages') as $index => $lang)
                     <option id="lang">{{ $lang }}</option>
                     @endforeach
                 </select>
-            </div>
-
-        </div>
-
-        {{-- name --}}
-        <div class="form-group ml-5 en">
-
-            <label for="name" class="col-sm-2 col-form-label">Name English</label>
-
-            <div class="col-sm-7">
-
-                <input type="text" name='category[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Name">
-                <input type="text" name='category[en][local]' value='en' hidden>
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
-                @error('category.en.name')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
 
             </div>
 
-        </div>
-
-        <div class="form-group ml-5 ar">
-
-            <label for="name" class="col-sm-2 col-form-label">Name Arabic</label>
-
-            <div class="col-sm-7">
-
-                <input type="text" name='category[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="Name">
-                <input type="text" name='category[ar][local]' value='ar' hidden>
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
-                </div>
-                @error('category.ar.name')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
-
-            </div>
-
-        </div>
+    </div>
 
         {{-- keyword --}}
-        <div class="form-group ml-5 en">
 
-            <label for="keyword" class="col-sm-2 col-form-label">Keyword English</label>
+        <div class="form-group ml-3 col-sm-7">
+            <div class="rowInput">
 
-            <div class="col-sm-7">
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('category.Kenglish') }}</label>
 
-                <input type="text" name='category[en][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword" placeholder="Keyword">
-                <input type="text" name='category[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('keyword') }}
+                    <input type="text" name='category[en][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword">
+                    <input type="text" name='category[en][local]' value='en' hidden>
+
+                    @error('category.en.keyword')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
                 </div>
-                @error('category.en.keyword')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
 
-            </div>
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('category.Karabic') }}</label>
 
-        </div>
+                    <input type="text" name='category[ar][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword">
+                    <input type="text" name='category[ar][local]' value='ar' hidden>
 
-        <div class="form-group ml-5 ar">
-
-            <label for="keyword" class="col-sm-2 col-form-label">Keyword Arabic</label>
-
-            <div class="col-sm-7">
-
-                <input type="text" name='category[ar][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword" placeholder="Keyword">
-                <input type="text" name='category[ar][local]' value='ar' hidden>
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('keyword') }}
-                </div>
+                    <div class="invalid-feedback">
+                        {{ $errors->first('keyword') }}
+                    </div>
                 @error('category.ar.keyword')
                     <small class="form-text text-danger"> {{ $message }}</small>
                 @enderror
+                </div>
+
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
 
             </div>
 
-        </div>
+    </div>
 
-        {{-- meta desc --}}
-        <div class="form-group ml-5 en">
+    {{-- meta desc --}}
+    <div class="form-group ml-3 col-sm-7">
+        <div class="rowInput">
 
-            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc English</label>
+            <div class="en col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('category.Denglish') }}</label>
 
-            <div class="col-sm-7">
-
-                <input type="text" name='category[en][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc" placeholder="Meta Description">
+                <input type="text" name='category[en][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc">
                 <input type="text" name='category[en][local]' value='en' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('meta_desc') }}
-                </div>
                 @error('category.en.meta_desc')
                     <small class="form-text text-danger"> {{ $message }}</small>
                 @enderror
 
             </div>
 
-        </div>
+            <div class="ar col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('category.Darabic') }}</label>
 
-        <div class="form-group ml-5 ar">
-
-            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc Arabic</label>
-
-            <div class="col-sm-7">
-
-                <input type="text" name='category[ar][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc" placeholder="Meta Description">
+                <input type="text" name='category[ar][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc">
                 <input type="text" name='category[ar][local]' value='ar' hidden>
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('meta_desc') }}
-                </div>
                 @error('category.ar.meta_desc')
                     <small class="form-text text-danger"> {{ $message }}</small>
                 @enderror
 
             </div>
 
-        </div>
-
-        <div class="form-group ml-5">
-
-            <div class="col-sm-3">
-
-                <button type="submit" class="btn btn-primary">Create</button>
-
-            </div>
+            <select class="form-control col-sm-2 selectLang" id="selectLang">
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
 
         </div>
 
     </div>
+
+        <div class="form-group ml-4">
+
+            <div class="col-sm-3">
+
+                <button type="submit" class="btn btn-primary">{{ __('category.create') }}</button>
+
+            </div>
+
+        </div>
 
   </form>
 @endsection
@@ -179,7 +169,7 @@
     }
 
     $(function () {
-        $("#selectLang").change(function() {
+        $(".selectLang").change(function() {
             var val = $(this).val();
             localStorage.setItem('local',val);
             if(localStorage.getItem('local') == 'en'){

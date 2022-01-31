@@ -10,7 +10,7 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Services</h1>
+<h1 class="h3 mb-2 text-gray-800">{{ __('service.service') }}</h1>
 
 @if (session('success'))
 
@@ -28,7 +28,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.service.create') }}" class="btn btn-success">Create service</a>
+        <a href="{{ route('admin.service.create') }}" class="btn btn-success">{{ __('service.Cservice') }}</a>
 
     </div>
 
@@ -42,15 +42,15 @@
 
                     <tr>
 
-                        <th>No.</th>
+                        <th>{{ __('service.no') }}</th>
 
-                        <th>Icon</th>
+                        <th>{{ __('service.image') }}</th>
 
-                        <th>Title</th>
+                        <th>{{ __('service.title') }}</th>
 
-                        <th>Desc</th>
+                        <th>{{  __('service.Desc') }}</th>
 
-                        <th>Option</th>
+                        <th>{{ __('service.option') }}</th>
 
                     </tr>
 
@@ -82,7 +82,7 @@
 
                         <td>
 
-                            <a href="{{route('admin.service.edit', [$service->id])}}" class="btn btn-info btn-sm"> Edit </a>
+                            <a href="{{route('admin.service.edit', [$service->id])}}" class="btn btn-info btn-sm"> {{ __('service.edit') }} </a>
 
                             <form method="POST" action="{{route('admin.service.destroy', [$service->id])}}" class="d-inline" onsubmit="return confirm('Delete this service permanently?')">
 
@@ -90,7 +90,7 @@
 
                                 <input type="hidden" name="_method" value="DELETE">
 
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                                <input type="submit" value="{{ __('service.del') }}" class="btn btn-danger btn-sm">
 
                             </form>
 

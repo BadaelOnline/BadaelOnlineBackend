@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Admin - Dashboard</title>
+  <title>{{ __('home.admindashboard') }}</title>
 
   <!-- Custom fonts for this template-->
   <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -46,7 +46,7 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
-        <div class="sidebar-brand-text mx-3">BADAEL<sup>1.0</sup></div>
+        <div class="sidebar-brand-text mx-3">{{ __('home.badael') }}<sup>1.0</sup></div>
       </a>
 
       <!-- Divider -->
@@ -56,20 +56,20 @@
       <li class="nav-item active">
         <a class="nav-link" href="{{ route('admin.dashboard') }}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>{{ __('home.dashboard') }}</span></a>
       </li>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
           <i class="fas fa-fw fa-table"></i>
-          <span>Managment</span>
+          <span>{{ __('home.managment') }}</span>
         </a>
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('admin.user') }}">Admin</a>
-            <a class="collapse-item" href="{{ route('admin.role') }}">Role</a>
-            <a class="collapse-item" href="{{ route('admin.permission') }}">Permission</a>
+            <a class="collapse-item" href="{{ route('admin.user') }}">{{ __('home.user') }}</a>
+            <a class="collapse-item" href="{{ route('admin.role') }}">{{ __('home.role') }}</a>
+            <a class="collapse-item" href="{{ route('admin.permission') }}">{{ __('home.permission') }}</a>
           </div>
         </div>
       </li>
@@ -94,14 +94,14 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-table"></i>
-          <span>Blog</span>
+          <span>{{ __('home.blog') }}</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('admin.post') }}">Blog</a>
-            <a class="collapse-item" href="{{ route('admin.category') }}">Categories</a>
-            <a class="collapse-item" href="{{ route('admin.tag') }}">Tags</a>
-            <a class="collapse-item" href="{{ route('admin.post.trash') }}">Trash</a>
+            <a class="collapse-item" href="{{ route('admin.post') }}">{{ __('home.blog') }}</a>
+            <a class="collapse-item" href="{{ route('admin.category') }}">{{ __('home.cate') }}</a>
+            <a class="collapse-item" href="{{ route('admin.tag') }}">{{ __('home.tag') }}</a>
+            <a class="collapse-item" href="{{ route('admin.post.trash') }}">{{ __('home.trash') }}</a>
           </div>
         </div>
       </li>
@@ -110,12 +110,12 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-table"></i>
-          <span>Portfolio</span>
+          <span>{{ __('home.portfolio') }}</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('admin.portfolio') }}">Portfolio</a>
-            <a class="collapse-item" href="{{ route('admin.pcategory') }}">Portfolio Categories</a>
+            <a class="collapse-item" href="{{ route('admin.portfolio') }}">{{ __('home.portfolio') }}</a>
+            <a class="collapse-item" href="{{ route('admin.pcategory') }}">{{ __('home.portfoliocate') }}</a>
           </div>
         </div>
       </li>
@@ -123,58 +123,58 @@
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.faq') }}">
           <i class="fas fa-fw fa-table"></i>
-          <span>FAQ</span></a>
+          <span>{{ __('home.faq') }}</span></a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.link') }}">
           <i class="fas fa-fw fa-table"></i>
-          <span>Links</span></a>
+          <span>{{ __('home.link') }}</span></a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.page') }}">
           <i class="fas fa-fw fa-table"></i>
-          <span>Pages</span></a>
+          <span>{{ __('home.page') }}</span></a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.partner') }}">
           <i class="fas fa-fw fa-table"></i>
-          <span>Partners</span></a>
+          <span>{{ __('home.partner') }}</span></a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.service') }}">
           <i class="fas fa-fw fa-table"></i>
-          <span>Services</span></a>
+          <span>{{ __('home.service') }}</span></a>
       </li>
 
       @can('team-list')
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.team') }}">
           <i class="fas fa-fw fa-table"></i>
-          <span>Team</span></a>
+          <span>{{ __('home.team') }}</span></a>
       </li>
       @endcan
 
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.testi') }}">
           <i class="fas fa-fw fa-table"></i>
-          <span>Testimonials</span></a>
+          <span>{{ __('home.testi') }}</span></a>
       </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
-          <span>Settings</span>
+          <span>{{ __('home.setting') }}</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{{ route('admin.about') }}">About</a>
-            <a class="collapse-item" href="{{ route('admin.banner') }}">Banner</a>
-            <a class="collapse-item" href="{{ route('admin.general') }}">General Settings</a>
+            <a class="collapse-item" href="{{ route('admin.about') }}">{{ __('home.about') }}</a>
+            <a class="collapse-item" href="{{ route('admin.banner') }}">{{ __('home.banner') }}</a>
+            <a class="collapse-item" href="{{ route('admin.general') }}">{{ __('home.generalsetting') }}</a>
           </div>
         </div>
       </li>
@@ -208,7 +208,7 @@
           <ul class="navbar-nav ml-auto">
             {{-- dropdown language --}}
             <li class="dropdown m-4">
-              <a class="dropdown-toggle" data-toggle="dropdown" role="button">Languages</a>
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button">{{ __('home.lang') }}</a>
               <ul class="dropdown-menu">
                 <li><a href="{{url("locale/en")}}">EN</a></li>
                 <li><a href="{{url("locale/ar")}}">AR</a></li>
@@ -231,7 +231,7 @@
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+                  {{ __('home.logout') }}
                 </a>
               </div>
             </li>
@@ -247,7 +247,7 @@
                 </a>
                 <!-- Dropdown - Notification Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" role="menu">
-                  <span class="dropdown-header">Unread Notifications</span>
+                  <span class="dropdown-header">{{ __('home.unnotifi') }}</span>
                   @foreach (auth()->user()->unreadNotifications as $notification)
                     <a href="#" class="dropdown-item {{ $notification->read_at == null ? 'unread' : '' }}" >
                         <i class="fas fa-envelope"></i> {{ $notification->data['title'] }}
@@ -259,14 +259,14 @@
                   @endforeach
 
                   <div class="dropdown-divider"></div>
-                  <span class="dropdown-header">Read Notifications</span>
+                  <span class="dropdown-header">{{ __('home.notifi') }}</span>
                   @forelse(auth()->user()->readNotifications as $notification)
                     <a href="#" class="dropdown-item">
                         <i class="fas fa-envelope mr-2"></i> {{ $notification->data['description'] }}
                         <span class="ml-3 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
                     </a>
                   @empty
-                  <span class="ml-3 pull-right text-muted text-sm">no notifications read</span>
+                  <span class="ml-3 pull-right text-muted text-sm">{{ __('home.nonotifi') }}</span>
                   @endforelse
 
                   <div class="dropdown-divider"></div>
@@ -293,7 +293,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Badael Online 2020</span>
+            <span>{{ __('home.copyright') }} &copy; {{ __('home.badaelonline') }}</span>
           </div>
         </div>
       </footer>
@@ -315,14 +315,14 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">{{ __('home.readytileave') }}</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">{{ __('home.selectlogout') }}</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('home.cancel') }}</button>
 
           <a class="btn btn-primary" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

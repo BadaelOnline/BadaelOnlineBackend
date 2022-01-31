@@ -10,7 +10,7 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Permissions</h1>
+<h1 class="h3 mb-2 text-gray-800">{{ __('user.perm') }}</h1>
 
 @if (session('success'))
 
@@ -28,7 +28,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.permission.create') }}" class="btn btn-success">Create permission</a>
+        <a href="{{ route('admin.permission.create') }}" class="btn btn-success">{{ __('user.Cperm') }}</a>
 
     </div>
 
@@ -42,13 +42,13 @@
 
                     <tr>
 
-                        <th>No.</th>
+                        <th>{{ __('user.no') }}</th>
 
-                        <th>Name</th>
+                        <th>{{ __('user.name') }}</th>
 
                         {{-- <th>Email</th> --}}
 
-                        <th>Option</th>
+                        <th>{{ __('user.option') }}</th>
 
                     </tr>
 
@@ -75,7 +75,7 @@
                         <td>
 
                             {{-- <a href="#" data-toggle="modal" data-target="#changepasswordModal" class="btn btn-primary btn-sm">Change Password</a> --}}
-                            <a href="{{route('admin.permission.edit', [$permission->id])}}" class="btn btn-info btn-sm"> Edit </a>
+                            <a href="{{route('admin.permission.edit', [$permission->id])}}" class="btn btn-info btn-sm"> {{ __('user.edit') }} </a>
 
                             <form method="POST" action="{{route('admin.permission.destroy', [$permission->id])}}" class="d-inline" onsubmit="return confirm('Delete this permission permanently?')">
 
@@ -83,7 +83,7 @@
 
                                 <input type="hidden" name="_method" value="DELETE">
 
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                                <input type="submit" value="{{ __('user.del') }}" class="btn btn-danger btn-sm">
 
                             </form>
 

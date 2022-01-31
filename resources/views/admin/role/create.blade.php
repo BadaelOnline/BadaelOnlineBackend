@@ -50,11 +50,15 @@
 <form action="{{ route('admin.role.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
+    <div class="form-group m-4">
+        <h2>{{__('user.Crole')}}</h2>
+    </div>
+
     <div class="container">
 
         <div class="form-group ml-5">
 
-            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <label for="name" class="col-sm-2 col-form-label">{{ __('user.name') }}</label>
 
             <div class="col-sm-9">
 
@@ -68,11 +72,11 @@
 
         </div>
 
-        {{-- assign role --}}
+        {{-- Role --}}
 
         <div class="form-group ml-5">
 
-            <label for="permissions" class="col-sm-2 col-form-label">Assign Role</label>
+            <label for="permissions" class="col-sm-2 col-form-label">{{ __('user.perm') }}</label>
 
             <div class="col-sm-9">
 
@@ -89,31 +93,11 @@
 
         </div>
 
-        {{-- <div class="form-group ml-5">
-
-            <label for="role" class="col-sm-2 col-form-label">Assign Role</label>
-
-            @foreach ($permissions as $permission)
-
-                <div class="col-sm-9">
-
-                    <label><input type="checkbox" name="permissions[]" class="{{$errors->first('permissions') ? "is-invalid" : "" }} " value="{{ $permission->id }}"> {{ $permission->name }}</label>
-
-                    <div class="invalid-feedback">
-                        {{ $errors->first('permissions') }}
-                    </div>
-
-                </div>
-
-            @endforeach
-
-        </div> --}}
-
         <div class="form-group ml-5">
 
             <div class="col-sm-3">
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">{{ __('user.create') }}</button>
 
             </div>
 

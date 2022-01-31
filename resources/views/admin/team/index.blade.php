@@ -10,7 +10,7 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">{{__('team.Team')}}</h1>
+<h1 class="h3 mb-2 text-gray-800">{{__('team.team')}}</h1>
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -27,7 +27,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.team.create') }}" class="btn btn-success">Create team</a>
+        <a href="{{ route('admin.team.create') }}" class="btn btn-success">{{ __('team.Cteam') }}</a>
 
     </div>
 
@@ -41,15 +41,15 @@
 
                     <tr>
 
-                        <th>No.</th>
+                        <th>{{ __('team.no') }}</th>
 
-                        <th>Photo</th>
+                        <th>{{ __('team.photo') }}</th>
 
-                        <th>Name</th>
+                        <th>{{ __('team.name') }}</th>
 
-                        <th>Position</th>
+                        <th>{{ __('team.position') }}</th>
 
-                        <th>Option</th>
+                        <th>{{ __('team.option') }}</th>
 
                     </tr>
 
@@ -81,7 +81,7 @@
 
                         <td>
 
-                            <a href="{{route('admin.team.edit', [$team->id])}}" class="btn btn-info btn-sm"> Edit </a>
+                            <a href="{{route('admin.team.edit', [$team->id])}}" class="btn btn-info btn-sm"> {{ __('team.edit') }} </a>
 
                             <form method="POST" action="{{route('admin.team.destroy', [$team->id])}}" class="d-inline" onsubmit="return confirm('Delete this team permanently?')">
 
@@ -89,7 +89,7 @@
 
                                 <input type="hidden" name="_method" value="DELETE">
 
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                                <input type="submit" value="{{ __('team.del') }}" class="btn btn-danger btn-sm">
 
                             </form>
 

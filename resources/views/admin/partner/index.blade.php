@@ -10,8 +10,8 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Partners</h1>     
-   
+<h1 class="h3 mb-2 text-gray-800">{{ __('partner.partner') }}</h1>
+
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -28,7 +28,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.partner.create') }}" class="btn btn-success">Create Partner</a>
+        <a href="{{ route('admin.partner.create') }}" class="btn btn-success">{{ __('partner.Cpartner') }}</a>
 
     </div>
 
@@ -42,13 +42,13 @@
 
                     <tr>
 
-                        <th>No.</th>
+                        <th>{{ __('partner.no') }}</th>
 
-                        <th>Cover</th>
+                        <th>{{ __('partner.cover') }}</th>
 
-                        <th>Name</th>
+                        <th>{{ __('partner.name') }}</th>
 
-                        <th>Option</th>
+                        <th>{{ __('partner.option') }}</th>
 
                     </tr>
 
@@ -57,47 +57,47 @@
                 <tbody>
 
                 @php
-                
+
                 $no=0;
-                
+
                 @endphp
-                
+
                 @foreach ($partner as $partner)
-                     
-                    <tr> 
-             
-                        <td>{{ ++$no }}</td>  
-                
-                        <td>
-                        
+
+                    <tr class="col-sm-12">
+
+                        <td class="col-sm-2">{{ ++$no }}</td>
+
+                        <td class="col-sm-3">
+
                             <img src="{{ asset('storage/'.$partner->cover) }}" alt="" style="height: 200px; width: 300px">
-                        
-                        </td> 
-                        
-                        <td>{{ $partner->name }}</td> 
-                
-                        <td>    
-                
-                            <a href="{{route('admin.partner.edit', [$partner->id])}}" class="btn btn-info btn-sm"> Edit </a>
-                
-                            <form method="POST" action="{{route('admin.partner.destroy', [$partner->id])}}" class="d-inline" onsubmit="return confirm('Delete this partner permanently?')">
-                
-                                @csrf
-                
-                                <input type="hidden" name="_method" value="DELETE">
-                
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                
-                            </form>
-                
+
                         </td>
-            
+
+                        <td class="col-sm-3">{{ $partner->name }}</td>
+
+                        <td class="col-sm-4">
+
+                            <a href="{{route('admin.partner.edit', [$partner->id])}}" class="btn btn-info btn-sm"> {{ __('partner.edit') }} </a>
+
+                            <form method="POST" action="{{route('admin.partner.destroy', [$partner->id])}}" class="d-inline" onsubmit="return confirm('Delete this partner permanently?')">
+
+                                @csrf
+
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <input type="submit" value="{{ __('partner.del') }}" class="btn btn-danger btn-sm">
+
+                            </form>
+
+                        </td>
+
                     </tr>
-            
+
                     @endforeach
-        
+
                 </tbody>
-    
+
             </table>
 
         </div>

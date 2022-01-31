@@ -10,8 +10,8 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Tags</h1>     
-   
+<h1 class="h3 mb-2 text-gray-800">{{ __('tag.tag') }}</h1>
+
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -28,7 +28,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.tag.create') }}" class="btn btn-success">Create tag</a>
+        <a href="{{ route('admin.tag.create') }}" class="btn btn-success">{{ __('tag.Ctag') }}</a>
 
     </div>
 
@@ -42,17 +42,17 @@
 
                     <tr>
 
-                        <th>No.</th>
+                        <th>{{ __('tag.no') }}</th>
 
-                        <th>Name</th>
+                        <th>{{ __('tag.name') }}</th>
 
-                        <th>Slug</th>
+                        {{-- <th>Slug</th> --}}
 
-                        <th>Keyword</th>
+                        <th>{{ __('tag.keyword') }}</th>
 
-                        <th>Meta Desc</th>
+                        <th>{{ __('tag.metadesc') }}</th>
 
-                        <th>Option</th>
+                        <th>{{ __('tag.option') }}</th>
 
                     </tr>
 
@@ -61,47 +61,47 @@
                 <tbody>
 
                 @php
-                
-                $no=0;
-                
-                @endphp
-                
-                @foreach ($tag as $tag)
-                     
-                    <tr> 
-             
-                        <td>{{ ++$no }}</td>  
-                
-                        <td>{{ $tag->name }}</td> 
-                        
-                        <td>{{ $tag->slug }}</td> 
-                        
-                        <td>{{ $tag->keyword }}</td> 
 
-                        <td>{{ $tag->meta_desc }}</td> 
-                
-                        <td>    
-                
-                            <a href="{{route('admin.tag.edit', [$tag->id])}}" class="btn btn-info btn-sm"> Edit </a>
-                
+                $no=0;
+
+                @endphp
+
+                @foreach ($tag as $tag)
+
+                    <tr>
+
+                        <td>{{ ++$no }}</td>
+
+                        <td>{{ $tag->name }}</td>
+
+                        {{-- <td>{{ $tag->slug }}</td> --}}
+
+                        <td>{{ $tag->keyword }}</td>
+
+                        <td>{{ $tag->meta_desc }}</td>
+
+                        <td>
+
+                            <a href="{{route('admin.tag.edit', [$tag->id])}}" class="btn btn-info btn-sm"> {{ __('tag.edit') }} </a>
+
                             <form method="POST" action="{{route('admin.tag.destroy', [$tag->id])}}" class="d-inline" onsubmit="return confirm('Delete this tag permanently?')">
-                
+
                                 @csrf
-                
+
                                 <input type="hidden" name="_method" value="DELETE">
-                
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                
+
+                                <input type="submit" value="{{ __('tag.del') }}" class="btn btn-danger btn-sm">
+
                             </form>
-                
+
                         </td>
-            
+
                     </tr>
-            
+
                     @endforeach
-        
+
                 </tbody>
-    
+
             </table>
 
         </div>

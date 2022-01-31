@@ -10,8 +10,8 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Page</h1>     
-   
+<h1 class="h3 mb-2 text-gray-800">{{ __('page.page') }}</h1>
+
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -28,7 +28,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.page.create') }}" class="btn btn-success">Create Page</a>
+        <a href="{{ route('admin.page.create') }}" class="btn btn-success">{{ __('page.Cpage') }}</a>
 
     </div>
 
@@ -42,13 +42,13 @@
 
                     <tr>
 
-                        <th>No.</th>
+                        <th>{{ __('page.no') }}</th>
 
-                        <th>Title</th>
+                        <th>{{ __('page.title') }}</th>
 
-                        <th>Slug</th>
+                        <th>{{ __('page.text') }}</th>
 
-                        <th>Option</th>
+                        <th>{{ __('page.option') }}</th>
 
                     </tr>
 
@@ -57,43 +57,43 @@
                 <tbody>
 
                 @php
-                
+
                 $no=0;
-                
+
                 @endphp
-                
+
                 @foreach ($page as $page)
-                     
-                    <tr> 
-             
-                        <td>{{ ++$no }}</td>  
-                
-                        <td>{{ $page->title }}</td> 
-                        
-                        <td>{{ $page->slug }}</td>   
-                
-                        <td>    
-                
-                            <a href="{{route('admin.page.edit', [$page->id])}}" class="btn btn-info btn-sm"> Edit </a>
-                
+
+                    <tr class="col-sm-12">
+
+                        <td class="col-sm-2">{{ ++$no }}</td>
+
+                        <td class="col-sm-2">{{ $page->title }}</td>
+
+                        <td class="col-sm-4">{{ $page->text }}</td>
+
+                        <td class="col-sm-4">
+
+                            <a href="{{route('admin.page.edit', [$page->id])}}" class="btn btn-info btn-sm"> {{ __('page.edit') }} </a>
+
                             <form method="POST" action="{{route('admin.page.destroy', [$page->id])}}" class="d-inline" onsubmit="return confirm('Delete this page permanently?')">
-                
+
                                 @csrf
-                
+
                                 <input type="hidden" name="_method" value="DELETE">
-                
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                
+
+                                <input type="submit" value="{{ __('page.del') }}" class="btn btn-danger btn-sm">
+
                             </form>
-                
+
                         </td>
-            
+
                     </tr>
-            
+
                     @endforeach
-        
+
                 </tbody>
-    
+
             </table>
 
         </div>

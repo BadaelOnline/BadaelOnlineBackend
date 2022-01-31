@@ -10,8 +10,8 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Link</h1>     
-   
+<h1 class="h3 mb-2 text-gray-800">{{ __('link.links') }}</h1>
+
 @if (session('success'))
 
 <div class="alert alert-success">
@@ -28,7 +28,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.link.create') }}" class="btn btn-success">Create Link</a>
+        <a href="{{ route('admin.link.create') }}" class="btn btn-success">{{{ __('link.Clink') }}}</a>
 
     </div>
 
@@ -42,13 +42,13 @@
 
                     <tr>
 
-                        <th>No.</th>
+                        <th>{{ __('link.no') }}</th>
 
-                        <th>Name</th>
+                        <th>{{ __('link.name') }}</th>
 
-                        <th>Link</th>
+                        <th>{{ __('link.link') }}</th>
 
-                        <th>Option</th>
+                        <th>{{ __('link.option') }}</th>
 
                     </tr>
 
@@ -57,43 +57,43 @@
                 <tbody>
 
                 @php
-                
+
                 $no=0;
-                
+
                 @endphp
-                
+
                 @foreach ($link as $link)
-                     
-                    <tr> 
-             
-                        <td>{{ ++$no }}</td>  
-                
-                        <td>{{ $link->name }}</td> 
-                        
-                        <td>{{ $link->link}}</td>   
-                
-                        <td>    
-                
-                            <a href="{{route('admin.link.edit', [$link->id])}}" class="btn btn-info btn-sm"> Edit </a>
-                
+
+                    <tr>
+
+                        <td>{{ ++$no }}</td>
+
+                        <td>{{ $link->name }}</td>
+
+                        <td>{{ $link->link}}</td>
+
+                        <td>
+
+                            <a href="{{route('admin.link.edit', [$link->id])}}" class="btn btn-info btn-sm"> {{ __('link.edit') }} </a>
+
                             <form method="POST" action="{{route('admin.link.destroy', [$link->id])}}" class="d-inline" onsubmit="return confirm('Delete this link permanently?')">
-                
+
                                 @csrf
-                
+
                                 <input type="hidden" name="_method" value="DELETE">
-                
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                
+
+                                <input type="submit" value="{{ __('link.del') }}" class="btn btn-danger btn-sm">
+
                             </form>
-                
+
                         </td>
-            
+
                     </tr>
-            
+
                     @endforeach
-        
+
                 </tbody>
-    
+
             </table>
 
         </div>

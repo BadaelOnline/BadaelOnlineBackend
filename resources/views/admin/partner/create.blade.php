@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('styles')
-@section('styles')
 <style>
    .picture-container {
   position: relative;
@@ -37,9 +36,16 @@
   width: 100%;
   height: 100%;
 }
-
+.rowInput {
+    display: flex;
+    gap: 15px;
+}
+.selectLang {
+    margin-top: 38px;
+}
 </style>
 @endsection
+
 @section('content')
 
 @if (session('error'))
@@ -50,6 +56,10 @@
 
 <form action="{{ route('admin.partner.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
+
+    <div class="form-group m-4">
+        <h2>{{__('partner.Cpartner')}}</h2>
+    </div>
 
     <div class="container">
 
@@ -69,69 +79,57 @@
 
                 </div>
 
-                <h6>Pilih Cover</h6>
+                <h6>{{__('partner.Scover')}}</h6>
 
             </div>
 
         </div>
 
-
-        <div class="form-group ml-5">
-
-            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
-
-            <div class="col-sm-9">
-                <select class="form-control" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-        </div>
 
         {{-- name --}}
-        <div class="form-group ml-5 en">
+    <div class="form-group ml-2 col-sm-7">
+        <div class="rowInput">
 
-            <label for="name" class="col-sm-2 col-form-label">Name English</label>
+            <div class="en col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('partner.Nenglish') }}</label>
 
-            <div class="col-sm-9">
-
-                <input type="text" name='partner[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="ex: Wiklop">
+                <input type="text" name='partner[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
                 <input type="text" name='partner[en][local]' value='en' hidden>
 
                 @error('partner.en.name')
                     <small class="form-text text-danger"> {{ $message }}</small>
                 @enderror
-
             </div>
 
-        </div>
+            <div class="ar col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('partner.Narabic') }}</label>
 
-        <div class="form-group ml-5 ar">
-
-            <label for="name" class="col-sm-2 col-form-label">Name Arabic</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='partner[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name" placeholder="ex: Wiklop">
+                <input type="text" name='partner[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
                 <input type="text" name='partner[ar][local]' value='ar' hidden>
 
                 @error('partner.ar.name')
                     <small class="form-text text-danger"> {{ $message }}</small>
                 @enderror
-
             </div>
 
+            <select class="form-control col-sm-2 selectLang" id="selectLang">
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
+
         </div>
+    </div>
 
-        <div class="form-group ml-5">
+        {{-- link --}}
 
-            <label for="link" class="col-sm-2 col-form-label">Link</label>
+        <div class="form-group ml-4">
+
+            <label for="link" class="col-sm-2 col-form-label">{{ __('partner.link') }}</label>
 
             <div class="col-sm-9">
 
-                <input type="text" name='link' class="form-control {{$errors->first('link') ? "is-invalid" : "" }} " value="{{old('link')}}" id="link" placeholder="ex: Wiklop.com">
+                <input type="text" name='link' class="form-control {{$errors->first('link') ? "is-invalid" : "" }} " value="{{old('link')}}" id="link">
 
                 <div class="invalid-feedback">
                     {{ $errors->first('link') }}
@@ -141,18 +139,18 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-4">
 
             <div class="col-sm-3">
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">{{ __('partner.create') }}</button>
 
             </div>
 
         </div>
 
     </div>
-
+<div class="container">
   </form>
 @endsection
 
@@ -171,7 +169,7 @@
     }
 
     $(function () {
-        $("#selectLang").change(function() {
+        $(".selectLang").change(function() {
             var val = $(this).val();
             localStorage.setItem('local',val);
             if(localStorage.getItem('local') == 'en'){

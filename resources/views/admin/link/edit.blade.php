@@ -8,49 +8,44 @@
 </div>
 @endif
 
+@section('styles')
+<style>
+.rowInput {
+    display: flex;
+    gap: 15px;
+}
+.selectLang {
+    margin-top: 38px;
+}
+</style>
+@endsection
+
 <form action="{{ route('admin.link.update',$link->id) }}" method="POST">
     @csrf
 
-    <div class="container">
+    <div class="form-group m-4">
+        <h2>{{__('link.Ulink')}}</h2>
+    </div>
 
-        <div class="form-group ml-5">
+    {{-- name --}}
+    <div class="form-group ml-3 col-sm-7">
+        <div class="rowInput">
 
-            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+            <div class="en col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('link.Nenglish') }}</label>
 
-            <div class="col-sm-9">
-                <select class="form-control" id="selectLang">
-                    @foreach(config('app.languages') as $index => $lang)
-                    <option id="lang">{{ $lang }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-        </div>
-
-        <div class="form-group ml-5 en">
-
-            <label for="name" class="col-sm-2 col-form-label">Name English</label>
-
-            <div class="col-sm-7">
-
-                <input type="text" name='links[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $link->name}}" id="name" placeholder="Name">
+                <input type="text" name='links[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $link->name}}" id="name">
                 <input type="text" name='links[en][local]' value='en' hidden>
 
                 @error('links.en.name')
                     <small class="form-text text-danger"> {{ $message }}</small>
                 @enderror
-
             </div>
 
-        </div>
+            <div class="ar col-sm-9">
+                <label class="col-sm-6 col-form-label"{{ __('link.Narabic') }}</label>
 
-        <div class="form-group ml-5 ar">
-
-            <label for="name" class="col-sm-2 col-form-label">Name Arabic</label>
-
-            <div class="col-sm-7">
-
-                <input type="text" name='links[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $link->name}}" id="name" placeholder="Name">
+                <input type="text" name='links[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $link->name}}" id="name">
                 <input type="text" name='links[ar][local]' value='ar' hidden>
 
                 @error('links.ar.name')
@@ -58,31 +53,36 @@
                 @enderror
             </div>
 
+            <select class="form-control col-sm-2 selectLang" id="selectLang">
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
+
         </div>
+    </div>
 
-        <div class="form-group ml-5">
+    <div class="form-group ml-4">
 
-            <label for="link" class="col-sm-2 col-form-label">Link</label>
+        <label for="link" class="col-sm-2 col-form-label ml-3">{{ __('link.link') }}</label>
 
-            <div class="col-sm-7">
+        <div class="col-sm-7">
 
-                <input type="text" name='link' class="form-control {{$errors->first('link') ? "is-invalid" : "" }} " value="{{old('link') ? old('link') : $link->link}}" id="link" placeholder="Link">
+            <input type="text" name='link' class="form-control {{$errors->first('link') ? "is-invalid" : "" }} " value="{{old('link') ? old('link') : $link->link}}" id="link">
 
-                <div class="invalid-feedback">
-                    {{ $errors->first('link') }}
-                </div>
-
+            <div class="invalid-feedback">
+                {{ $errors->first('link') }}
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+    </div>
 
-            <div class="col-sm-3">
+    <div class="form-group ml-4">
 
-                <button type="submit" class="btn btn-primary">Create</button>
+        <div class="col-sm-3">
 
-            </div>
+            <button type="submit" class="btn btn-primary">{{ __('link.update') }}</button>
 
         </div>
 
