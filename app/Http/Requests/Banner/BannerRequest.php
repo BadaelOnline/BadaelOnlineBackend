@@ -25,11 +25,8 @@ class BannerRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'banner.*'=>'required',
             'banner.*.title' => 'required',
             'banner.*.desc'=>'required|min:8|max:255',
-            'cover' => 'required'
         ];
     }
     public function messages()
@@ -39,7 +36,7 @@ class BannerRequest extends FormRequest
             'banner.*.title.required' => 'the title is required',
             'banner.*.desc.required' => 'the description is required',
             'banner.*.desc.min' => 'Your Banner\'s description  Is Too Short',
-            'cover.required' => 'the image is required',
+            
         ];
     }
 }

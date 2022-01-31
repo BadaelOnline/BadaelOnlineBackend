@@ -50,11 +50,15 @@
 <form action="{{ route('admin.permission.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
+    <div class="form-group m-4">
+        <h2>{{__('user.Cperm')}}</h2>
+    </div>
+
     <div class="container">
 
         <div class="form-group ml-5">
 
-            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <label for="name" class="col-sm-2 col-form-label">{{ __('user.name') }}</label>
 
             <div class="col-sm-9">
 
@@ -68,23 +72,11 @@
 
         </div>
 
-        {{-- assign role --}}
-
-        {{-- <div class="form-group ml-5">
-
-            <label for="role" class="col-sm-2 col-form-label">Assign Role</label>
-
-            <select name="role" id="" class="form-control">
-                <option value=""></option>
-            </select>
-
-        </div> --}}
-
         <div class="form-group ml-5">
 
             <div class="col-sm-3">
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">{{ __('user.create') }}</button>
 
             </div>
 

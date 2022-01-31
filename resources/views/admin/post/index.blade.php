@@ -10,7 +10,7 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Posts</h1>
+<h1 class="h3 mb-2 text-gray-800">{{ __('post.post') }}</h1>
 
 @if (session('success'))
 
@@ -28,7 +28,7 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.post.create') }}" class="btn btn-success">Create Post</a>
+        <a href="{{ route('admin.post.create') }}" class="btn btn-success">{{ __('post.Cpost') }}</a>
 
     </div>
 
@@ -42,15 +42,15 @@
 
                     <tr>
 
-                        <th>No.</th>
+                        <th>{{ __('post.no') }}</th>
 
-                        <th>Title</th>
+                        <th>{{ __('post.title') }}</th>
 
-                        <th>Keyword</th>
+                        <th>{{ __('post.keyword') }}</th>
 
-                        <th>Status</th>
+                        <th>{{ __('post.status') }}</th>
 
-                        <th>Option</th>
+                        <th>{{ __('post.option') }}</th>
 
                     </tr>
 
@@ -78,14 +78,14 @@
 
                         <td>
 
-                            <a href="{{route('admin.post.edit', [$post->id])}}" class="btn btn-info btn-sm"> Edit </a>
+                            <a href="{{route('admin.post.edit', [$post->id])}}" class="btn btn-info btn-sm"> {{ __('post.edit') }} </a>
 
                             <form method="POST" class="d-inline" onsubmit="return confirm('Move post to trash ?')" action="{{route('admin.post.destroy', $post->id)}}">
                                 @csrf
 
                                 <input type="hidden" value="DELETE" name="_method">
 
-                                <input type="submit" value="Trash" class="btn btn-danger btn-sm">
+                                <input type="submit" value="{{ __('post.trash') }}" class="btn btn-danger btn-sm">
 
                             </form>
 

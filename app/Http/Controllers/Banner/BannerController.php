@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Banner;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Banner\BannerRequest;
+use App\Models\Banner\Banner;
 use App\Service\Banner\BannerService;
 use Illuminate\Http\Request;
 

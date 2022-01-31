@@ -36,6 +36,13 @@
   width: 100%;
   height: 100%;
 }
+.rowInput {
+    display: flex;
+    gap: 15px;
+}
+.selectLang {
+    margin-top: 38px;
+}
 </style>
 
 @endsection
@@ -51,29 +58,11 @@
 <form action="{{ route('admin.service.update',$service->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
 
+    <div class="form-group m-4">
+        <h2>{{__('service.Uservice')}}</h2>
+    </div>
+
     <div class="container">
-
-        {{-- <div class="form-group ml-5">
-
-            <label for="icon" class="col-sm-2 col-form-label">Icon</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='icon' class="form-control {{$errors->first('icon') ? "is-invalid" : "" }} " value="{{old('icon') ? old('icon') : $service->icon}}" id="icon" placeholder="icofont-map">
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('icon') }}
-                </div>
-
-            </div>
-
-            <a href="https://icofont.com/icons" target="_blank" rel="noopener noreferrer">
-
-                <span class="col-sm-2 col-form-label" style="color: red">https://icofont.com/icons</span>
-
-            </a>
-
-        </div> --}}
 
         <div class="form-group">
 
@@ -91,134 +80,122 @@
 
                 </div>
 
-                <h6>Choose Photo</h6>
+                <h6>{{ __('service.Scover') }}</h6>
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+         {{-- title --}}
+         <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('service.Tenglish') }}</label>
 
-            <div class="col-sm-9">
-                <select class="form-control" id="selectLang">
+                    <input type="text" name='service[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $service->title}}" id="title" placeholder="Title">
+                    <input type="text" name='service[en][local]' id="local" value="en" hidden>
+
+                    @error('service.en.title')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('service.Tarabic') }}</label>
+
+                    <input type="text" name='service[ar][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $service->title}}" id="title" placeholder="Title">
+                    <input type="text" name='service[ar][local]' id="local" value="ar" hidden>
+
+                    @error('service.ar.title')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
                     @foreach(config('app.languages') as $index => $lang)
                     <option id="lang">{{ $lang }}</option>
                     @endforeach
                 </select>
-            </div>
-
-        </div>
-        {{-- title --}}
-        <div class="form-group ml-5 ar">
-
-            <label for="title" class="col-sm-2 col-form-label">Title Arabic</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='service[ar][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $service->title}}" id="title" placeholder="Title">
-                <input type="text" name='service[ar][local]' id="local" value="ar" hidden>
-
-                @error('service.ar.title')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
 
             </div>
-
-        </div>
-
-        <div class="form-group ml-5 en">
-
-            <label for="title" class="col-sm-2 col-form-label">Title English</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='service[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $service->title}}" id="title" placeholder="Title">
-                <input type="text" name='service[en][local]' id="local" value="en" hidden>
-
-                @error('service.en.title')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
-
-            </div>
-
         </div>
 
         {{-- quote --}}
-        <div class="form-group ml-5 ar">
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-            <label for="quote" class="col-sm-2 col-form-label">Quote Arabic</label>
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('service.Qenglish') }}</label>
 
-            <div class="col-sm-9">
+                    <input type="text" name='service[en][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote') ? old('quote') : $service->quote}}" id="quote" placeholder="Quote">
+                    <input type="text" name='service[en][local]' id="local" value="en" hidden>
 
-                <input type="text" name='service[ar][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote') ? old('quote') : $service->quote}}" id="quote" placeholder="Quote">
-                <input type="text" name='service[ar][local]' id="local" value="ar" hidden>
+                    @error('service.en.quote')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
 
-                @error('service.ar.quote')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('service.Qarabic') }}</label>
+
+                    <input type="text" name='service[ar][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote') ? old('quote') : $service->quote}}" id="quote" placeholder="Quote">
+                    <input type="text" name='service[ar][local]' id="local" value="ar" hidden>
+
+                    @error('service.ar.quote')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
 
             </div>
-
         </div>
 
-        <div class="form-group ml-5 en">
-
-            <label for="quote" class="col-sm-2 col-form-label">Quote English</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='service[en][quote]' class="form-control {{$errors->first('quote') ? "is-invalid" : "" }} " value="{{old('quote') ? old('quote') : $service->quote}}" id="quote" placeholder="Quote">
-                <input type="text" name='service[en][local]' id="local" value="en" hidden>
-
-                @error('service.en.quote')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
-
-            </div>
-
-        </div>
         {{-- desc --}}
-        <div class="form-group ml-5 ar">
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-            <label for="desc" class="col-sm-2 col-form-label">Desc Arabic</label>
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('service.Denglish') }}</label>
 
-            <div class="col-sm-9">
+                    <textarea name="service[en][desc]" id="summernote" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $service->desc}}</textarea>
+                    <input type="text" name='service[en][local]' id="local" value="en" hidden>
 
-                <textarea name="service[ar][desc]" id="summernote" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $service->desc}}</textarea>
-                <input type="text" name='service[ar][local]' id="local" value="ar" hidden>
+                    @error('service.en.desc')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
 
-                @error('service.ar.desc')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('service.Darabic') }}</label>
+
+                    <textarea name="service[ar][desc]" id="summernote" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $service->desc}}</textarea>
+                    <input type="text" name='service[ar][local]' id="local" value="ar" hidden>
+
+                    @error('service.ar.desc')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
 
             </div>
-
         </div>
 
-        <div class="form-group ml-5 en">
-
-            <label for="desc" class="col-sm-2 col-form-label">Desc English</label>
-
-            <div class="col-sm-9">
-
-                <textarea name="service[en][desc]" id="summernote" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} ">{{old('desc') ? old('desc') : $service->desc}}</textarea>
-                <input type="text" name='service[en][local]' id="local" value="en" hidden>
-
-                @error('service.en.desc')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
-
-            </div>
-
-        </div>
-
-        <div class="form-group ml-5">
+        <div class="form-group ml-4">
 
             <div class="col-sm-3">
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">{{ __('service.update') }}</button>
 
             </div>
 
@@ -244,7 +221,7 @@
     }
 
     $(function () {
-        $("#selectLang").change(function() {
+        $(".selectLang").change(function() {
             var val = $(this).val();
             localStorage.setItem('local',val);
             if(localStorage.getItem('local') == 'en'){

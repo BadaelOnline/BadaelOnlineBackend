@@ -37,6 +37,13 @@
   width: 100%;
   height: 100%;
 }
+.rowInput {
+    display: flex;
+    gap: 15px;
+}
+.selectLang {
+    margin-top: 38px;
+}
 </style>
 @endsection
 @section('content')
@@ -49,6 +56,10 @@
 
 <form action="{{ route('admin.post.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
+
+    <div class="form-group m-4">
+        <h2>{{__('post.Cpost')}}</h2>
+    </div>
 
     <div class="container">
 
@@ -68,166 +79,150 @@
 
                 </div>
 
-                <h6>Pilih Cover</h6>
+                <h6>{{ __('post.Scover') }}</h6>
 
             </div>
 
         </div>
 
-        <div class="form-group ml-5">
+        {{-- title --}}
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('post.Tenglish') }}</label>
 
-            <div class="col-sm-9">
-                <select class="form-control" id="selectLang">
+                    <input type="text" name='post[en][title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title">
+                    <input type="text" name='post[en][local]' id="local" value="en" hidden>
+                    @error('post.en.title')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('post.Tarabic') }}</label>
+
+                    <input type="text" name='post[ar][title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" >
+                    <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
+                    @error('post.ar.title')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
                     @foreach(config('app.languages') as $index => $lang)
                     <option id="lang">{{ $lang }}</option>
                     @endforeach
                 </select>
-            </div>
-
-        </div>
-
-
-        {{-- @foreach(config('app.languages') as $index => $lang) --}}
-
-        <div class="form-group ml-5 ar">
-
-            <label for="title" class="col-sm-2 col-form-label">Title Arabic</label>
-
-            <div class="col-sm-9">
-                <input type="text" name='post[ar][title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
-                <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
-                @error('post.ar.title')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
 
             </div>
-
         </div>
+        {{-- body --}}
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-        <div class="form-group ml-5 en" id="h2" style="">
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('post.Benglish') }}</label>
 
-            <label for="title" class="col-sm-2 col-form-label">Title English</label>
+                    <textarea name='post[en][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
+                    <input type="text" name='post[en][local]' id="local" value="en" hidden>
+                    @error('post.en.body')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
 
-            <div class="col-sm-9">
-                <input type="text" name='post[en][title]' class="form-control {{$errors->first('post.title') ? "is-invalid" : "" }} " value="{{old('title')}}" id="title" placeholder="Title">
-                <input type="text" name='post[en][local]' id="local" value="en" hidden>
-                @error('post.en.title')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('post.Barabic') }}</label>
+
+                    <textarea name='post[ar][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
+                    <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
+                    @error('post.ar.body')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
 
             </div>
-
         </div>
-
-        {{-- desc --}}
-        <div class="form-group ml-5 ar" id="h1">
-
-            <label for="body" class="col-sm-2 col-form-label">Desc Arabic</label>
-
-            <div class="col-sm-9">
-
-                <textarea name='post[ar][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
-                <input type="text" name='post[ar][local]' id="local" value="ar" hidden>
-                @error('post.ar.body')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
-
-            </div>
-
-        </div>
-
-        <div class="form-group ml-5 en" id="h2">
-
-            <label for="body" class="col-sm-2 col-form-label">Desc English</label>
-
-            <div class="col-sm-9">
-
-                <textarea name='post[en][body]' class="form-control {{$errors->first('body') ? "is-invalid" : "" }} "  id="summernote" cols="30" rows="10">{{old('body')}}</textarea>
-                <input type="text" name='post[en][local]' id="local" value="en" hidden>
-                @error('post.en.body')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
-
-            </div>
-
-        </div>
-
         {{-- keyword --}}
-        <div class="form-group ml-5 en">
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-            <label for="keyword" class="col-sm-2 col-form-label">Keyword English</label>
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('post.Kenglish') }}</label>
 
-            <div class="col-sm-9">
+                    <input type="text" name='post[en][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword">
+                    <input type="text" name='post[en][local]' value='en' hidden>
+                    @error('post.en.keyword')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
 
-                <input type="text" name='post[en][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword" placeholder="Keyword">
-                <input type="text" name='post[en][local]' value='en' hidden>
-                @error('post.en.keyword')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('post.Karabic') }}</label>
 
-            </div>
+                    <input type="text" name='post[ar][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword">
+                    <input type="text" name='post[ar][local]' value='ar' hidden>
+                    @error('post.ar.keyword')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
 
-        </div>
-
-        <div class="form-group ml-5 ar">
-
-            <label for="keyword" class="col-sm-2 col-form-label">Keyword Arabic</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='post[ar][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword')}}" id="keyword" placeholder="Keyword">
-                <input type="text" name='post[ar][local]' value='ar' hidden>
-                @error('post.ar.keyword')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
-
-            </div>
-
-        </div>
-
-        {{-- meta desc --}}
-        <div class="form-group ml-5 en">
-
-            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc English</label>
-
-            <div class="col-sm-9">
-
-                <input type="text" name='post[en][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc" placeholder="Meta Description">
-                <input type="text" name='post[en][local]' value='en' hidden>
-                @error('post.en.meta_desc')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
 
             </div>
-
         </div>
+        {{-- meta-desc --}}
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-        <div class="form-group ml-5 ar">
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('post.Menglish') }}</label>
 
-            <label for="meta_desc" class="col-sm-2 col-form-label">Meta Desc Arabic</label>
+                    <input type="text" name='post[en][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc">
+                    <input type="text" name='post[en][local]' value='en' hidden>
+                    @error('post.en.meta_desc')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
 
-            <div class="col-sm-9">
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('post.Marabic') }}</label>
 
-                <input type="text" name='post[ar][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc" placeholder="Meta Description">
-                <input type="text" name='post[ar][local]' value='ar' hidden>
-                @error('post.ar.meta_desc')
-                    <small class="form-text text-danger"> {{ $message }}</small>
-                @enderror
+                    <input type="text" name='post[ar][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc')}}" id="meta_desc">
+                    <input type="text" name='post[ar][local]' value='ar' hidden>
+                    @error('post.ar.meta_desc')
+                        <small class="form-text text-danger"> {{ $message }}</small>
+                    @enderror
+                </div>
+
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
 
             </div>
-
         </div>
 
-        <div class="form-group ml-5">
+        {{-- category --}}
+        <div class="form-group ml-4">
 
-            <label for="category" class="col-sm-2 col-form-label">Category</label>
+            <label for="category" class="col-sm-2 col-form-label">{{ __('post.category') }}</label>
 
-            <div class="col-sm-9">
+            <div class="col-sm-7">
 
                 <select name='category' class="form-control {{$errors->first('category') ? "is-invalid" : "" }} " id="category">
-                    <option disabled selected>Choose One!</option>
+                    <option disabled selected>{{ __('post.choosone') }}</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
@@ -240,11 +235,12 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        {{-- tags --}}
+        <div class="form-group ml-4">
 
-            <label for="tags" class="col-sm-2 col-form-label">Tags</label>
+            <label for="tags" class="col-sm-2 col-form-label">{{ __('post.tags') }}</label>
 
-            <div class="col-sm-9">
+            <div class="col-sm-7">
 
                 <select name='tags[]' class="form-control {{$errors->first('tags') ? "is-invalid" : "" }} select2" id="tags" multiple>
                     @foreach ($tags as $tags)
@@ -259,11 +255,11 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-4">
 
             <div class="col-sm-3">
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">{{ __('post.create') }}</button>
 
             </div>
 
@@ -297,7 +293,7 @@ if(isset($_COOKIE['local'])) {
     }
 
     $(function () {
-        $("#selectLang").change(function() {
+        $(".selectLang").change(function() {
             var val = $(this).val();
             localStorage.setItem('local',val);
             if(localStorage.getItem('local') == 'en'){

@@ -10,7 +10,7 @@
 
 <!-- Page Heading -->
 
-<h1 class="h3 mb-2 text-gray-800">Portfolios</h1>
+<h1 class="h3 mb-2 text-gray-800">{{ __('portfolio.portfolio') }}</h1>
 
 @if (session('success'))
 
@@ -28,11 +28,11 @@
 
     <div class="card-header py-3">
 
-        <a href="{{ route('admin.portfolio.create') }}" class="btn btn-success">Create Portfolio</a>
+        <a href="{{ route('admin.portfolio.create') }}" class="btn btn-success">{{ __('portfolio.Cportfolio') }}</a>
 
     </div>
 
-    <div class="card-body col-md-8">
+    <div class="card-body">
 
         <div class="table-responsive">
 
@@ -42,15 +42,15 @@
 
                     <tr>
 
-                        <th>No.</th>
+                        <th>{{ __('portfolio.no') }}</th>
 
-                        <th>Cover</th>
+                        <th>{{ __('portfolio.cover') }}</th>
 
-                        <th>Name</th>
+                        <th>{{ __('portfolio.name') }}</th>
 
-                        <th>Project Date</th>
+                        <th>{{ __('portfolio.Pdate') }}</th>
 
-                        <th>Option</th>
+                        <th>{{ __('portfolio.option') }}</th>
 
                     </tr>
 
@@ -82,7 +82,7 @@
 
                         <td>
 
-                            <a href="{{route('admin.portfolio.edit', [$portfolio->id])}}" class="btn btn-info btn-sm"> Edit </a>
+                            <a href="{{route('admin.portfolio.edit', [$portfolio->id])}}" class="btn btn-info btn-sm"> {{ __('portfolio.edit') }} </a>
 
                             <form method="POST" action="{{route('admin.portfolio.destroy', [$portfolio->id])}}" class="d-inline" onsubmit="return confirm('Delete this portfolio permanently?')">
 
@@ -90,7 +90,7 @@
 
                                 <input type="hidden" name="_method" value="DELETE">
 
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                                <input type="submit" value="{{ __('portfolio.del') }}" class="btn btn-danger btn-sm">
 
                             </form>
 

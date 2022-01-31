@@ -8,14 +8,31 @@
 </div>
 @endif
 
+@section('styles')
+<style>
+.rowInput {
+    display: flex;
+    gap: 15px;
+}
+.selectLang {
+    margin-top: 38px;
+}
+</style>
+
+@endsection
+
 <form action="{{ route('admin.testi.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
+    <div class="form-group m-4">
+        <h2>{{__('testi.Ctesti')}}</h2>
+    </div>
+
     <div class="container">
 
-        <div class="form-group ml-5">
+        <div class="form-group ml-4">
 
-            <label for="Photo" class="col-sm-2 col-form-label">Photo</label>
+            <label for="Photo" class="col-sm-2 col-form-label">{{ __('testi.photo') }}</label>
 
             <div class="col-sm-7">
 
@@ -29,130 +46,116 @@
 
         </div>
 
-        <div class="form-group ml-5">
+        {{-- name --}}
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-            <label for="lang" class="col-sm-2 col-form-label">Languages</label>
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label"{{ __('testi.Nenglish') }}</label>
 
-            <div class="col-sm-9">
-                <select class="form-control" id="selectLang">
+                    <input type="text" name='testimonial[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
+                    <input type="text" name='testimonial[en][local]' value='en' hidden>
+
+                    <div class="invalid-feedback">
+                        {{ $errors->first('name') }}
+                    </div>
+                </div>
+
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('testi.Narabic') }}</label>
+
+                    <input type="text" name='testimonial[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
+                    <input type="text" name='testimonial[ar][local]' value='ar' hidden>
+
+                    <div class="invalid-feedback">
+                        {{ $errors->first('name') }}
+                    </div>
+                </div>
+
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
                     @foreach(config('app.languages') as $index => $lang)
                     <option id="lang">{{ $lang }}</option>
                     @endforeach
                 </select>
-            </div>
 
+            </div>
         </div>
 
-        {{-- name --}}
-        <div class="form-group ml-5 en">
+        {{-- Profession --}}
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-            <label for="name" class="col-sm-2 col-form-label">Name English</label>
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label"{{ __('testi.Penglish') }}</label>
 
-            <div class="col-sm-7">
+                    <input type="text" name='testimonial[en][profession]' class="form-control {{$errors->first('profession') ? "is-invalid" : "" }} " value="{{old('profession')}}" id="profession">
+                    <input type="text" name='testimonial[en][local]' value='en' hidden>
 
-                <input type="text" name='testimonial[en][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
-                <input type="text" name='testimonial[en][local]' value='en' hidden>
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
+                    <div class="invalid-feedback">
+                        {{ $errors->first('profession') }}
+                    </div>
                 </div>
 
-            </div>
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('testi.Parabic') }}</label>
 
-        </div>
+                    <input type="text" name='testimonial[ar][profession]' class="form-control {{$errors->first('profession') ? "is-invalid" : "" }} " value="{{old('profession')}}" id="profession">
+                    <input type="text" name='testimonial[ar][local]' value='ar' hidden>
 
-        <div class="form-group ml-5 ar">
-
-            <label for="name" class="col-sm-2 col-form-label">Name Arabic</label>
-
-            <div class="col-sm-7">
-
-                <input type="text" name='testimonial[ar][name]' class="form-control {{$errors->first('name') ? "is-invalid" : "" }} " value="{{old('name')}}" id="name">
-                <input type="text" name='testimonial[ar][local]' value='ar' hidden>
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('name') }}
+                    <div class="invalid-feedback">
+                        {{ $errors->first('profession') }}
+                    </div>
                 </div>
 
-            </div>
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
 
+            </div>
         </div>
 
-        {{-- profession --}}
-        <div class="form-group ml-5 en">
+        {{-- Testimonial --}}
+        <div class="form-group ml-2 col-sm-7">
+            <div class="rowInput">
 
-            <label for="profession" class="col-sm-2 col-form-label">Profession English</label>
+                <div class="en col-sm-9">
+                    <label class="col-sm-6 col-form-label"{{ __('testi.Tenglish') }}</label>
 
-            <div class="col-sm-7">
+                    <textarea name="testimonial[en][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="" cols="30" rows="10">{{old('desc')}}</textarea>
+                    <input type="text" name='testimonial[en][local]' value='en' hidden>
 
-                <input type="text" name='testimonial[en][profession]' class="form-control {{$errors->first('profession') ? "is-invalid" : "" }} " value="{{old('profession')}}" id="profession">
-                <input type="text" name='testimonial[en][local]' value='en' hidden>
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('profession') }}
+                    <div class="invalid-feedback">
+                        {{ $errors->first('desc') }}
+                    </div>
                 </div>
 
-            </div>
+                <div class="ar col-sm-9">
+                    <label class="col-sm-6 col-form-label">{{ __('testi.Tarabic') }}</label>
 
-        </div>
+                    <textarea name="testimonial[ar][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="" cols="30" rows="10">{{old('desc')}}</textarea>
+                    <input type="text" name='testimonial[ar][local]' value='ar' hidden>
 
-        <div class="form-group ml-5 ar">
-
-            <label for="profession" class="col-sm-2 col-form-label">Profession Arabic</label>
-
-            <div class="col-sm-7">
-
-                <input type="text" name='testimonial[ar][profession]' class="form-control {{$errors->first('profession') ? "is-invalid" : "" }} " value="{{old('profession')}}" id="profession">
-                <input type="text" name='testimonial[ar][local]' value='ar' hidden>
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('profession') }}
+                    <div class="invalid-feedback">
+                        {{ $errors->first('desc') }}
+                    </div>
                 </div>
 
-            </div>
-
-        </div>
-
-        {{-- testi --}}
-        <div class="form-group ml-5 en">
-
-            <label for="desc" class="col-sm-2 col-form-label">Testi English</label>
-
-            <div class="col-sm-7">
-
-                <textarea name="testimonial[en][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="" cols="30" rows="10">{{old('desc')}}</textarea>
-                <input type="text" name='testimonial[en][local]' value='en' hidden>
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('desc') }}
-                </div>
+                <select class="form-control col-sm-2 selectLang" id="selectLang">
+                    @foreach(config('app.languages') as $index => $lang)
+                    <option id="lang">{{ $lang }}</option>
+                    @endforeach
+                </select>
 
             </div>
-
         </div>
 
-        <div class="form-group ml-5 ar">
-
-            <label for="desc" class="col-sm-2 col-form-label">Testi Arabic</label>
-
-            <div class="col-sm-7">
-
-                <textarea name="testimonial[ar][desc]" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} "  id="" cols="30" rows="10">{{old('desc')}}</textarea>
-                <input type="text" name='testimonial[ar][local]' value='ar' hidden>
-
-                <div class="invalid-feedback">
-                    {{ $errors->first('desc') }}
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="form-group ml-5">
+        <div class="form-group ml-4">
 
             <div class="col-sm-3">
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">{{ __('testi.create') }}</button>
 
             </div>
 
@@ -177,7 +180,7 @@
     }
 
     $(function () {
-        $("#selectLang").change(function() {
+        $(".selectLang").change(function() {
             var val = $(this).val();
             localStorage.setItem('local',val);
             if(localStorage.getItem('local') == 'en'){
