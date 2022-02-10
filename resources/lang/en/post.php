@@ -17,6 +17,7 @@ return [
     'post' => 'Posts',
     'Cpost' => 'Create post',
     'no' => 'NO',
+    'cover' => 'Image',
     'title' => 'Title',
     'keyword' => 'Keyword',
     'status' => 'Status',

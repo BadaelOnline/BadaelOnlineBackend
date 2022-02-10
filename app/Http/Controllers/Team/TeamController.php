@@ -16,10 +16,10 @@ class TeamController extends Controller
     {
         $this->teamService = $teamService;
         $this->user = $user;
-        $this->middleware('can:team-list')->only('index','show');
-        $this->middleware('can:team-create')->only('create','store');
-        $this->middleware('can:team-update')->only('edit','update');
-        $this->middleware('can:team-delete')->only('destroy');
+        // $this->middleware('can:team-list')->only('index','show');
+        // $this->middleware('can:team-create')->only('create','store');
+        // $this->middleware('can:team-update')->only('edit','update');
+        // $this->middleware('can:team-delete')->only('destroy');
     }
 
     public function index()
@@ -43,7 +43,7 @@ class TeamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TeamRequest $request){
+    public function store(Request $request){
         return $this->teamService->store($request);
     }
 
@@ -74,7 +74,7 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TeamRequest $request, $id){
+    public function update(Request $request, $id){
         return $this->teamService->update($request, $id);
     }
 

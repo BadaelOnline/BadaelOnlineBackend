@@ -22,7 +22,7 @@ class ServiceController extends Controller
         return $this->servicesService->create();
     }
 
-    public function store(ServiceRequest $request){
+    public function store(Request $request){
         return $this->servicesService->store($request);
     }
 
@@ -34,7 +34,7 @@ class ServiceController extends Controller
         return $this->servicesService->edit($id);
     }
 
-    public function update(ServiceRequest $request, $id){
+    public function update(Request $request, $id){
         return $this->servicesService->update($request, $id);
     }
 

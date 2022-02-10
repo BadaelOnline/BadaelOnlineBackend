@@ -22,7 +22,7 @@ class TeamService
         return $this->teamManager->create();
     }
 
-    public function store(TeamRequest $request){
+    public function store(Request $request){
         return $this->teamManager->store($request);
     }
 
@@ -34,7 +34,7 @@ class TeamService
         return $this->teamManager->edit($id);
     }
 
-    public function update(TeamRequest $request, $id){
+    public function update(Request $request, $id){
         return $this->teamManager->update($request, $id);
     }
 

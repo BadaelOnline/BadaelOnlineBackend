@@ -35,7 +35,7 @@ class PartnerRepository implements PartnerRepositoryInterface{
        return view('admin.partner.create');
    }
 
-   public function store(PartnerRequest $request)
+   public function store(Request $request)
    {
     try {
         /** transformation to collection */
@@ -92,7 +92,7 @@ class PartnerRepository implements PartnerRepositoryInterface{
        return view('admin.partner.edit',compact('partner'));
    }
 
-   public function update(PartnerRequest $request,$id)
+   public function update(Request $request,$id)
    {
     try{
 

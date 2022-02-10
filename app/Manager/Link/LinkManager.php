@@ -21,7 +21,7 @@ class LinkManager
         return $this->linkRepository->create();
     }
 
-    public function store(LinkRequest $request){
+    public function store(Request $request){
         return $this->linkRepository->store($request);
     }
 
@@ -33,7 +33,7 @@ class LinkManager
         return $this->linkRepository->edit($id);
     }
 
-    public function update(LinkRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->linkRepository->update($id,$request);
     }
 

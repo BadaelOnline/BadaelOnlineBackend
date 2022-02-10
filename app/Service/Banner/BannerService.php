@@ -21,7 +21,7 @@ class BannerService
         return $this->bannerManager->create();
     }
 
-    public function store(BannerRequest $request){
+    public function store(Request $request){
         return $this->bannerManager->store($request);
     }
 
@@ -33,7 +33,7 @@ class BannerService
         return $this->bannerManager->edit($id);
     }
 
-    public function update(BannerRequest $request, $id){
+    public function update(Request $request, $id){
         return $this->bannerManager->update($request, $id);
     }
 

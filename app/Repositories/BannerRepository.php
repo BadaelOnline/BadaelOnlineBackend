@@ -31,7 +31,7 @@ class BannerRepository implements BannerRepositoryInterface{
 
     }
 
-    public function store(BannerRequest $request)
+    public function store(Request $request)
     {
         try {
             /** transformation to collection */
@@ -71,7 +71,7 @@ class BannerRepository implements BannerRepositoryInterface{
 
         } catch (\Exception $ex) {
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.banner.create')->with('error', 'Data failed to create');
         }
     }
@@ -86,7 +86,7 @@ class BannerRepository implements BannerRepositoryInterface{
         return $this->banner::findOrFail($id);
     }
 
-    public function update(BannerRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try{
 
@@ -125,7 +125,7 @@ class BannerRepository implements BannerRepositoryInterface{
             return redirect()->route('admin.banner')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.banner.edit')->with('error', 'Data failed to update');
         }
     }

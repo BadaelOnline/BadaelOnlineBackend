@@ -52,7 +52,7 @@ class PostRepository implements PostRepositoryInterface{
         return view('admin.post.create',compact('categories','tags'));
     }
 
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
 
         try {
@@ -112,7 +112,7 @@ class PostRepository implements PostRepositoryInterface{
             return redirect()->route('admin.post')->with('success', 'Data added successfully');
 
         } catch (\Exception $ex) {
-            // return $ex->getMessage();
+            return $ex->getMessage();
             DB::rollback();
             return redirect()->route('admin.post.create')->with('error', 'Data failed to add');
         }
@@ -133,7 +133,7 @@ class PostRepository implements PostRepositoryInterface{
         return view('admin.post.edit',compact('post','categories','tags'));
     }
 
-    public function update(PostRequest $request,$id)
+    public function update(Request $request,$id)
     {
         try{
 

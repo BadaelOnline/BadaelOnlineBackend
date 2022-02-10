@@ -33,7 +33,7 @@ class PageRepository implements PageRepositoryInterface{
         return view('admin.page.create');
     }
 
-    public function store(PageRequest $request)
+    public function store(Request $request)
     {
         try{
             /** transformation to collection */
@@ -85,7 +85,7 @@ class PageRepository implements PageRepositoryInterface{
         return view ('admin.page.edit', compact('page'));
     }
 
-    public function update(PageRequest $request,$id)
+    public function update(Request $request,$id)
     {
         try{
 

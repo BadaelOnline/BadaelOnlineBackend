@@ -12,13 +12,13 @@ interface CategoryRepositoryInterface{
 
     public function create();
 
-    public function store(CategoryRequest $request);
+    public function store(Request $request);
 
     public function show($id);
 
     public function edit($id);
 
-    public function update($id, CategoryRequest $request);
+    public function update($id, Request $request);
 
     public function destroy($id);
 }

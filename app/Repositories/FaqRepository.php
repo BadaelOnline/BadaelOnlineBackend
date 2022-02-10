@@ -33,7 +33,7 @@ class FaqRepository implements FaqRepositoryInterface{
         return view('admin.faq.create');
     }
 
-    public function store(FaqRequest $request)
+    public function store(Request $request)
     {
         try{
             /** transformation to collection */
@@ -66,7 +66,7 @@ class FaqRepository implements FaqRepositoryInterface{
             return redirect()->route('admin.faq')->with('success', 'Data added successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.faq.create')->with('error', 'Data failed to add');
         }
     }
@@ -83,7 +83,7 @@ class FaqRepository implements FaqRepositoryInterface{
         return view('admin.faq.edit',compact('faq'));
     }
 
-    public function update(FaqRequest $request,$id)
+    public function update(Request $request,$id)
     {
         try{
 
@@ -112,7 +112,7 @@ class FaqRepository implements FaqRepositoryInterface{
             return redirect()->route('admin.faq')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.faq.create')->with('error', 'Data failed to update');
         }
     }

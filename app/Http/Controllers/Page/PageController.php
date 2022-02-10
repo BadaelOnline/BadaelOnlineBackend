@@ -22,7 +22,7 @@ class PageController extends Controller
         return $this->pageService->create();
     }
 
-    public function store(PageRequest $request){
+    public function store(Request $request){
         return $this->pageService->store($request);
     }
 
@@ -34,7 +34,7 @@ class PageController extends Controller
         return $this->pageService->edit($id);
     }
 
-    public function update(PageRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->pageService->update($request,$id);
     }
 

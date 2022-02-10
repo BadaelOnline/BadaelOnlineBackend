@@ -114,7 +114,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.Tenglish') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.Tenglish') }}</label>
 
                         <input type="text" name='general[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $general->title}}" id="title" placeholder="Title">
                         <input type="text" name='general[en][local]' value='en' hidden>
@@ -155,7 +155,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.A1english') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.A1english') }}</label>
 
                         <input type="text" name='general[en][address1]' class="form-control {{$errors->first('address1') ? "is-invalid" : "" }} " value="{{old('address1') ? old('address1') : $general->address1}}" id="address1" placeholder="Address 1">
                         <input type="text" name='general[en][local]' value='en' hidden>
@@ -196,7 +196,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.A2english') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.A2english') }}</label>
 
                         <input type="text" name='general[en][address2]' class="form-control {{$errors->first('address2') ? "is-invalid" : "" }} " value="{{old('address2') ? old('address2') : $general->address2}}" id="address2" placeholder="Address 2">
                         <input type="text" name='general[en][local]' value='en' hidden>
@@ -231,7 +231,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.Tawkenglish') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.Tawkenglish') }}</label>
 
                         <textarea name="general[en][tawkto]" id="tawkto" cols="30" rows="10" class="form-control {{$errors->first('tawkto') ? "is-invalid" : "" }} ">{{old('tawkto') ? old('tawkto') : $general->tawkto}}</textarea>
                         <input type="text" name='general[en][local]' value='en' hidden>
@@ -266,7 +266,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.disgusenglish') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.disgusenglish') }}</label>
 
                         <textarea name="general[en][disqus]" id="disqus" cols="30" rows="10" class="form-control {{$errors->first('disqus') ? "is-invalid" : "" }} ">{{old('disqus') ? old('disqus') : $general->disqus}}</textarea>
                         <input type="text" name='general[en][local]' value='en' hidden>
@@ -301,7 +301,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.sharethisenglish') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.sharethisenglish') }}</label>
 
                         <textarea name="general[en][sharethis]" id="sharethis" cols="30" rows="10" class="form-control {{$errors->first('sharethis') ? "is-invalid" : "" }} ">{{old('sharethis') ? old('sharethis') : $general->sharethis}}</textarea>
                         <input type="text" name='general[en][local]' value='en' hidden>
@@ -336,7 +336,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.googleverifenglish') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.googleverifenglish') }}</label>
 
                         <input type="text" name='general[en][gverification]' class="form-control {{$errors->first('gverification') ? "is-invalid" : "" }} " value="{{old('gverification') ? old('gverification') : $general->gverification}}" id="footer" placeholder="Google Verification">
                         <input type="text" name='general[en][local]' value='en' hidden>
@@ -371,7 +371,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.footerenglish') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.footerenglish') }}</label>
 
                         <input type="text" name='general[en][footer]' class="form-control {{$errors->first('footer') ? "is-invalid" : "" }} " value="{{old('footer') ? old('footer') : $general->footer}}" id="footer" placeholder="Footer">
                         <input type="text" name='general[en][local]' value='en' hidden>
@@ -406,7 +406,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.kenglish') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.kenglish') }}</label>
 
                         <input type="text" name='general[en][keyword]' class="form-control {{$errors->first('keyword') ? "is-invalid" : "" }} " value="{{old('keyword') ? old('keyword') : $general->keyword}}" id="keyword" placeholder="Keyword">
                         <input type="text" name='general[en][local]' value='en' hidden>
@@ -441,7 +441,7 @@
             <div class="rowInput">
 
                 <div class="en col-sm-9">
-                    <label class="col-sm-6 col-form-label"{{ __('general.Menglish') }}</label>
+                    <label class="col-sm-6 col-form-label">{{ __('general.Menglish') }}</label>
 
                         <input type="text" name='general[en][meta_desc]' class="form-control {{$errors->first('meta_desc') ? "is-invalid" : "" }} " value="{{old('meta_desc') ? old('meta_desc') : $general->meta_desc}}" id="meta_desc" placeholder="Meta Description">
                         <input type="text" name='general[en][local]' value='en' hidden>

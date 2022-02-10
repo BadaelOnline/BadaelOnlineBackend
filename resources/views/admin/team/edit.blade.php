@@ -89,7 +89,7 @@
         <div class="rowInput">
 
             <div class="en col-sm-9">
-                <label class="col-sm-6 col-form-label"{{ __('team.Nenglish') }}</label>
+                <label class="col-sm-6 col-form-label">{{ __('team.Nenglish') }}</label>
 
                 <input type="text" name='team[en][name]' class="form-control {{$errors->first('team.$index.name') ? "is-invalid" : "" }} " value="{{old('name') ? old('name') : $team->name}}" id="name">
                 <input type="text" name='team[en][local]' value='en' hidden>

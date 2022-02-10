@@ -22,7 +22,7 @@ class PostController extends Controller
         return $this->postService->create();
     }
 
-    public function store(PostRequest $request){
+    public function store(Request $request){
         return $this->postService->store($request);
     }
 
@@ -34,7 +34,7 @@ class PostController extends Controller
         return $this->postService->edit($id);
     }
 
-    public function update(PostRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->postService->update($request,$id);
     }
 

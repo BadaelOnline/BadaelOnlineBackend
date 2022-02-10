@@ -21,7 +21,7 @@ class PageManager
         return $this->pageRepository->create();
     }
 
-    public function store(PageRequest $request){
+    public function store(Request $request){
         return $this->pageRepository->store($request);
     }
 
@@ -33,7 +33,7 @@ class PageManager
         return $this->pageRepository->edit($id);
     }
 
-    public function update(PageRequest $request, $id){
+    public function update(Request $request, $id){
         return $this->pageRepository->update($request,$id);
     }
 

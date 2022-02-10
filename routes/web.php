@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes([
     'register' => false
 ]);
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -29,7 +30,6 @@ Route::get('locale/{locale}','Languages\LanguageController@changeLang');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->middleware(['auth','Localization'])->group(function () {
-
 
     Route::group(['namespace'=>'General'],function()
         {

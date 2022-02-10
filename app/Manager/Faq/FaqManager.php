@@ -21,7 +21,7 @@ class FaqManager
         return $this->faqRepository->create();
     }
 
-    public function store(FaqRequest $request){
+    public function store(Request $request){
         return $this->faqRepository->store($request);
     }
 
@@ -33,7 +33,7 @@ class FaqManager
         return $this->faqRepository->edit($id);
     }
 
-    public function update(FaqRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->faqRepository->update($request,$id);
     }
 

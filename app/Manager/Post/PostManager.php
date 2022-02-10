@@ -21,7 +21,7 @@ class PostManager
         return $this->postRepository->create();
     }
 
-    public function store(PostRequest $request){
+    public function store(Request $request){
         return $this->postRepository->store($request);
     }
 
@@ -33,7 +33,7 @@ class PostManager
         return $this->postRepository->edit($id);
     }
 
-    public function update(PostRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->postRepository->update($request,$id);
     }
 

@@ -23,7 +23,7 @@ class GeneralManager
         return $this->generalRepository->general();
     }
 
-    public function generalUpdate(GeneralRequest $request){
+    public function generalUpdate(Request $request){
         return $this->generalRepository->generalUpdate($request);
     }
 
@@ -31,7 +31,7 @@ class GeneralManager
         return $this->generalRepository->about();
     }
 
-    public function aboutUpdate(AboutRequest $request){
+    public function aboutUpdate(Request $request){
         return $this->generalRepository->aboutUpdate($request);
     }
 

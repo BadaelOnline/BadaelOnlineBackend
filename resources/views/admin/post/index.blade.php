@@ -44,6 +44,8 @@
 
                         <th>{{ __('post.no') }}</th>
 
+                        <th>{{ __('post.cover') }}</th>
+
                         <th>{{ __('post.title') }}</th>
 
                         <th>{{ __('post.keyword') }}</th>
@@ -70,9 +72,15 @@
 
                         <td>{{ ++$no }}</td>
 
+                        <td>
+
+                            <img src="{{asset('storage/' . $post->cover)}}" width="96px"/>
+
+                        </td>
+
                         <td>{{ $post->title }}</td>
 
-                        <td>{{ $post->category->name }}</td> 
+                        <td>{{ $post->category->name }}</td>
 
                         <td>{{ $post->status }}</td>
 

@@ -23,7 +23,7 @@ class PortfolioController extends Controller
         return $this->portfolioService->create();
     }
 
-    public function store(PortfolioRequest $request){
+    public function store(Request $request){
         return $this->portfolioService->store($request);
     }
 
@@ -35,7 +35,7 @@ class PortfolioController extends Controller
         return $this->portfolioService->edit($id);
     }
 
-    public function update(PortfolioRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->portfolioService->update($request,$id);
     }
 
