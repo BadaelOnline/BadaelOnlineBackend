@@ -32,7 +32,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
         return view('admin.category.create');
     }
 
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
         try{
             /** transformation to collection */
@@ -86,7 +86,7 @@ class CategoryRepository implements CategoryRepositoryInterface{
         return view('admin.category.edit',compact('category'));
     }
 
-    public function update($id ,CategoryRequest $request)
+    public function update($id ,Request $request)
     {
         try{
 

@@ -17,7 +17,7 @@ class PcategoryManager
         return $this->pcategoryRepository->index();
     }
 
-    public function store(PCategoryRequest $request){
+    public function store(Request $request){
         return $this->pcategoryRepository->store($request);
     }
 
@@ -29,7 +29,7 @@ class PcategoryManager
         return $this->pcategoryRepository->edit($id);
     }
 
-    public function update(PCategoryRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->pcategoryRepository->update($request,$id);
     }
 

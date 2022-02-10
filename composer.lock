@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b893b39ea264a1a57412dd49cb6c67a7",
+    "content-hash": "34bd13bc22ae7f3d9c1966834271f187",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5652,6 +5652,50 @@
             "time": "2020-07-09T08:09:16+00:00"
         },
         {
+            "name": "hamoda-dev/laravel-adminlte-setup",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hamoda-dev/laravel-adminlte-setup.git",
+                "reference": "6383b43986ea0e4a8e545d6e31b18f319b138e08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hamoda-dev/laravel-adminlte-setup/zipball/6383b43986ea0e4a8e545d6e31b18f319b138e08",
+                "reference": "6383b43986ea0e4a8e545d6e31b18f319b138e08",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelSetupAdmin\\Providers\\LaravelSetupAdminProvider",
+                        "LaravelSetupAdmin\\Providers\\InstallerProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelSetupAdmin\\Providers\\": "src/Providers",
+                    "LaravelSetupAdmin\\Commands\\": "src/Commands"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Mohammed Hamid Hamoda",
+                    "email": "hamoda.dev@gmail.com"
+                }
+            ],
+            "description": "Laravel AdminLTE Setup Blade Files RTL,LTR",
+            "support": {
+                "issues": "https://github.com/hamoda-dev/laravel-adminlte-setup/issues",
+                "source": "https://github.com/hamoda-dev/laravel-adminlte-setup/tree/master"
+            },
+            "time": "2021-03-03T10:58:10+00:00"
+        },
+        {
             "name": "mockery/mockery",
             "version": "1.4.2",
             "source": {
@@ -7515,7 +7559,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "hamoda-dev/laravel-adminlte-setup": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

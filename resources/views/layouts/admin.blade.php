@@ -150,13 +150,13 @@
           <span>{{ __('home.service') }}</span></a>
       </li>
 
-      @can('team-list')
+      {{-- @can('team-list') --}}
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.team') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>{{ __('home.team') }}</span></a>
       </li>
-      @endcan
+      {{-- @endcan --}}
 
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.testi') }}">
@@ -252,9 +252,9 @@
                     <a href="#" class="dropdown-item {{ $notification->read_at == null ? 'unread' : '' }}" >
                         <i class="fas fa-envelope"></i> {{ $notification->data['title'] }}
                         <span class="ml-2 pull-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
-                        {{-- <span href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+                        <span href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
                                 Mark as read
-                        </span> --}}
+                        </span>
                     </a>
                   @endforeach
 
@@ -270,7 +270,7 @@
                   @endforelse
 
                   <div class="dropdown-divider"></div>
-                  {{-- <a href="#" class="dropdown-item dropdown-footer">Mark all as read</a> --}}
+                  <a href="#" class="dropdown-item dropdown-footer">Mark all as read</a>
                 </div>
               </li>
           </ul>

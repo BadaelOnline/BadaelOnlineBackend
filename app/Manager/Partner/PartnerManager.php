@@ -21,7 +21,7 @@ class PartnerManager
         return $this->partnerRepository->create();
     }
 
-    public function store(PartnerRequest $request){
+    public function store(Request $request){
         return $this->partnerRepository->store($request);
     }
 
@@ -33,7 +33,7 @@ class PartnerManager
         return $this->partnerRepository->edit($id);
     }
 
-    public function update(PartnerRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->partnerRepository->update($request,$id);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Requests\User\UserRequest;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Models\Role;
 use App\Models\User\User;
@@ -13,9 +14,13 @@ class UserRepository implements UserRepositoryInterface{
 
     public function index()
     {
-        $user = User::all();
+        $users = User::latest()->get();
+        $users->transform(function($user){
+            $user->role = $user->roles()->first();
+            return $user;
+        });
         return view('admin.user.index',[
-            'user' => $user
+            'user' => $users,
         ]);
     }
 
@@ -25,26 +30,34 @@ class UserRepository implements UserRepositoryInterface{
        return view ('admin.user.create',compact('roles'));
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        Validator::make($request->all(), [
-            "name" => "required",
-            "email" => "required|email|unique:users",
-            "password" => "required|min:8"
-        ])->validate();
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        try{
+            return $request->all();
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
 
-        if ($user->save()) {
             return redirect()->route('admin.user')->with('success', 'Data added successfully');
-        }else {
-
+        }catch(\Exception $ex){
+            // DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.user.create')->with('error', 'Data failed to add');
+        }
+        // $user = new User();
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = Hash::make($request->password);
 
-           }
+        // if ($user->save()) {
+        //     return redirect()->route('admin.user')->with('success', 'Data added successfully');
+        // }else {
+
+        //     return redirect()->route('admin.user.create')->with('error', 'Data failed to add');
+
+        //    }
     }
 
     public function show($id)
@@ -60,7 +73,7 @@ class UserRepository implements UserRepositoryInterface{
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user = User::findOrFail($id);
         $user->name = $request->name;
@@ -77,7 +90,7 @@ class UserRepository implements UserRepositoryInterface{
            }
     }
 
-    public function changepassword(Request $request, $id)
+    public function changepassword(UserRequest $request, $id)
     {
         $user = User::findOrFail($id);
         $user->password = Hash::make($request->password);

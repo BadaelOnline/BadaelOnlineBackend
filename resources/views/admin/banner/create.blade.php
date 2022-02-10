@@ -125,7 +125,7 @@
             <div class="en col-sm-9">
                 <label class="col-sm-6 col-form-label">{{ __('banner.Denglish')  }}</label>
 
-                <textarea id="desc" cols="30" rows="5" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} " id="summernote">{{old('desc')}}</textarea>
+                <textarea id="desc" name='banner[en][desc]' cols="30" rows="5" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} " id="summernote">{{old('desc')}}</textarea>
                 <input type="text" name='banner[en][local]' value='en' hidden>
                 @error('banner.en.desc')
                     <small class="form-text text-danger"> {{ $message }}</small>
@@ -135,7 +135,7 @@
             <div class="ar col-sm-9">
                 <label class="col-sm-6 col-form-label">{{ __('banner.Darabic')  }}</label>
 
-                <textarea id="desc" cols="30" rows="5" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} " id="summernote">{{old('desc')}}</textarea>
+                <textarea id="desc" name='banner[ar][desc]'  cols="30" rows="5" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} " id="summernote">{{old('desc')}}</textarea>
                 <input type="text" name='banner[ar][local]' value='ar' hidden>
                 @error('banner.ar.desc')
                     <small class="form-text text-danger"> {{ $message }}</small>

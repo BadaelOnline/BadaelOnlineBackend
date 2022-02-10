@@ -30,7 +30,7 @@ class BannerController extends Controller
         ]);
     }
 
-    public function store(BannerRequest $request){
+    public function store(Request $request){
         return $this->bannerService->store($request);
     }
 
@@ -43,7 +43,7 @@ class BannerController extends Controller
         return view ('admin.banner.edit',compact('banner'));
     }
 
-    public function update(BannerRequest $request, $id){
+    public function update(Request $request, $id){
         return $this->bannerService->update($request, $id);
     }
 

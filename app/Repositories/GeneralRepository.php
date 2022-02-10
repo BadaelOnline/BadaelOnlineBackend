@@ -56,7 +56,7 @@ class GeneralRepository implements GeneralRepositoryInterface{
         ]);
     }
 
-    public function generalUpdate(GeneralRequest $request)
+    public function generalUpdate(Request $request)
     {
         try{
             $general = $this->general::find(1);
@@ -132,7 +132,7 @@ class GeneralRepository implements GeneralRepositoryInterface{
         ]);
     }
 
-    public function aboutUpdate(AboutRequest $request)
+    public function aboutUpdate(Request $request)
     {
         try{
             $about = $this->about::find(1);

@@ -12,9 +12,9 @@ interface GeneralRepositoryInterface{
 
     public function general();
 
-    public function generalUpdate(GeneralRequest $request);
+    public function generalUpdate(Request $request);
 
     public function about();
 
-    public function aboutUpdate(AboutRequest $request);
+    public function aboutUpdate(Request $request);
 }

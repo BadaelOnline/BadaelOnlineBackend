@@ -2,6 +2,7 @@
 
 namespace App\Service\User;
 
+use App\Http\Requests\User\UserRequest;
 use App\Manager\User\UserManager;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class UserService
         return $this->userManager->create();
     }
 
-    public function store(Request $request){
+    public function store(UserRequest $request){
         return $this->userManager->store($request);
     }
 
@@ -33,11 +34,11 @@ class UserService
         return $this->userManager->edit($id);
     }
 
-    public function update(Request $request, $id){
+    public function update(UserRequest $request, $id){
         return $this->userManager->update($request, $id);
     }
 
-    public function changepassword(Request $request, $id){
+    public function changepassword(UserRequest $request, $id){
         return $this->userManager->changepassword($id,$request);
     }
 

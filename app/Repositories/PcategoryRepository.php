@@ -29,7 +29,7 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
         return view('admin.pcategory.index',compact('pcategory'));
     }
 
-    public function store(PCategoryRequest $request)
+    public function store(Request $request)
     {
         try{
             /** transformation to collection */
@@ -78,7 +78,7 @@ class PcategoryRepository implements PcategoryRepositoryInterface{
         return view('admin.pcategory.edit',compact('pcategory'));
     }
 
-    public function update(PCategoryRequest $request,$id)
+    public function update(Request $request,$id)
     {
         try{
 

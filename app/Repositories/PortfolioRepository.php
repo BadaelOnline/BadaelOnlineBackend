@@ -43,7 +43,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
         return view('admin.portfolio.create',compact('categories'));
     }
 
-    public function store(PortfolioRequest $request)
+    public function store(Request $request)
     {
         try{
             /** transformation to collection */
@@ -95,7 +95,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
             return redirect()->route('admin.portfolio')->with('success', 'Data added successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.portfolio.create')->with('error', 'Data failed to add');
         }
     }
@@ -113,7 +113,7 @@ class PortfolioRepository implements PortfolioRepositoryInterface{
         return view('admin.portfolio.edit',compact('portfolio','categories'));
     }
 
-    public function update(PortfolioRequest $request,$id)
+    public function update(Request $request,$id)
     {
         try{
             $portfolio = $this->portfolio::findOrFail($id);

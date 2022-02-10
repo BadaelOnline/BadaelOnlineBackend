@@ -21,7 +21,7 @@ class ServiceManager
         return $this->serviceRepository->create();
     }
 
-    public function store(ServiceRequest $request){
+    public function store(Request $request){
         return $this->serviceRepository->store($request);
     }
 
@@ -33,7 +33,7 @@ class ServiceManager
         return $this->serviceRepository->edit($id);
     }
 
-    public function update(ServiceRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->serviceRepository->update($request,$id);
     }
 

@@ -32,7 +32,7 @@ class LinkRepository implements LinkRepositoryInterface{
         return view('admin.link.create');
     }
 
-    public function store(LinkRequest $request)
+    public function store(Request $request)
     {
         try{
             /** transformation to collection */
@@ -65,7 +65,7 @@ class LinkRepository implements LinkRepositoryInterface{
             return redirect()->route('admin.link')->with('success', 'Data added successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.link.create')->with('error', 'Data failed to add');
         }
     }
@@ -81,7 +81,7 @@ class LinkRepository implements LinkRepositoryInterface{
         return view('admin.link.edit',compact('link'));
     }
 
-    public function update(LinkRequest $request,$id)
+    public function update(Request $request,$id)
     {
         try{
             $link = $this->link::findOrFail($id);
@@ -109,7 +109,7 @@ class LinkRepository implements LinkRepositoryInterface{
                 return redirect()->route('admin.link')->with('success', 'Data updated successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.link.create')->with('error', 'Data failed to update');
         }
     }

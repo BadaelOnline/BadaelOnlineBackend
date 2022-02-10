@@ -35,11 +35,11 @@
 
     <div class="container">
     {{-- title --}}
-    <div class="form-group ml-2 col-sm-9">
+    <div class="form-group ml-2 col-sm-7">
         <div class="rowInput">
 
             <div class="en col-sm-9">
-                <label class="col-sm-6 col-form-label"{{ __('general.Tenglish') }}</label>
+                <label class="col-sm-6 col-form-label">{{ __('general.Tenglish') }}</label>
 
                     <input type="text" name='about[en][title]' class="form-control {{$errors->first('title') ? "is-invalid" : "" }} " value="{{old('title') ? old('title') : $about->title}}" id="link" placeholder="Title About">
                     <input type="text" name='about[en][local]' value='en' hidden>
@@ -75,11 +75,11 @@
         </div>
     </div>
   {{-- subject --}}
-  <div class="form-group ml-2 col-sm-9">
+  <div class="form-group ml-2 col-sm-7">
     <div class="rowInput">
 
         <div class="en col-sm-9">
-            <label class="col-sm-6 col-form-label"{{ __('general.subjectenglish') }}</label>
+            <label class="col-sm-6 col-form-label">{{ __('general.subjectenglish') }}</label>
 
                 <input type="text" name='about[en][subject]' class="form-control {{$errors->first('subject') ? "is-invalid" : "" }} " value="{{old('subject') ? old('subject') : $about->subject}}" id="link" placeholder="Slogan">
                 <input type="text" name='about[en][local]' value='en' hidden>
@@ -116,11 +116,50 @@
 </div>
 
     {{-- description --}}
-    <div class="form-group ml-2 col-sm-9">
+    <div class="form-group ml-2 col-sm-7">
         <div class="rowInput">
 
             <div class="en col-sm-9">
-                <label class="col-sm-6 col-form-label"{{ __('general.Menglish') }}</label>
+                <label class="col-sm-6 col-form-label">{{ __('general.Menglish') }}</label>
+
+                    <input type="text" name='about[en][desc]' class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} " value="{{old('desc') ? old('desc') : $about->desc}}" id="link" placeholder="Slogan">
+                    <input type="text" name='about[en][local]' value='en' hidden>
+
+                    <div class="invalid-feedback">
+                      {{ $errors->first('about.en.desc') }}
+                      </div>
+                      @error('about.en.desc')
+                          <small class="form-text text-danger"> {{ $message }}</small>
+                      @enderror
+            </div>
+
+            <div class="ar col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('general.Marabic') }}</label>
+
+                <input type="text" name='about[ar][desc]' class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} " value="{{old('desc') ? old('desc') : $about->desc}}" id="link" placeholder="Slogan">
+                <input type="text" name='about[ar][local]' value='ar' hidden>
+
+                <div class="invalid-feedback">
+                  {{ $errors->first('about.ar.desc') }}
+                  </div>
+                  @error('about.ar.desc')
+                  <small class="form-text text-danger"> {{ $message }}</small>
+              @enderror
+            </div>
+
+            <select class="form-control col-sm-2 selectLang" id="selectLang">
+                @foreach(config('app.languages') as $index => $lang)
+                <option id="lang">{{ $lang }}</option>
+                @endforeach
+            </select>
+
+        </div>
+    </div>
+    {{-- <div class="form-group ml-2 col-sm-7">
+        <div class="rowInput">
+
+            <div class="en col-sm-9">
+                <label class="col-sm-6 col-form-label">{{ __('general.Menglish') }}</label>
 
                     <textarea name="about[en][desc]" cols="30" rows="10" class="form-control {{$errors->first('desc') ? "is-invalid" : "" }} " id="summernote">{{old('desc') ? old('desc') : $about->desc}}</textarea>
                     <input type="text" name='about[en][local]' value='en' hidden>
@@ -155,14 +194,14 @@
             </select>
 
         </div>
-    </div>
+    </div> --}}
 
-    <div class="form-group ml-5">
+    <div class="form-group ml-4">
         <div class="col-sm-3">
             <button type="submit" class="btn btn-primary">{{ __('general.update') }}</button>
         </div>
     </div>
-</div>
+    </div>
   </form>
 @endsection
 

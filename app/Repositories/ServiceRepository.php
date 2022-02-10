@@ -36,7 +36,7 @@ class ServiceRepository implements ServiceRepositoryInterface{
 
     }
 
-    public function store(ServiceRequest $request)
+    public function store(Request $request)
     {
         try{
             /** transformation to collection */
@@ -80,7 +80,7 @@ class ServiceRepository implements ServiceRepositoryInterface{
             return redirect()->route('admin.service')->with('success', 'Data added successfully');
         }catch(\Exception $ex){
             DB::rollback();
-            // return $ex->getMessage();
+            return $ex->getMessage();
             return redirect()->route('admin.service.create')->with('error', 'Data failed to add');
         }
     }
@@ -97,7 +97,7 @@ class ServiceRepository implements ServiceRepositoryInterface{
         return view('admin.service.edit',compact('service'));
     }
 
-    public function update(ServiceRequest $request,$id)
+    public function update(Request $request,$id)
     {
         try{
             // return $this->request->all();

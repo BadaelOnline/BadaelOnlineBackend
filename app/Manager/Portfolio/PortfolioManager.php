@@ -21,7 +21,7 @@ class PortfolioManager
         return $this->portfolioRepository->create();
     }
 
-    public function store(PortfolioRequest $request){
+    public function store(Request $request){
         return $this->portfolioRepository->store($request);
     }
 
@@ -33,7 +33,7 @@ class PortfolioManager
         return $this->portfolioRepository->edit($id);
     }
 
-    public function update(PortfolioRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->portfolioRepository->update($request,$id);
     }
 

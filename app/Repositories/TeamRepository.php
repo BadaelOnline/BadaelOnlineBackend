@@ -26,20 +26,20 @@ class TeamRepository implements TeamRepositoryInterface{
 
     public function index()
     {
-        Gate::authorize('team-list',$this->user);
+        // Gate::authorize('team-list',$this->user);
 
         return $this->team::orderBy('id','desc')->get();
     }
 
     public function create()
     {
-        Gate::authorize('team-create',$this->user);
+        // Gate::authorize('team-create',$this->user);
     }
 
-    public function store(TeamRequest $request)
+    public function store(Request $request)
     {
         try {
-            Gate::authorize('team-create',$this->user);
+            // Gate::authorize('team-create',$this->user);
 
             /** transformation to collection */
             $allteams = collect($request->team)->all();
@@ -82,24 +82,25 @@ class TeamRepository implements TeamRepositoryInterface{
 
         } catch (\Exception $ex) {
             DB::rollback();
+            return $ex->getMessage();
             return redirect()->route('admin.team.create')->with('error', 'Data failed to add');
         }
     }
     public function show($id)
     {
-        Gate::authorize('team-list',$this->user);
+        // Gate::authorize('team-list',$this->user);
     }
 
     public function edit($id)
     {
-        Gate::authorize('team-update',$this->user);
+        // Gate::authorize('team-update',$this->user);
         return $this->team::findOrFail($id);
     }
 
-    public function update(TeamRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try{
-            Gate::authorize('team-update',$this->user);
+            // Gate::authorize('team-update',$this->user);
 
             $team = $this->team::findOrFail($id);
 
@@ -148,7 +149,7 @@ class TeamRepository implements TeamRepositoryInterface{
 
     public function destroy($id)
     {
-        Gate::authorize('team-delete',$this->user);
+        // Gate::authorize('team-delete',$this->user);
         $team = $this->team::findOrFail($id);
 
         $team->delete();

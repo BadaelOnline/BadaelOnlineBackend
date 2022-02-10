@@ -22,7 +22,7 @@ class PartnerController extends Controller
         return $this->partnerService->create();
     }
 
-    public function store(PartnerRequest $request){
+    public function store(Request $request){
         return $this->partnerService->store($request);
     }
 
@@ -34,7 +34,7 @@ class PartnerController extends Controller
         return $this->partnerService->edit($id);
     }
 
-    public function update(PartnerRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->partnerService->update($request,$id);
     }
 

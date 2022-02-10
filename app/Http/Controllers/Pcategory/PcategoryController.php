@@ -18,7 +18,7 @@ class PCategoryController extends Controller
         return $this->pcategoryService->index();
     }
 
-    public function store(PCategoryRequest $request){
+    public function store(Request $request){
         return $this->pcategoryService->store($request);
     }
 
@@ -30,7 +30,7 @@ class PCategoryController extends Controller
         return $this->pcategoryService->edit($id);
     }
 
-    public function update(PCategoryRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->pcategoryService->update($request,$id);
     }
 

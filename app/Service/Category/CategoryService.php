@@ -22,7 +22,7 @@ class CategoryService
         return $this->categoryManager->create();
     }
 
-    public function store(CategoryRequest $request){
+    public function store(Request $request){
         return $this->categoryManager->store($request);
     }
 
@@ -34,7 +34,7 @@ class CategoryService
         return $this->categoryManager->edit($id);
     }
 
-    public function update($id,CategoryRequest $request){
+    public function update($id,Request $request){
         return $this->categoryManager->update($id, $request);
     }
 

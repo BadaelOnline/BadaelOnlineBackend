@@ -22,7 +22,7 @@ class LinkController extends Controller
         return $this->linkService->create();
     }
 
-    public function store(LinkRequest $request){
+    public function store(Request $request){
         return $this->linkService->store($request);
     }
 
@@ -34,7 +34,7 @@ class LinkController extends Controller
         return $this->linkService->edit($id);
     }
 
-    public function update(LinkRequest $request,$id){
+    public function update(Request $request,$id){
         return $this->linkService->update($id,$request);
     }
 

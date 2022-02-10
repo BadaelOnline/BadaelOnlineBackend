@@ -22,7 +22,7 @@ interface TeamRepositoryInterface{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TeamRequest $request);
+    public function store(Request $request);
 
     /**
      * Display the specified resource.
@@ -46,7 +46,7 @@ interface TeamRepositoryInterface{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TeamRequest $request, $id);
+    public function update(Request $request, $id);
 
     /**
      * Remove the specified resource from storage.

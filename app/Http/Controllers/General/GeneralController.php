@@ -24,7 +24,7 @@ class GeneralController extends Controller
         return $this->generalService->general();
     }
 
-    public function generalUpdate(GeneralRequest $request){
+    public function generalUpdate(Request $request){
         return $this->generalService->generalUpdate($request);
     }
 
@@ -32,7 +32,7 @@ class GeneralController extends Controller
         return $this->generalService->about();
     }
 
-    public function aboutUpdate(AboutRequest $request){
+    public function aboutUpdate(Request $request){
         return $this->generalService->aboutUpdate($request);
     }
 }
